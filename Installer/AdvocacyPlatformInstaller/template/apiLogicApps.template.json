@@ -1,0 +1,100 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ap_func_aad_key_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "aadaudience_variable": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "aadclientid_variable": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "sites_ap_wu_func_name": {
+      "defaultValue": "ap-wu-func",
+      "type": "String"
+    },
+    "servicebus_Connection_Name": {
+      "defaultValue": "servicebus",
+      "type": "String"
+    },
+    "vaults_ap_wu_keyvault_name": {
+      "defaultValue": "ap-wu-keyvault",
+      "type": "String"
+    },
+    "workflows_ap_process_wu_logicapp_name": {
+      "defaultValue": "ap-process-wu-logicapp",
+      "type": "String"
+    },
+    "workflows_ap_request_wu_logicapp_name": {
+      "defaultValue": "ap-request-wu-logicapp",
+      "type": "String"
+    }
+  },
+  "variables": {
+    "tenant_id": "[subscription().tenantId]",
+    "subscription_id": "[subscription().subscriptionId]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('workflows_ap_process_wu_logicapp_name')]",
+      "location": "westus2",
+      "dependsOn": [
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-process-logicapp-wu.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('workflows_ap_request_wu_logicapp_name')]",
+      "location": "westus2",
+      "dependsOn": [
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-request-logicapp-wu.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ap_func_aad_key_secret_name": {
+      "value": "ap-{newId(func-aad)}-func-aad-key"
+    },
+    "ap_func_aad_key_secret_value": {
+      "value": ""
+    },
+    "ap_func_aad_name_secret_name": {
+      "value": "ap-{newId(func-aad)}-func-aad-name"
+    },
+    "ap_func_aad_name_secret_value": {
+      "value": ""
+    },
+    "luis_subscription_key_secret_name": {
+      "value": "ap-{newId(luis)}-luis-subscription-key"
+    },
+    "luis_subscription_key_secret_value": {
+      "value": ""
+    },
+    "speech_api_key_secret_name": {
+      "value": "ap-{newId(speech)}-speech-api-key"
+    },
+    "speech_api_key_secret_value": {
+      "value": ""
+    },
+    "storage_access_key_secret_name": {
+      "value": "ap-{newId(storage)}-storage-access-key"
+    },
+    "storage_access_key_secret_value": {
+      "value": ""
+    },
+    "storage_read_access_key_secret_name": {
+      "value": "ap-{newId(storage)}-storage-read-access-key"
+    },
+    "storage_read_access_key_secret_value": {
+      "value": ""
+    },
+    "twilioaccountphonenumber_secret_name": {
+      "value": "ap-{newId(twilio)}-twilio-account-phonenumber"
+    },
+    "twilioaccountphonenumber_secret_value": {
+      "value": ""
+    },
+    "twilioaccountssid_secret_name": {
+      "value": "ap-{newId(twilio)}-twilio-account-ssid"
+    },
+    "twilioaccountssid_secret_value": {
+      "value": ""
+    },
+    "twilioaccounttoken_secret_name": {
+      "value": "ap-{newId(twilio)}-twilio-account-token"
+    },
+    "twilioaccounttoken_secret_value": {
+      "value": ""
+    },
+    "aadaudience_variable": {
+      "value": "{placeHolder}"
+    },
+    "aadclientid_variable": {
+      "value": "{placeHolder}"
+    },
+    "sites_ap_wu_func_name": {
+      "value": "ap-{newId()}-func-wu"
+    },
+    "servicebus_Connection_Name": {
+      "value": "ap-{newId(servicebus)}-servicebus"
+    },
+    "serverfarms_WestUS2Plan_name": {
+      "value": "WestUS2Plan"
+    },
+    "vaults_ap_wu_keyvault_name": {
+      "value": "ap-{newId()}-keyvault-wu"
+    },
+    "storageAccounts_apwustorage_name": {
+      "value": "ap{newId(storage)}storagewu"
+    },
+    "components_ap_eu_appInsights_name": {
+      "value": "ap-{newId()}-appinsights-eu"
+    },
+    "workflows_ap_process_wu_logicapp_name": {
+      "value": "ap-{newId(logicapp)}-process-logicapp-wu"
+    },
+    "workflows_ap_request_wu_logicapp_name": {
+      "value": "ap-{newId(logicapp)}-request-logicapp-wu"
+    },
+    "accounts_ap_wu_luisapp_name": {
+      "value": "ap-{newId(luis)}-luis-wu"
+    },
+    "namespaces_ap_wu_messagingbus_name": {
+      "value": "ap-{newId(servicebus)}-messagingbus-wu"
+    },
+    "workspaces_ap_wu_loganalytics_name": {
+      "value": "ap-{newId()}-loganalytics-wu"
+    },
+    "accounts_ap_wu_speech_cognitivesvc_name": {
+      "value": "ap-{newId(speech)}-speech-cognitivesvc-wu"
+    },
+    "ap_function_app_zip_uri": {
+      "value": ""
+    }
+  }
+}

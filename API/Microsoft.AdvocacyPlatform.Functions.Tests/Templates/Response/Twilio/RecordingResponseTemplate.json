@@ -1,0 +1,13 @@
+﻿{
+  "end": 0,
+  "first_page_uri": "/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings.json?PageSize=1&Page=0",
+  "next_page_uri": "",
+  "page": 0,
+  "page_size": {pageSize},
+  "previous_page_uri": "/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings.json?PageSize=1&Page=0",
+  "recordings": [
+    {recordingsComposite}
+  ],
+  "start": 0,
+  "uri": "/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Recordings.json?PageSize=1&Page=0"
+}

@@ -1,0 +1,41 @@
+﻿{
+  "id": "/providers/Microsoft.BusinessAppPlatform/scopes/service/environments/{environmentName}",
+  "type": "Microsoft.BusinessAppPlatform/scopes/environments",
+  "name": "{environmentName}",
+  "location": "{location}",
+  "properties": {
+    "apiManagementAccountResourceId": "subscriptions/{subscriptionId}/resourceGroups/unitedstates-002/providers/Microsoft.Web/apiManagementAccounts/unitedstates-002",
+    "apiManagementEndpoint": "https://unitedstates-002.admin.azure-apim.net",
+    "azureRegionHint": "westus",
+    "displayName": "{displayName}",
+    "createdTime": "2019-05-28T02:12:07.2000946Z",
+    "createdBy": {
+      "id": "{createdById}",
+      "displayName": "{createdBy}",
+      "type": "User",
+      "tenantId": "{tenantId}",
+      "userPrincipalName": "{createdByUpn}"
+    },
+    "lastModifiedTime": "2019-05-28T02:12:07.2000946Z",
+    "lastModifiedBy": {
+      "id": "{modifiedById}",
+      "displayName": "{modifiedBy}",
+      "type": "User",
+      "tenantId": "{tenantId}",
+      "userPrincipalName": "{modifiedByUpn}"
+    },
+    "provisioningState": "LinkedDatabaseProvisioning",
+    "creationType": "User",
+    "environmentSku": "Trial",
+    "environmentType": "Production",
+    "isDefault": false,
+    "runtimeEndpoints": {
+      "microsoft.BusinessAppPlatform": "https://unitedstates.api.bap.microsoft.com",
+      "microsoft.CommonDataModel": "https://unitedstates.api.cds.microsoft.com",
+      "microsoft.PowerApps": "https://unitedstates.api.powerapps.com",
+      "microsoft.Flow": "https://unitedstates.api.flow.microsoft.com",
+      "microsoft.PowerAppsAdvisor": "https://unitedstates.api.advisor.powerapps.com"
+    },
+    "expirationTime": "2019-06-27T02:12:07.2000946Z"
+  }
+}

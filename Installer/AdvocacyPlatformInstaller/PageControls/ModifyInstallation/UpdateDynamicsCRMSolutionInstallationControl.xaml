@@ -1,0 +1,43 @@
+﻿<local:WizardPageBase x:Class="AdvocacyPlatformInstaller.UpdateDynamicsCRMSolutionInstallationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="WizardProgressGrid" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Steps" Background="LightGray" FontWeight="Bold" />
+            <local:WizardProgressControl x:Name="WizardProgress" Grid.Row="1" Grid.Column="0" PagesSource="{Binding Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" MaxHeight="400" />
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Operations Progress" Background="LightGray" HorizontalAlignment="Stretch" FontWeight="Bold" />
+            <local:OperationsProgressControl x:Name="OperationsProgressControl" Grid.Row="1" Grid.Column="0" OperationsSource="{Binding OperationsProgress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"/>
+
+            <Label Grid.Row="2" Grid.Column="0" Content="Details" Background="LightGray" HorizontalAlignment="Stretch" FontWeight="Bold" />
+            <RichTextBox Grid.Row="3" Grid.Column="0" x:Name="DetailsRichTextBox" VerticalScrollBarVisibility="Auto" />
+        </Grid>
+    </Grid>
+</local:WizardPageBase>

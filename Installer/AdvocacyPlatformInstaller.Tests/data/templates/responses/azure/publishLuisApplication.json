@@ -1,0 +1,11 @@
+﻿{
+  "versionId": "{version}",
+  "directVersionPublish": false,
+  "endpointUrl": "{endpointUrl}",
+  "isStaging": false,
+  "assignedEndpointKey": null,
+  "region": "{authoringRegion}",
+  "endpointRegion": "{endpointRegion}",
+  "publishedDateTime": "2019-05-29T17:53:14Z",
+  "failedRegions": ""
+}

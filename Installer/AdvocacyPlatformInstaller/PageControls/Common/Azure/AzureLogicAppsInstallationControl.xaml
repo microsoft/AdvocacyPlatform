@@ -1,0 +1,90 @@
+﻿<local:WizardPageBase x:Class="AdvocacyPlatformInstaller.AzureLogicAppsInstallationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" 
+             d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="WizardProgressGrid" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Steps" Background="LightGray" FontWeight="Bold" />
+            <local:WizardProgressControl x:Name="WizardProgress" Grid.Row="1" Grid.Column="0" PagesSource="{Binding Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="LightBlue" VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Margin="15 0 15 0">
+                    <Span FontWeight="Bold">Tip:</Span> You can find your API key by clicking on the following 
+                    <Hyperlink NavigateUri="https://www.bingmapsportal.com/Application" Click="Hyperlink_Click">link</Hyperlink>
+                    . If you do not have an account please refer to the documentation for information on how to create one.
+                </TextBlock>
+            </ScrollViewer>
+            
+            <Label Grid.Row="2" Grid.Column="0" Margin="5 5 5 5" Content="Bing Maps API Key" />
+            <PasswordBox x:Name="ApiKeyPasswordBox" Grid.Row="2" Grid.Column="1" Margin="5 5 5 5" PasswordChanged="ApiKeyPasswordBox_PasswordChanged" />
+
+            <Label Grid.Row="3" Grid.Column="0" Margin="5 5 5 5" Content="Service Bus Connection Name" />
+            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.ServiceBusConnectionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="4" Grid.Column="0" Margin="5 5 5 5" Content="Common Data Service Connection Name" />
+            <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.CdsConnectionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="5" Grid.Column="0" Margin="5 5 5 5" Content="Bing Maps Connection Name" />
+            <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.BingMapsConnectionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="6" Grid.Column="0" Margin="5 5 5 5" Content="Request Workflow Name" />
+            <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.RequestWorkflowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="7" Grid.Column="0" Margin="5 5 5 5" Content="Process Workflow Name" />
+            <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.ProcessWorkflowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="8" Grid.Column="0" Margin="5 5 5 5" Content="New Case Workflow Name" />
+            <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.NewCaseWorkflowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="9" Grid.Column="0" Margin="5 5 5 5" Content="Results Update Case Workflow Name" />
+            <TextBox Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.ResultsUpdateCaseWorkflowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="10" Grid.Column="0" Margin="5 5 5 5" Content="Address Update Case Workflow Name" />
+            <TextBox Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.AddressUpdateCaseWorkflowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="11" Grid.Column="0" Margin="5 5 5 5" Content="Get Retry Records Workflow Name" />
+            <TextBox Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.LogicApps.GetRetryRecordsWorkflowName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+    </Grid>
+</local:WizardPageBase>

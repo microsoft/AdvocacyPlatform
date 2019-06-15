@@ -1,0 +1,16 @@
+﻿{
+  "InputId": "",
+  "InitSeconds": 0,
+  "FinalSeconds": 45,
+  "Dtmf": "1ww{inputId}ww1ww1ww1",
+  "CallSid": "{callSid}",
+  "RecordingUri": "",
+  "Transcript": "The alien registration number. You entered the system will your next the immigration judge issued an administrative decision on your case at on August 1st, 2017 for your next hearing date press one. For case processing information press 2. Poor decision information press 3. For case appeal information press 4. For filing Information Press, 5 to repeat these options press zero.",
+  "ExpectedEntities": [
+    "Date"
+  ],
+  "ExpectedAdditionalEntities": {
+    "administrativeOrder": "administrative decision"
+  },
+  "CallbackUrl": ""
+}

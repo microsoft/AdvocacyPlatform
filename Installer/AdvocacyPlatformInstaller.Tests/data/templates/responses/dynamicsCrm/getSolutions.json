@@ -1,0 +1,34 @@
+﻿{
+  "@odata.context": "https://orgabb1dcd5.crm.dynamics.com/api/data/v9.0/$metadata#solutions",
+  "value": [
+    {
+      "@odata.etag": "W/\"507697\"",
+      "_organizationid_value": "{orgId}",
+      "versionnumber": 507697,
+      "ismanaged": true,
+      "solutionid": "{solutionId}",
+      "uniquename": "{uniqueName}",
+      "friendlyname": "{friendlyName}",
+      "_createdby_value": "{createdById}",
+      "_publisherid_value": "{publisherId}",
+      "solutionpackageversion": "9.1",
+      "modifiedon": "2019-05-29T23:19:31Z",
+      "_modifiedby_value": "{modifiedById}",
+      "isvisible": true,
+      "version": "{version}",
+      "createdon": "2019-05-29T23:18:45Z",
+      "installedon": "2019-05-29T23:18:45Z",
+      "_modifiedonbehalfby_value": null,
+      "description": null,
+      "pinpointsolutionid": null,
+      "_configurationpageid_value": null,
+      "pinpointsolutiondefaultlocale": null,
+      "_createdonbehalfby_value": null,
+      "_parentsolutionid_value": null,
+      "pinpointpublisherid": null,
+      "solutiontype": null,
+      "updatedon": null,
+      "pinpointassetid": null
+    }
+  ]
+}

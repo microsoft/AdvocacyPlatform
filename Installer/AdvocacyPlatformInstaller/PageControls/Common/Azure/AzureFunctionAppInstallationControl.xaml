@@ -1,0 +1,64 @@
+﻿<local:WizardPageBase x:Class="AdvocacyPlatformInstaller.AzureFunctionAppInstallationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:BoolToRowHeightConverter x:Key="BoolToRowHeigthConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="WizardProgressGrid" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Steps" Background="LightGray" FontWeight="Bold" />
+            <local:WizardProgressControl x:Name="WizardProgress" Grid.Row="1" Grid.Column="0" PagesSource="{Binding Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="400" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="{Binding InstallationConfiguration.Azure.FunctionApp.CollectSecrets, Converter={StaticResource BoolToRowHeigthConverter}, ConverterParameter=40, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MaxHeight="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Margin="5 5 5 5" Content="App Registration Name" />
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.FunctionApp.ApplicationRegistrationName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="1" Grid.Column="0" Margin="5 5 5 5" Content="App Registration Secret" />
+            <PasswordBox x:Name="AppRegistrationSecretPasswordBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="5 5 5 5" PasswordChanged="AppRegistrationSecretPasswordBox_PasswordChanged" />
+
+            <Label Grid.Row="2" Grid.Column="0" Margin="5 5 5 5" Content="App Name" />
+            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.FunctionApp.AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="3" Grid.Column="0" Margin="5 5 5 5" Content="App Service Name" />
+            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.FunctionApp.AppServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="4" Grid.Column="0" Margin="5 5 5 5" Content="App Deployment Source URL" />
+            <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.FunctionApp.AppDeploymentSourceUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+    </Grid>
+</local:WizardPageBase>

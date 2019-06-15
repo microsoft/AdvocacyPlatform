@@ -1,0 +1,103 @@
+﻿{
+  "numberOfThreads": 3,
+  "testConfigurationQueue": [
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": "1ww{inputId}ww1ww1ww1",
+      "CallSid": "CA1000000000000001",
+      "RecordingUri": "test/OSR_us_000_0010_8k.wav",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    },
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": "1ww{inputId}ww1ww1ww1",
+      "CallSid": "CA1000000000000002",
+      "RecordingUri": "test/OSR_us_000_0011_8k.wav",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    },
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": "1ww{inputId}ww1ww1ww1",
+      "CallSid": "CA1000000000000003",
+      "RecordingUri": "test/OSR_us_000_0012_8k.wav",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    },
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": "1ww{inputId}ww1ww1ww1",
+      "CallSid": "CA1000000000000004",
+      "RecordingUri": "test/OSR_us_000_0013_8k.wav",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    },
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": "1ww{inputId}ww1ww1ww1",
+      "CallSid": "CA1000000000000005",
+      "RecordingUri": "test/OSR_us_000_0014_8k.wav",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    },
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": "1ww{inputId}ww1ww1ww1",
+      "CallSid": "CA1000000000000006",
+      "RecordingUri": "test/OSR_us_000_0015_8k.wav",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    },
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": "1ww{inputId}ww1ww1ww1",
+      "CallSid": "CA1000000000000007",
+      "RecordingUri": "test/OSR_us_000_0016_8k.wav",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    }
+  ]
+}

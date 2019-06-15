@@ -1,0 +1,81 @@
+﻿<local:WizardPageBase x:Class="AdvocacyPlatformInstaller.AzureLuisModelInstallationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="WizardProgressGrid" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Steps" Background="LightGray" FontWeight="Bold" />
+            <local:WizardProgressControl x:Name="WizardProgress" Grid.Row="1" Grid.Column="0" PagesSource="{Binding Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="LightBlue"  VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Margin="15 0 15 0">
+                    <Span FontWeight="Bold">Tip:</Span> You can find your authoring key by clicking on the following 
+                    <Hyperlink NavigateUri="https://www.luis.ai/user/settings" Click="Hyperlink_Click">link</Hyperlink>
+                    . If you do not have an account please refer to the documentation for information on how to create one.
+                </TextBlock>
+            </ScrollViewer>
+
+            <Label Grid.Row="2" Grid.Column="0" Margin="5 5 5 5" Content="Resource Name" />
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.ResourceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="3" Grid.Column="0" Margin="5 5 5 5" Content="Authoring Key" />
+            <PasswordBox x:Name="AuthoringKeyPasswordBox" Grid.Row="3" Grid.Column="1" Margin="5 5 5 5" PasswordChanged="AuthoringKeyPasswordBox_PasswordChanged" />
+            
+            <Label Grid.Row="4" Grid.Column="0" Margin="5 5 5 5" Content="App Name" />
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="5" Grid.Column="0" Margin="5 5 5 5" Content="App Version" />
+            <TextBox Grid.Row="5" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.AppVersion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="6" Grid.Column="0" Margin="5 5 5 5" Content="App File Path" />
+            <TextBox Grid.Row="6" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.AppFilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button x:Name="LuisModelFilePathBrowseButton" Grid.Row="6" Grid.Column="3" Margin="5 5 5 5" Click="LuisModelFilePathBrowseButton_Click" Background="Transparent">
+                <Image Source="pack://application:,,,/Media/folder_icon.png" />
+            </Button>
+
+            <Label Grid.Row="7" Grid.Column="0" Margin="5 5 5 5" Content="Authoring Region" />
+            <TextBox Grid.Row="7" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.AuthoringRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="8" Grid.Column="0" Margin="5 5 5 5" Content="Resource Region" />
+            <TextBox Grid.Row="8" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.ResourceRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+    </Grid>
+</local:WizardPageBase>

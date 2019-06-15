@@ -1,0 +1,13 @@
+﻿{
+	"value": [
+		{
+			"properties": {
+				"level": "CanNotDelete",
+				"notes": "{notes}"
+			},
+			"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/{resourceProvider}/{resourceType}/{resourceName}",
+			"type": "Microsoft.Authorization/locks",
+			"name": "{resourceName}"
+		}
+	]
+}

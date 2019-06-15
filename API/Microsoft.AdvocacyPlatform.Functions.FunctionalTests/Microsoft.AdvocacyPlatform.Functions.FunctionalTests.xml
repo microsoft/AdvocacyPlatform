@@ -1,0 +1,834 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AdvocacyPlatform.Functions.FunctionalTests</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest">
+            <summary>
+            Functional test for CheckCallProgressHttpTrigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest._log">
+            <summary>
+            Internal logger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest._config">
+            <summary>
+            Test configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest._concurrentConfig">
+            <summary>
+            Test configuration for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.InitializeTests">
+            <summary>
+            Initialize tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.CheckCallProgressHttpTriggerRun">
+            <summary>
+            Ensure CheckCallPrgressHttpTrigger.Run() runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.CheckCallProgressImplementationConcurrentRuns">
+            <summary>
+            Ensure CheckCallPrgressHttpTrigger.Run() runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.CheckCallProgressRunnerLocal(System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Ensure CheckCallPrgressHttpTrigger.Run() runs correctly against local URL.
+            </summary>
+            <param name="queue">The queue of tests to run.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.CheckCallProgressHttpTriggerConcurrentRuns">
+            <summary>
+            Ensure CheckCallPrgressHttpTrigger.Run() runs correctly for concurrent runs against deployed Azure Function.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.CheckCallProgressRunnerAsync(System.Net.Http.HttpClient,Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings,System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner utility for testing CheckCallProgress.
+            </summary>
+            <param name="httpClient">The HttpClient instance to use.</param>
+            <param name="functionSettings">Configuration information for calling the remote function.</param>
+            <param name="queue">A queue of test to run.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.CreateHttpPostRequest(System.String)">
+            <summary>
+            Creates an HTTP POST request message for CheckCallProgress.
+            </summary>
+            <param name="callSid">The callSid to set in the request body.</param>
+            <returns>The generated request message.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.CheckCallProgressFunctionalTest.CreateHttpPostContent(System.String)">
+            <summary>
+            Creates content for an HTTP request for CheckCallProgress.
+            </summary>
+            <param name="callSid">The callSid to set in the request body.</param>
+            <returns>The request body content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration">
+            <summary>
+            Model for representing a concurrent test configuration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration.NumberOfThreads">
+            <summary>
+            Gets or sets the desired number of threads to run on.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration.TestConfigurations">
+            <summary>
+            Gets or sets the test configuration list.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration.TestConfigurationQueue">
+            <summary>
+            Gets or sets the test configuration queue.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration.Load(System.String)">
+            <summary>
+            Loads a test configuration from file.
+            </summary>
+            <param name="filePath">Path to the test configuration file.</param>
+            <returns>The test configuration.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConcurrentTestConfiguration.Save(System.String)">
+            <summary>
+            Saves the configuration to file.
+            </summary>
+            <param name="filePath">Path to the test configuration file to save to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConsoleLogger">
+            <summary>
+            Internal logger.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConsoleLogger.BeginScope``1(``0)">
+            <summary>
+            Not implemented.
+            </summary>
+            <typeparam name="TState">The state type.</typeparam>
+            <param name="state">The current state.</param>
+            <returns>An object implementing IDisposable.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConsoleLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            Not implemented.
+            </summary>
+            <param name="logLevel">The log level to query.</param>
+            <returns>True if the log level is enabled, false if it is not.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConsoleLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            Logs output.
+            </summary>
+            <typeparam name="TState">The type of the state object.</typeparam>
+            <param name="logLevel">The log level.</param>
+            <param name="eventId">An id for the event.</param>
+            <param name="state">The state to log.</param>
+            <param name="exception">The exception to log.</param>
+            <param name="formatter">Delegate for formatting.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest">
+            <summary>
+            Functional test for DeleteRecordingsHttpTrigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest._log">
+            <summary>
+            Internal logging.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest.InitializeTests">
+            <summary>
+            Initialize tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest.DeleteAccountRecordingsImplementationRun">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest.DeleteRecordingsRunnerLocal">
+            <summary>
+            Runner for testing DeleteRecordingsHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest.DeleteAccountRecordingsHttpTriggerRun">
+            <summary>
+            Ensure calls to DeleteRecordingsHttpTrigger for a deployed Azure Function runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest.DeleteRecordingsRunner(System.Net.Http.HttpClient,Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings)">
+            <summary>
+            Runner for ensuring calls to DeleteRecordingsHttpTrigger for a deployed Azure Function runs correctly.
+            </summary>
+            <param name="httpClient">The HttpClient instance to use.</param>
+            <param name="functionSettings">Configuration information required to make calls to the deployed Azure Function.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest.CreateHttpPostRequest(System.String)">
+            <summary>
+            Creates an HTTP POST request for DeleteAccountRecordings.
+            </summary>
+            <param name="confirmDelete">The value to set for confirmDelete in the content body.</param>
+            <returns>The generated HTTP request.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteAccountRecordingsFunctionalTest.CreateHttpPostContent(System.String)">
+            <summary>
+            Creates the request content.
+            </summary>
+            <param name="confirmDelete">The value to set for confirmDelete in the content body.</param>
+            <returns>The content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest">
+            <summary>
+            Functional test for DeleteRecordingsHttpTrigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest._log">
+            <summary>
+            Internal logging.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest._config">
+            <summary>
+            Test configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest._concurrentConfig">
+            <summary>
+            Test configuration for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.InitializeTests">
+            <summary>
+            Initialize tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.DeleteRecordingsHttpTriggerRun">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.DeleteRecordingsVerify">
+            <summary>
+            Verify recordings were actually deleted.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.DeleteRecordingsImplementationConcurrentRuns">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.DeleteRecordingsRunnerLocal(System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+            <param name="queue">The queue of tests to run.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.DeleteRecordingsHttpTriggerConcurrentRuns">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger runs correctly for concurrent executions against remote Azure Function.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.DeleteRecordingsRunnerAsync(System.Net.Http.HttpClient,Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings,System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensure DeleteRecordingsHttpTrigger runs correctly against remote Azure Function.
+            </summary>
+            <param name="httpClient">The HttpClient instance to use.</param>
+            <param name="functionSettings">Configuration information required to make calls to the Azure Functions.</param>
+            <param name="queue">The queue of tests to run.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.CreateDeleteHttpPostRequest(System.String)">
+            <summary>
+            Creates an HTTP POST request for the DeleteRecordings function.
+            </summary>
+            <param name="callSid">The callSid to set in the request body.</param>
+            <returns>The HTTP request.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.CreatePullHttpPostRequest(System.String,System.String)">
+            <summary>
+            Creates an HTTP POST request for the DeleteRecordings function.
+            </summary>
+            <param name="inputId">The inputId to set in the content.</param>
+            <param name="callSid">The callSid to set in the content.</param>
+            <returns>The content.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.DeleteRecordingsFunctionalTest.CreateHttpPostContent(System.String)">
+            <summary>
+            Creates content for a request to DeleteRecordings.
+            </summary>
+            <param name="callSid">The callSid to set in the content.</param>
+            <returns>The content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest">
+            <summary>
+            Functional test for ExtractInfoHttpTrigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest._log">
+            <summary>
+            Internal logger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest._config">
+            <summary>
+            Test configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest._concurrentConfig">
+            <summary>
+            Test configuration for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.InitializeTests">
+            <summary>
+            Initialize tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.ExtractInfoHttpTriggerRun">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.ExtractInfoImplementationConcurrentRuns">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.ExtractInfoRunnerLocal(System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensuring ExtractInfoHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+            <param name="queue">The queue of tests to run.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.ExtractInfoHttpTriggerConcurrentRuns">
+            <summary>
+            Ensure ExtractInfoHttpTrigger runs correctly for concurrent executions against remote Azure Function.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.ExtractInfoRunnerAsync(System.Net.Http.HttpClient,Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings,System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensuring ExtractInfoHttpTrigger runs correctly against a remote Azure Function.
+            </summary>
+            <param name="httpClient">The HttpClient instance to use.</param>
+            <param name="functionSettings">Configuration information required for calling the Azure Function.</param>
+            <param name="queue">The queue of tests to run.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.CreateHttpPostRequest(System.String,System.String)">
+            <summary>
+            Creates an HTTP POST request for the ExtractInfo function.
+            </summary>
+            <param name="expectedCallSid">The callSid to set in the request body.</param>
+            <param name="expectedText">The text to set in the request body.</param>
+            <returns>The HTTP request.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ExtractInfoFunctionalTest.CreateHttpPostContent(System.String,System.String)">
+            <summary>
+            Creates content for a request to the ExtractInfo function.
+            </summary>
+            <param name="callSid">The callSid to set in the content.</param>
+            <param name="transcript">The text to set in the content.</param>
+            <returns>The content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings">
+            <summary>
+            Model representing configuration information required to call a remote Azure Function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.TenantId">
+            <summary>
+            Gets or sets the tenant id.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.ApplicationId">
+            <summary>
+            Gets or sets the application id.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.ClientSecret">
+            <summary>
+            Gets or sets the client secret.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.ResourceId">
+            <summary>
+            Gets or sets the resource id.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.FunctionHostName">
+            <summary>
+            Gets or sets the function's host name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.FunctionHostKey">
+            <summary>
+            Gets or sets the function's host key.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.Authority">
+            <summary>
+            Gets the authorizing authority.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.InitiateCallUrl">
+            <summary>
+            Gets the URL for InitiateCall.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.CheckCallProgressUrl">
+            <summary>
+            Gets the URL for CheckCallProgress.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.PullRecordingUrl">
+            <summary>
+            Gets the URL for PullRecordings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.TranscribeCallUrl">
+            <summary>
+            Gets the URL for TranscribeCall.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.ExtractInfoUrl">
+            <summary>
+            Gets the URL for ExtractInfo.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.DeleteRecordingsUrl">
+            <summary>
+            Gets the URL for DeleteRecordings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.DeleteAccountRecordingsUrl">
+            <summary>
+            Gets the URL for DeleteAccountRecordings.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings.Load(System.String)">
+            <summary>
+            Loads settings from a file.
+            </summary>
+            <param name="filePath">Path to the setting files.</param>
+            <returns>The deserialized settings.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.GlobalTestConstants">
+            <summary>
+            Global constants.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.GlobalTestConstants.TestConfigurationFilePath">
+            <summary>
+            The file path of the test configuration file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.GlobalTestConstants.ConcurrentTestConfigurationFilePath">
+            <summary>
+            The file path of the concurrent test configuration file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestHelper">
+            <summary>
+            Helper class for functional tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestHelper.GetConfiguration">
+            <summary>
+            Gets configuration information.
+            </summary>
+            <returns>The configuration information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestHelper.InitializeTest(Microsoft.AdvocacyPlatform.Functions.FunctionalTests.ConsoleLogger,System.Boolean)">
+            <summary>
+            Initializes test.
+            </summary>
+            <param name="log">Trace logger instance.</param>
+            <param name="reset">Flag indicating if previous run information should be cleared from tracking file.</param>
+            <returns>A tuple with sequential and concurrent test configuration information.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest">
+            <summary>
+            Functional test for InitiateCallHttpTrigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest._log">
+            <summary>
+            Internal logger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest._config">
+            <summary>
+            Test configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest._concurrentConfig">
+            <summary>
+            Test configuration for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.InitiateCallHttpTriggerRun">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.InitiateCallImplementationConcurrentRuns">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.InitiateCallRunnerLocal(System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensuring InitiateCallHttpTrigger.Run() implementation runs correctly.
+            </summary>
+            <param name="queue">The queue of tests to run.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.InitiateCallHttpTriggerConcurrentRuns">
+            <summary>
+            Ensure InitiateCallHttpTrigger runs correctly for concurrent calls against a remote Azure Function.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.InitiateCallRunnerAsync(System.Net.Http.HttpClient,Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings,System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensuring InitiateCallHttpTrigger runs correctly against a remote Azure Function.
+            </summary>
+            <param name="httpClient">The HttpClient instance to use.</param>
+            <param name="functionSettings">Configuration information required to make calls to the Azure Function.</param>
+            <param name="queue">The queue of tests to run.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.CreateHttpPostRequest(System.String,Microsoft.AdvocacyPlatform.Contracts.DtmfRequest)">
+            <summary>
+            Create an HTTP POST request for InitiateCall.
+            </summary>
+            <param name="inputId">The inputId to set in the request body.</param>
+            <param name="dtmf">The dtmf to set in the request body.</param>
+            <returns>The HTTP request.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.InitiateCallFunctionalTest.CreateHttpPostContent(System.String,Microsoft.AdvocacyPlatform.Contracts.DtmfRequest)">
+            <summary>
+            Creates content for a request to InitiateCall.
+            </summary>
+            <param name="inputId">The inputId to set in the content.</param>
+            <param name="dtmf">The dtmf to set in the content.</param>
+            <returns>The content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest">
+            <summary>
+            Functional test for PullRecordingHttpTrigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.TwilioBaseUrl">
+            <summary>
+            Twilio base URL for REST calls.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.StorageAccessConnectionStringAppSettingName">
+            <summary>
+            Name of app setting with data store connection string.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.StorageReadAccessKeySecretNameAppSettingName">
+            <summary>
+            Name of app setting with secret identifier for storage read access key.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.StorageContainerNameAppSettingName">
+            <summary>
+            Name of app setting with container name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.AuthorityAppSettingName">
+            <summary>
+            Name of app setting for URL of token issuing authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest._functionConfig">
+            <summary>
+            Function configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest._log">
+            <summary>
+            Internal logger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest._config">
+            <summary>
+            Test configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest._concurrentConfig">
+            <summary>
+            Test configuration for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.GetBlobEndpoint(System.String)">
+            <summary>
+            Formats connection string with data store access key.
+            </summary>
+            <param name="connectionString">Partial connection string.</param>
+            <returns>The full connection string.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.InitializeTests">
+            <summary>
+            Initialize tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.PullRecordingHttpTriggerRun">
+            <summary>
+            Ensures PullRecordingHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.PullRecordingImplementationConcurrentRuns">
+            <summary>
+            Ensures PullRecordingHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.PullRecordingRunnerLocal(System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensuring PullRecordingHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+            <param name="queue">The queue of tests to run.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.PullRecordingHttpTriggerConcurrentRuns">
+            <summary>
+            Ensures PullRecordingHttpTrigger runs correctly for concurrent executions against a remote Azure Function.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.PullRecordingRunnerAsync(System.Net.Http.HttpClient,Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings,System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner to ensure PullRecordingHttpTrigger runs correctly for concurrent executions against a remote Azure Function.
+            </summary>
+            <param name="httpClient">The HttpClient instance to use.</param>
+            <param name="functionSettings">Configuration information required to make calls to the Azure Function.</param>
+            <param name="queue">The queue of tests to run.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.CreateHttpPostRequest(System.String,System.String)">
+            <summary>
+            Creates an HTTP POST request for PullRecording.
+            </summary>
+            <param name="inputId">The inputId to set in the request body.</param>
+            <param name="callSid">The callSid to set in the request body.</param>
+            <returns>The HTTP request.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.PullRecordingFunctionalTest.CreateHttpPostContent(System.String,System.String)">
+            <summary>
+            Creates content for a request to PullRecording.
+            </summary>
+            <param name="inputId">The inputId to set in the content.</param>
+            <param name="callSid">The callSid to set in the content.</param>
+            <returns>The content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration">
+            <summary>
+            Test configuration information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.InputId">
+            <summary>
+            Gets or sets the input id to use with the functional test.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.Dtmf">
+            <summary>
+            Gets or sets the  Dual-toned Multi-frequency signaling sequence to use with the functional test.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.InitSeconds">
+            <summary>
+            Gets or sets the  number of seconds to wait after the call is initiated in the functional test.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.FinalSeconds">
+            <summary>
+            Gets or sets the  number of seconds to wait after the DTMF sequence is completed in the functional test.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.CallSid">
+            <summary>
+            Gets or sets the  SID of the call resource (updated after InitateCallFunctionalTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.CallStatus">
+            <summary>
+            Gets or sets the  status of the call resource (updated after CheckCallProgressTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.RecordingUri">
+            <summary>
+            Gets or sets the  recording URI of the call recording (updated after PullRecordingFunctionalTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.AllRecordingsDeleted">
+            <summary>
+            Gets or sets a value indicating whether all recordings for a call were deleted (updated after DeleteRecordingsFunctionalTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.AllAccountRecordingsDeleted">
+            <summary>
+            Gets or sets a value indicating whether all recordings for an account were deleted (updated after DeleteAccountRecordingsFunctionalTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.Transcript">
+            <summary>
+            Gets or sets the  transcript of the recording (updated after TranscribeCallFunctionalTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.Data">
+            <summary>
+            Gets or sets the  transcription data returned (updated after ExtractInfoFunctionalTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.ExpectedEntities">
+            <summary>
+            Gets or sets the  entities expected to be extracted from the transcription (Date, Location, and/or Person).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.ExpectedAdditionalEntities">
+            <summary>
+            Gets or sets the additional entities collection expected to be returned by the data extractor.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.CallbackUrl">
+            <summary>
+            Gets or sets the  callback URL to send results to (only used with SendResultFunctionalTest).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.IsLocalRecordingPath">
+            <summary>
+            Gets or sets a value indicating whether the RecordingUri is a local path (only used to troubleshoot issues).
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.Load(System.String)">
+            <summary>
+            Loads the configuration from a local file.
+            </summary>
+            <param name="filePath">Path to the local file.</param>
+            <returns>A TestConfiguration file loaded from the file path.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration.Save(System.String)">
+            <summary>
+            Saves the configuration to a local file.
+            </summary>
+            <param name="filePath">Path to the local file.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest">
+            <summary>
+            Functional test for TranscribeCallHttpTrigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest._log">
+            <summary>
+            Internal logging.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest._config">
+            <summary>
+            Test configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest._concurrentConfig">
+            <summary>
+            Test configuration for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.InitializeTests">
+            <summary>
+            Initialize tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.TranscribeCallRun">
+            <summary>
+            Ensures TranscribeCallHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.TranscribeCallImplementationOpenSpeechRepositoryConcurrentRuns">
+            <summary>
+            Ensures TranscribeCallHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.TranscribeCallHttpTriggerOpenSpeechRepositoryConcurrentRuns">
+            <summary>
+            Runner for ensuring TranscribeCallHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.TranscribeCallImplementationConcurrentRuns">
+            <summary>
+            Ensures TranscribeCallHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.TranscribeCallRunnerLocal(System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensuring TranscribeCallHttpTrigger.Run() implementation runs correctly for concurrent executions.
+            </summary>
+            <param name="queue">The queue of tests to runs.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.TranscribeCallHttpTriggerConcurrentRuns">
+            <summary>
+            Ensures TranscribeCallHttpTrigger runs correctly for concurrent executions against a remote Azure Function.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.TranscribeCallRunnerAsync(System.Net.Http.HttpClient,Microsoft.AdvocacyPlatform.Functions.FunctionalTests.FunctionSettings,System.Collections.Concurrent.ConcurrentQueue{Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TestConfiguration})">
+            <summary>
+            Runner for ensuring TranscribeCallHttpTrigger runs correctly for concurrent executions against a remote Azure Function.
+            </summary>
+            <param name="httpClient">The HttpClient instance to use.</param>
+            <param name="functionSettings">Configuration information required to make calls to the Azure Function.</param>
+            <param name="queue">The queue of tests to run.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.CreateHttpPostRequest(System.String,System.String)">
+            <summary>
+            Creates an HTTP POST request for TranscribeCall.
+            </summary>
+            <param name="callSid">The callSid to set in the request body.</param>
+            <param name="recordingUrl">The recordingUrl to set in the request body.</param>
+            <returns>The HTTP request.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionalTests.TranscribeCallFunctionalTest.CreateHttpPostContent(System.String,System.String)">
+            <summary>
+            Creates content for a request to TranscribeCall.
+            </summary>
+            <param name="callSid">The callSid to set in the content.</param>
+            <param name="recordingUrl">The recordingUrl to set in the content.</param>
+            <returns>The content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.AzureADHelper">
+            <summary>
+            Helper class for obtaining access tokens from Azure AD.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureADHelper.GetAccessTokenAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Acquires an access token.
+            </summary>
+            <param name="authority">The authorization authority.</param>
+            <param name="clientId">The client id of a service principal for a registered application.</param>
+            <param name="clientSecret">The client secret of a service principal for a registered application.</param>
+            <param name="resourceId">The resource id you are requesting authorization for.</param>
+            <returns>An access token.</returns>
+        </member>
+    </members>
+</doc>

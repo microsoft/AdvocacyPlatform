@@ -1,0 +1,39 @@
+﻿{
+  "id": "/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}",
+  "type": "Microsoft.BusinessAppPlatform/environments",
+  "name": "{environmentName}",
+  "location": "unitedstates",
+  "properties": {
+    "azureRegionHint": "westus",
+    "displayName": "{displayName}",
+    "createdTime": "2019-05-28T02:12:07.2000946Z",
+    "createdBy": {
+      "id": "{createdById}",
+      "displayName": "{createdBy}",
+      "type": "User",
+      "tenantId": "{tenantId}",
+      "userPrincipalName": "{createdByUpn}"
+    },
+    "lastModifiedTime": "2019-05-28T02:12:07.2000946Z",
+    "lastModifiedBy": {
+      "id": "{modifiedById}",
+      "displayName": "{modifiedBy}",
+      "type": "User",
+      "tenantId": "{tenantId}",
+      "userPrincipalName": "{modifiedByUpn}"
+    },
+    "provisioningState": "{provisioningState}",
+    "creationType": "User",
+    "environmentSku": "Trial",
+    "environmentType": "Production",
+    "isDefault": false,
+    "runtimeEndpoints": {
+      "microsoft.BusinessAppPlatform": "https://unitedstates.api.bap.microsoft.com",
+      "microsoft.CommonDataModel": "https://unitedstates.api.cds.microsoft.com",
+      "microsoft.PowerApps": "https://unitedstates.api.powerapps.com",
+      "microsoft.Flow": "https://unitedstates.api.flow.microsoft.com",
+      "microsoft.PowerAppsAdvisor": "https://unitedstates.api.advisor.powerapps.com"
+    },
+    "expirationTime": "2019-06-27T02:12:07.2000946Z"
+  }
+}

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModule>
+  <UniqueName>ap_AdvocacyPlatform</UniqueName>
+  <IntroducedVersion>1.0.0</IntroducedVersion>
+  <WebResourceId>85d10cc3-f88e-e911-a970-000d3a3005c3</WebResourceId>
+  <FormFactor>1</FormFactor>
+  <ClientType>4</ClientType>
+  <NavigationType>0</NavigationType>
+  <AppModuleComponents>
+    <AppModuleComponent type="62" schemaName="ap_AdvocacyPlatform" />
+    <AppModuleComponent type="60" id="{ca2f65e9-af58-e911-a985-000d3a1d5f25}" />
+    <AppModuleComponent type="1" schemaName="ap_configuration" />
+    <AppModuleComponent type="26" id="{208d0337-3fb8-48f0-9f04-1030c8216588}" />
+    <AppModuleComponent type="26" id="{9706d5b6-a18d-4e7b-8759-fa54c3afe36b}" />
+    <AppModuleComponent type="26" id="{d2271f65-9ef7-464b-ba78-351463becca9}" />
+    <AppModuleComponent type="26" id="{79b8efc1-6688-4826-afda-7bfa663b38f4}" />
+    <AppModuleComponent type="26" id="{16b9c7cd-89f2-49f9-a84a-2d9f14ee5c68}" />
+    <AppModuleComponent type="1" schemaName="ap_ain" />
+    <AppModuleComponent type="26" id="{8b6cd240-2680-4942-b7a2-1d344adb97d1}" />
+    <AppModuleComponent type="26" id="{560383a1-f248-e911-a962-000d3a300799}" />
+    <AppModuleComponent type="26" id="{a539113e-b458-e911-a970-000d3a1d5264}" />
+    <AppModuleComponent type="26" id="{346efb94-99a8-4ef2-83a6-7ae196d0c339}" />
+    <AppModuleComponent type="26" id="{4a76a017-7552-e911-a96d-000d3a3005c3}" />
+    <AppModuleComponent type="26" id="{aea67800-4065-e911-a965-000d3a300799}" />
+    <AppModuleComponent type="26" id="{02e489d2-0759-e911-a985-000d3a1d5f25}" />
+    <AppModuleComponent type="26" id="{a595fca0-0859-e911-a97b-000d3a1d51a5}" />
+    <AppModuleComponent type="26" id="{3a114f05-9264-e911-a965-000d3a300799}" />
+    <AppModuleComponent type="26" id="{639b7164-22ce-4fb1-bc61-7f21c34ab626}" />
+    <AppModuleComponent type="26" id="{c42e170c-e85c-e911-a965-000d3a3005d4}" />
+    <AppModuleComponent type="26" id="{c00bdaeb-6757-e911-a965-000d3a3005d4}" />
+    <AppModuleComponent type="26" id="{f15d9e9a-6757-e911-a975-000d3a300346}" />
+    <AppModuleComponent type="59" id="{d2b5d7b3-6a68-e911-a975-000d3a300346}" />
+    <AppModuleComponent type="59" id="{1289af5f-6a68-e911-a975-000d3a300346}" />
+    <AppModuleComponent type="59" id="{34272056-e953-e911-a975-000d3a300346}" />
+    <AppModuleComponent type="59" id="{507f0ed3-f85c-e911-a96d-000d3a3005c3}" />
+    <AppModuleComponent type="59" id="{299513bd-7748-e911-a972-000d3a300346}" />
+    <AppModuleComponent type="59" id="{e80bec51-6857-e911-a975-000d3a300346}" />
+    <AppModuleComponent type="59" id="{1ceee37a-8e59-e911-a985-000d3a1d5f25}" />
+    <AppModuleComponent type="59" id="{11974599-e75c-e911-a96d-000d3a3005c3}" />
+    <AppModuleComponent type="59" id="{7d21f5a5-6857-e911-a975-000d3a300346}" />
+    <AppModuleComponent type="1" schemaName="ap_person" />
+    <AppModuleComponent type="26" id="{e9fcb98e-994a-4918-bda8-03d1db79b018}" />
+    <AppModuleComponent type="26" id="{dd321292-466f-4ba0-8471-c500f1b221e0}" />
+    <AppModuleComponent type="26" id="{91787eba-006e-4ab4-85c5-2c1f740e81c6}" />
+    <AppModuleComponent type="26" id="{6e1d1776-c501-456a-9c86-cbfeb0a459a1}" />
+    <AppModuleComponent type="1" schemaName="ap_volunteer" />
+    <AppModuleComponent type="26" id="{e5d4f3a0-cc68-4b93-826f-b25599128bd1}" />
+    <AppModuleComponent type="26" id="{ddba3da8-ae36-4b75-9f8e-c43efaa4e8f5}" />
+    <AppModuleComponent type="26" id="{925155c7-02c7-4235-9269-cc769fb8d188}" />
+    <AppModuleComponent type="26" id="{38d96370-8414-47ed-872c-72701deacdb6}" />
+    <AppModuleComponent type="26" id="{ba6725a8-096f-46bf-972e-0e17d23319f7}" />
+  </AppModuleComponents>
+  <AppModuleRoleMaps>
+    <Role id="{627090ff-40a3-4053-8790-584edc5be201}" />
+    <Role id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+  </AppModuleRoleMaps>
+  <LocalizedNames>
+    <LocalizedName description="Advocacy Platform" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Advocacy Platform" languagecode="1033" />
+  </Descriptions>
+</AppModule>

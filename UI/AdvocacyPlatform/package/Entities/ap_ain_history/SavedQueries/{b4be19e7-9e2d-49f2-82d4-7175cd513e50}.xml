@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{b4be19e7-9e2d-49f2-82d4-7175cd513e50}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_ain_key_history" select="1" icon="1" preview="1">
+        <row name="ap_ain_history" id="ap_ain_historyid">
+          <cell name="ap_ain_key_history" width="100" />
+          <cell name="ap_casedecision_case_decision_history" width="150" />
+          <cell name="ap_casedecision_issued_date_history" width="160" />
+          <cell name="ap_courthearing_city_history" width="150" />
+          <cell name="ap_courthearing_state_history" width="136" />
+          <cell name="ap_courthearing_judge_history" width="144" />
+          <cell name="ap_courthearing_dateonly_history" width="135" />
+          <cell name="ap_caseappeal_status_info_history" width="195" />
+          <cell name="ap_caseappeal_submitted_date_history" width="186" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>2</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ap_ain_history">
+          <attribute name="ap_ain_historyid" />
+          <attribute name="ap_ain_key_history" />
+          <attribute name="createdon" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="ap_casedecision_case_decision_history" />
+          <attribute name="ap_courthearing_city_history" />
+          <attribute name="ap_casedecision_issued_date_history" />
+          <attribute name="ap_courthearing_state_history" />
+          <order attribute="createdon" descending="true" />
+          <attribute name="ap_courthearing_dateonly_history" />
+          <attribute name="ap_courthearing_judge_history" />
+          <attribute name="ap_caseappeal_status_info_history" />
+          <attribute name="ap_caseappeal_submitted_date_history" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="EOIR Case History Associated View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

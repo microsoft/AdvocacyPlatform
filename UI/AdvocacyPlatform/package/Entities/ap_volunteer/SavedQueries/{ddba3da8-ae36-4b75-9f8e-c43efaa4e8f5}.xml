@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{ddba3da8-ae36-4b75-9f8e-c43efaa4e8f5}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_volunteer_record_identifier" select="1" icon="1" preview="1">
+        <row name="result" id="ap_volunteerid">
+          <cell name="ap_volunteer_given_name" width="180" />
+          <cell name="ap_volunteer_record_identifier" width="187" />
+          <cell name="ap_volunteer_phone_number" width="120" />
+          <cell name="ap_volunteer_city" width="100" />
+          <cell name="ap_volunteer_state_province" width="137" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ap_volunteer">
+          <attribute name="ap_volunteerid" />
+          <attribute name="ap_volunteer_record_identifier" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+          <attribute name="ap_volunteer_city" />
+          <attribute name="ap_volunteer_state_province" />
+          <attribute name="ap_volunteer_phone_number" />
+          <attribute name="ap_volunteer_given_name" />
+          <order attribute="ap_volunteer_given_name" descending="false" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Volunteers" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

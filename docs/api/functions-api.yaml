@@ -1,0 +1,594 @@
+openapi: 3.0.1
+info:
+  title: Advocacy Platform
+  description: Advocacy Platform API.
+  contact:
+    email: noemail@noemail.com
+  license:
+    name: MIT
+    url: https://github.com/Microsoft/AdvocacyPlatform/blob/master/LICENSE
+  version: 1.0.0
+externalDocs:
+  description: Find out more about the Advocacy Platform API
+  url: https://github.com/Microsoft/AdvocacyPlatform
+servers:
+- url: ///api
+tags:
+- name: InitiateCall
+  description: Initiate a call via Twilio
+- name: CheckCallProgress
+  description: Check the progress of a Twilio call
+- name: PullRecording
+  description: Pull a Twilio call recording into internal storage
+- name: TranscribeCall
+  description: Transcribe the text from a Twilio call recording
+- name: ExtractInfo
+  description: Extract information from the transcription of a Twilio call recording
+- name: DeleteRecordings
+  description: Delete the recordings for a specific Twilio call
+- name: DeleteAccountRecordings
+  description: Delete all stored recordings for a Twilio account
+paths:
+  /InitiateCall:
+    post:
+      tags:
+      - InitiateCall
+      summary: Initiate a call via Twilio
+      operationId: initiateCall
+      parameters:
+      - name: code
+        in: path
+        description: API key for calling function
+        required: true
+        schema:
+          type: string
+      - name: Authentication
+        in: header
+        description: Bearer token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information specifying the behavior of the call to initiate.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitiateCallRequest'
+        required: true
+      responses:
+        200:
+          description: Input accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateCallResponse'
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiateCallResponse'
+  /CheckCallProgress:
+    post:
+      tags:
+      - CheckCallProgress
+      summary: Check the progress of a Twilio call
+      operationId: checkCallProgress
+      parameters:
+      - name: code
+        in: path
+        description: API key for calling function
+        required: true
+        schema:
+          type: string
+      - name: Authentication
+        in: header
+        description: Bearer token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information specifying the call to get the progress of.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckCallProgressRequest'
+        required: true
+      responses:
+        200:
+          description: Input accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckCallProgressResponse'
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckCallProgressResponse'
+  /PullRecording:
+    post:
+      tags:
+      - PullRecording
+      summary: Pull a Twilio call recording into internal storage
+      operationId: pullRecording
+      parameters:
+      - name: code
+        in: path
+        description: API key for calling function
+        required: true
+        schema:
+          type: string
+      - name: Authentication
+        in: header
+        description: Bearer token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information specifying the call to get the recording for.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PullRecordingRequest'
+        required: true
+      responses:
+        200:
+          description: Input accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PullRecordingResponse'
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PullRecordingResponse'
+  /TranscribeCall:
+    post:
+      tags:
+      - TranscribeCall
+      summary: Transcribe the text from a Twilio call recording
+      operationId: transcribeCall
+      parameters:
+      - name: code
+        in: path
+        description: API key for calling function
+        required: true
+        schema:
+          type: string
+      - name: Authentication
+        in: header
+        description: Bearer token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information specifying the call and recording to transcribe.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranscribeCallRequest'
+        required: true
+      responses:
+        200:
+          description: Input accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscribeCallResponse'
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscribeCallResponse'
+  /ExtractInfo:
+    post:
+      tags:
+      - ExtractInfo
+      summary: Extract information from the transcription of a Twilio call recording
+      operationId: extractInfo
+      parameters:
+      - name: code
+        in: path
+        description: API key for calling function
+        required: true
+        schema:
+          type: string
+      - name: Authentication
+        in: header
+        description: Bearer token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information specifying the transcription to extract information
+          from.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtractInfoRequest'
+        required: true
+      responses:
+        200:
+          description: Input accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractInfoResponse'
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractInfoResponse'
+  /DeleteRecordings:
+    post:
+      tags:
+      - DeleteRecordings
+      summary: Delete the recordings for a specific Twilio call
+      operationId: deleteRecordings
+      parameters:
+      - name: code
+        in: path
+        description: API key for calling function
+        required: true
+        schema:
+          type: string
+      - name: Authentication
+        in: header
+        description: Bearer token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information specifying the call to delete recordings for.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteRecordingsRequest'
+        required: true
+      responses:
+        200:
+          description: Input accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteRecordingsResponse'
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteRecordingsResponse'
+  /DeleteAccountRecordings:
+    post:
+      tags:
+      - DeleteAccountRecordings
+      summary: Delete all stored recordings for a Twilio account
+      operationId: deleteAccountRecordings
+      parameters:
+      - name: code
+        in: path
+        description: API key for calling function
+        required: true
+        schema:
+          type: string
+      - name: Authentication
+        in: header
+        description: Bearer token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Information specifying the account to delete recordings for.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteAccountRecordingsRequest'
+        required: true
+      responses:
+        200:
+          description: Input accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAccountRecordingsResponse'
+        400:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteAccountRecordingsResponse'
+components:
+  schemas:
+    InitiateCallRequest:
+      required:
+      - inputId
+      type: object
+      properties:
+        inputId:
+          $ref: '#/components/schemas/InputId'
+        inputType:
+          type: string
+          description: Input identifier type used to determine validation rules (e.g.
+            AIN)
+        dtmf:
+          $ref: '#/components/schemas/DtmfRequest'
+    PersonInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the person extracted from the text
+        type:
+          type: string
+          description: The type of person (e.g. judge) extracted from the text based
+            on context
+      description: Specifies identity information information extracted from the text
+    DeleteAccountRecordingsResponse:
+      allOf:
+      - type: object
+        properties:
+          areAllRecordingsDeleted:
+            type: boolean
+            description: Indicates if all of the recordings associated with the account
+              were successfully deleted
+      - $ref: '#/components/schemas/BaseResponse'
+    ExtractInfoRequest:
+      required:
+      - callSid
+      - text
+      type: object
+      properties:
+        callSid:
+          $ref: '#/components/schemas/CallSid'
+        text:
+          type: string
+          description: Transcription text to extract information from. Value returned
+            in call to TranscribeCall.
+        transformations:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataTransformation'
+        minDateTime:
+          type: string
+          description: Minimum DateTime value to accept. Response will set date information to null for any dates below this threshold.
+    TranscribeCallRequest:
+      required:
+      - callSid
+      - recordingUri
+      type: object
+      properties:
+        callSid:
+          $ref: '#/components/schemas/CallSid'
+        recordingUri:
+          type: string
+          description: The URI of the Twilio call recording. Value returned in call
+            to PullRecording.
+        isLocalPath:
+          type: boolean
+          description: 'Used for local testing. TODO: Remove.'
+    DeleteAccountRecordingsRequest:
+      required:
+      - confirmDelete
+      type: object
+      properties:
+        confirmDelete:
+          type: string
+          description: Must be set to 'yes'.
+    BaseResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: Code describing the end state of the request
+        statusDesc:
+          type: string
+          description: Friendly label describing the end state of the request
+        hasError:
+          type: boolean
+          description: Indicates if an error occured during the processing of the
+            request
+        errorCode:
+          type: integer
+          description: Code specifying the error encountered while processing the
+            request
+        errorDetails:
+          type: string
+          description: Additional details describing an error(s) encountered while
+            processing the request
+    CheckCallProgressRequest:
+      required:
+      - callSid
+      type: object
+      properties:
+        callSid:
+          $ref: '#/components/schemas/CallSid'
+    InputId:
+      type: string
+      description: Input identifier (e.g. Alien Identification Number)
+    CallSid:
+      type: string
+      description: Identifier for the Twilio call. Value returned in call to InitiateCall.
+    TranscriptionData:
+      type: object
+      properties:
+        intent:
+          type: string
+        intentConfidence:
+          type: number
+          format: float
+        transcription:
+          type: string
+        evaluatedTranscription:
+          type: string
+        data:
+          $ref: '#/components/schemas/DateInfo'
+        location:
+          $ref: '#/components/schemas/LocationInfo'
+        person:
+          $ref: '#/components/schemas/PersonInfo'
+        additionalData:
+          type: object
+          additionalProperties:
+            type: string
+    DeleteRecordingsRequest:
+      required:
+      - callSid
+      type: object
+      properties:
+        callSid:
+          $ref: '#/components/schemas/CallSid'
+    ExtractInfoResponse:
+      allOf:
+      - type: object
+        properties:
+          callSid:
+            $ref: '#/components/schemas/CallSid'
+          data:
+            $ref: '#/components/schemas/TranscriptionData'
+          flags:
+            type: array
+            items:
+              type: string
+      - $ref: '#/components/schemas/BaseResponse'
+    DeleteRecordingsResponse:
+      allOf:
+      - type: object
+        properties:
+          callSid:
+            $ref: '#/components/schemas/CallSid'
+          areAllRecordingsDeleted:
+            type: boolean
+            description: Indicates if all of the recordings associated with the call
+              were successfully deleted
+      - $ref: '#/components/schemas/BaseResponse'
+    TranscribeCallResponse:
+      allOf:
+      - type: object
+        properties:
+          callSid:
+            $ref: '#/components/schemas/CallSid'
+          text:
+            type: string
+            description: The text transcribed from the call recording
+      - $ref: '#/components/schemas/BaseResponse'
+    DateInfo:
+      type: object
+      properties:
+        year:
+          type: integer
+          description: The four digit representation of the year (e.g. 2019)
+        month:
+          type: integer
+          description: The single or two digit month value
+        day:
+          type: integer
+          description: The single or two digit day value
+        hour:
+          type: integer
+          description: The single or two digit hour value
+        minute:
+          type: integer
+          description: The single or two digit minute value
+        fullDate:
+          type: string
+          description: The full serialized datetime value
+      description: Specifies datetime information extracted from the text
+    DtmfRequest:
+      type: object
+      properties:
+        initPause:
+          type: integer
+          description: Specifies the number of seconds to pause as soon as the call
+            is initiated
+        dtmf:
+          type: string
+          description: Specifies the Dual-tone Multifrequency Signaling (DTMF) sequence
+            to use during the call
+        finalPause:
+          type: integer
+          description: Specifies the number of seconds to pause after the DTMF sequence
+            has completed
+    LocationInfo:
+      type: object
+      properties:
+        location:
+          type: string
+          description: The full address of the location
+        state:
+          type: string
+          description: The state extracted from the full address
+        city:
+          type: string
+          description: The city extracted from the full address
+        zipcode:
+          type: string
+          description: The postal zip code extracted from the full address
+      description: Specifies geographical location information extracted from the
+        text
+    PullRecordingResponse:
+      allOf:
+      - type: object
+        properties:
+          callSid:
+            $ref: '#/components/schemas/CallSid'
+          recordingLength:
+            type: integer
+            description: The length in bytes of the recording in the persistent data
+              store
+          recordingUri:
+            type: string
+            description: A relative URI to the recording
+          fullRecordingUrl:
+            type: string
+            description: The full URL to the recording
+      - $ref: '#/components/schemas/BaseResponse'
+    DataTransformation:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the requested data transformation.
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+          description: A dictionary of parameters to pass to the data transformer.
+    CheckCallProgressResponse:
+      allOf:
+      - type: object
+        properties:
+          callSid:
+            $ref: '#/components/schemas/CallSid'
+          status:
+            type: string
+            description: Friendly label for the current state of the call
+          duration:
+            type: integer
+            description: The duration of the call in seconds. Will always be 0 until
+              the call has reached a completion state.
+      - $ref: '#/components/schemas/BaseResponse'
+    InitiateCallResponse:
+      allOf:
+      - type: object
+        properties:
+          inputId:
+            $ref: '#/components/schemas/InputId'
+          callSid:
+            $ref: '#/components/schemas/CallSid'
+      - $ref: '#/components/schemas/BaseResponse'
+    PullRecordingRequest:
+      required:
+      - callSid
+      - inputId
+      type: object
+      properties:
+        inputId:
+          $ref: '#/components/schemas/InputId'
+        callSid:
+          $ref: '#/components/schemas/CallSid'

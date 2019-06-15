@@ -1,0 +1,10 @@
+﻿{
+  "value": [
+    {
+      "link": "{link}",
+      "firstPartyLoginUri": "{firstPartyLoginUri}",
+      "displayName": null,
+      "status": "{status}"
+    }
+  ]
+}

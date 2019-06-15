@@ -1,0 +1,523 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "servicebus_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "servicebus_1_connectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure Service Bus Connection String"
+      }
+    },
+    "commondataservice_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "dynamicscrm_environment_name": {
+      "type": "string",
+      "metadata": {
+        "description": "Environment id"
+      },
+      "defaultValue": ""
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2"
+      ],
+      "defaultValue": ""
+    },
+    "newCase_logicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "subscription_id": "[subscription().subscriptionId]",
+    "tenant_id": "[subscription().tenantId]"
+  },
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Call_Final_Pause_Config": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                "queries": {
+                  "$filter": "ap_configuration_type eq 683710005",
+                  "$top": 1
+                },
+                "retryPolicy": {
+                  "type": "exponential",
+                  "count": 10,
+                  "interval": "PT60S",
+                  "minimumInterval": "PT30S",
+                  "maximumInterval": "PT10M"
+                }
+              },
+              "runAfter": {
+                "Call_Initial_Pause_Config": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Call_Initial_Pause_Config": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                "queries": {
+                  "$filter": "ap_configuration_type eq 683710004",
+                  "$top": 1
+                },
+                "retryPolicy": {
+                  "type": "exponential",
+                  "count": 10,
+                  "interval": "PT60S",
+                  "minimumInterval": "PT30S",
+                  "maximumInterval": "PT10M"
+                }
+              },
+              "runAfter": {}
+            },
+            "If_Get_Case_Appeal_Information": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@triggerBody()?['ap_extract_case_appeal_info']",
+                      "@true"
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Compose_Get_Case_Appeal_Info_Request_Message": {
+                  "type": "Compose",
+                  "inputs": {
+                    "dtmf": {
+                      "dtmf": "@replace(body('Get_Case_Appeal_DTMF')?['value'][0]['ap_configuration_value'],'{inputIdPlaceHolder}',triggerBody()['ap_ain'])",
+                      "finalPause": "@int(body('Call_Final_Pause_Config')?['value'][0]['ap_configuration_value'])",
+                      "initPause": "@int(body('Call_Initial_Pause_Config')?['value'][0]['ap_configuration_value'])"
+                    },
+                    "inputId": "@triggerBody()?['ap_ain']",
+                    "recordId": "@triggerBody()?['ap_ainid']",
+                    "requestType": "CaseAppealInfo"
+                  },
+                  "runAfter": {
+                    "Get_Case_Appeal_DTMF": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Get_Case_Appeal_DTMF": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "get",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                    "queries": {
+                      "$filter": "ap_configuration_type eq 683710010",
+                      "$top": 1
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Send_Get_Case_Appeal_Message_To_Request_Queue": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "post",
+                    "body": {
+                      "SessionId": "0",
+                      "ContentData": "@{base64(outputs('Compose_Get_Case_Appeal_Info_Request_Message'))}",
+                      "ContentType": "application/json"
+                    },
+                    "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages",
+                    "queries": {
+                      "systemProperties": "None"
+                    }
+                  },
+                  "runAfter": {
+                    "Compose_Get_Case_Appeal_Info_Request_Message": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Update_Case_Appeal_Transcription_Status": {
+                  "runAfter": {
+                    "Send_Get_Case_Appeal_Message_To_Request_Queue": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "body": {
+                      "_ownerid_type": "",
+                      "ap_caseappeal_transcription_status": 683710001
+                    },
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "patch",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(triggerBody()?['ap_ainid']))}"
+                  }
+                }
+              },
+              "runAfter": {
+                "If_Get_Case_Decision_Information": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "If_Get_Case_Decision_Information": {
+              "type": "If",
+              "expression": {
+                "equals": [
+                  "@triggerBody()['ap_extract_case_decision_info']",
+                  "@true"
+                ]
+              },
+              "actions": {
+                "Compose_Get_Case_Decision_Info_Request_Message": {
+                  "type": "Compose",
+                  "inputs": {
+                    "dtmf": {
+                      "dtmf": "@replace(body('Get_Case_Decision_DTMF')?['value'][0]['ap_configuration_value'],'{inputIdPlaceHolder}',triggerBody()['ap_ain'])",
+                      "finalPause": "@int(body('Call_Final_Pause_Config')?['value'][0]['ap_configuration_value'])",
+                      "initPause": "@int(body('Call_Initial_Pause_Config')?['value'][0]['ap_configuration_value'])"
+                    },
+                    "inputId": "@triggerBody()?['ap_ain']",
+                    "recordId": "@triggerBody()?['ap_ainid']",
+                    "requestType": "CaseDecisionInfo"
+                  },
+                  "runAfter": {
+                    "Get_Case_Decision_DTMF": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Get_Case_Decision_DTMF": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "get",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                    "queries": {
+                      "$filter": "ap_configuration_type eq 683710006",
+                      "$top": 1
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Send_Get_Case_Decision_Message_To_Request_Queue": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "post",
+                    "body": {
+                      "SessionId": "0",
+                      "ContentData": "@{base64(outputs('Compose_Get_Case_Decision_Info_Request_Message'))}",
+                      "ContentType": "application/json"
+                    },
+                    "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages",
+                    "queries": {
+                      "systemProperties": "None"
+                    }
+                  },
+                  "runAfter": {
+                    "Compose_Get_Case_Decision_Info_Request_Message": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Update_Case_Decision_Transcription_Status": {
+                  "runAfter": {
+                    "Send_Get_Case_Decision_Message_To_Request_Queue": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "body": {
+                      "_ownerid_type": "",
+                      "ap_casedecision_transcription_status": 683710001
+                    },
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "patch",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(triggerBody()?['ap_ainid']))}"
+                  }
+                }
+              },
+              "runAfter": {
+                "If_Get_Court_Information": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "If_Get_Court_Information": {
+              "type": "If",
+              "expression": {
+                "equals": [
+                  "@triggerBody()['ap_extract_court_hearing_info']",
+                  "@true"
+                ]
+              },
+              "actions": {
+                "Compose_Get_Court_Info_Request_Message": {
+                  "type": "Compose",
+                  "inputs": {
+                    "dtmf": {
+                      "dtmf": "@replace(body('Get_Court_Info_DTMF')?['value'][0]['ap_configuration_value'],'{inputIdPlaceHolder}',triggerBody()['ap_ain'])",
+                      "finalPause": "@int(body('Call_Final_Pause_Config')?['value'][0]['ap_configuration_value'])",
+                      "initPause": "@int(body('Call_Initial_Pause_Config')?['value'][0]['ap_configuration_value'])"
+                    },
+                    "inputId": "@triggerBody()?['ap_ain']",
+                    "recordId": "@triggerBody()?['ap_ainid']",
+                    "requestType": "CourtHearingInfo"
+                  },
+                  "runAfter": {
+                    "Get_Court_Info_DTMF": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Get_Court_Info_DTMF": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "get",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                    "queries": {
+                      "$filter": "ap_configuration_type eq 683710007",
+                      "$top": 1
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Send__Get_Court_Info_Message_To_Request_Queue": {
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "post",
+                    "body": {
+                      "SessionId": "0",
+                      "ContentData": "@{base64(outputs('Compose_Get_Court_Info_Request_Message'))}",
+                      "ContentType": "application/json"
+                    },
+                    "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages",
+                    "queries": {
+                      "systemProperties": "None"
+                    }
+                  },
+                  "runAfter": {
+                    "Compose_Get_Court_Info_Request_Message": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Update_Court_Hearing_Information_Transcription_Status": {
+                  "runAfter": {
+                    "Send__Get_Court_Info_Message_To_Request_Queue": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "body": {
+                      "_ownerid_type": "",
+                      "ap_courthearing_transcription_status": 683710001
+                    },
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "patch",
+                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(triggerBody()?['ap_ainid']))}"
+                  }
+                }
+              },
+              "runAfter": {
+                "Call_Final_Pause_Config": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            },
+            "$crmOrgName": {
+              "defaultValue": "[concat(parameters('dynamicscrm_environment_name'),'.crm')]",
+              "type": "String"
+            }
+          },
+          "triggers": {
+            "When_a_record_is_created": {
+              "type": "ApiConnectionWebhook",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "body": {
+                  "NotificationUrl": "@{listCallbackUrl()}"
+                },
+                "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('dynamicscrm_environment_name'), '.crm''))}/tables/@{encodeURIComponent(encodeURIComponent(''ap_ains''))}/onnewitemswebhook')]",
+                "queries": {
+                  "scope": "Organization"
+                },
+                "retryPolicy": {
+                  "type": "exponential",
+                  "count": 10,
+                  "interval": "PT60S",
+                  "minimumInterval": "PT30S",
+                  "maximumInterval": "PT5M"
+                }
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('commondataservice_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]"
+              },
+              "[parameters('servicebus_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'servicebus')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('newCase_logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "apiVersion": "2016-06-01",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('servicebus_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'servicebus')]"
+        },
+        "displayName": "[parameters('servicebus_Connection_Name')]",
+        "parameterValues": {
+          "connectionString": "[parameters('servicebus_1_connectionString')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('commondataservice_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]"
+        },
+        "displayName": "[parameters('commondataservice_Connection_Name')]",
+        "nonSecretParameterValues": {
+          "environment": "[parameters('dynamicscrm_environment_name')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

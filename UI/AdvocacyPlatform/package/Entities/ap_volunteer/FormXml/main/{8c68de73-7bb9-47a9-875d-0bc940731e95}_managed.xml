@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{8c68de73-7bb9-47a9-875d-0bc940731e95}</formid>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{726a3c92-74cf-4e02-b2b0-1e40110f22a0}" IsUserDefined="1" expanded="true" name="{726a3c92-74cf-4e02-b2b0-1e40110f22a0}" locklevel="0" showlabel="true">
+          <labels>
+            <label description="Profile" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{27a2e1ca-a08d-4ee6-ab3e-ecff981d2d4c}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{eb9155be-bb1c-67d5-6164-8e5920637817}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_record_identifier" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_volunteer_record_identifier" disabled="true" uniqueid="{4200a077-98e1-7be5-0d5d-0be407a2804c}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e8bd0a14-0393-b93d-68c6-e918ecd803a9}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_given_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_volunteer_given_name" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5778e97b-5cc2-52e1-cda1-3064b1c8122a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_birthdate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_volunteer_birthdate" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{7ce78d9a-8a46-1bd1-9ea6-19b59c74d5c4}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_profession" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_volunteer_profession" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{98d01eb8-8532-a3c5-5944-107c41855a00}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_email" classid="{ADA2203E-B4CD-49be-9DDF-234642B43B52}" datafieldname="ap_volunteer_email" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{37864c64-559c-5222-8935-d56ed2a3569c}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_phone_number" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_volunteer_phone_number" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ab2996d3-38c4-9db5-0834-4c1c48c240de}" showlabel="true" locklevel="0" rowspan="2">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_address_composite" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_volunteer_address_composite" disabled="false" uniqueid="{9e4da97c-494d-7981-be00-697451d125c4}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row>
+                      <cell id="{d1c80608-35d5-b4d9-594e-1cb9b485ad75}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_city" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_volunteer_city" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{21577009-5088-04da-8e1b-50ae88630616}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_state_province" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_volunteer_state_province" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ea45d0d2-e64c-bbcd-839e-e4e05b75a269}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_country" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_volunteer_country" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="{726a3c92-74cf-4e02-b2b0-1e40110f22a0}_section_2" showlabel="true" showbar="true" locklevel="0" id="{92441ce3-043c-4d8d-1ce9-27c7d2c36ee3}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Contact Options" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{c91439aa-b453-2570-ee3c-9a04c4e3119c}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_isemailcontactallowed" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_volunteer_isemailcontactallowed" disabled="false" uniqueid="{94231113-50e2-9a50-0001-3bc2ce8185bd}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{29a3ad45-aae3-55e9-5300-1368adc2154b}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_volunteer_isphonecontactallowed" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_volunteer_isphonecontactallowed" disabled="false" uniqueid="{011bd717-5414-0ccb-d6a8-572a213c01c4}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="tab_2" id="{0ec007d1-b877-ce48-947b-70d4dd9e24d0}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+          <labels>
+            <label description="Notes" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" id="{c089831a-29bf-4bfe-b262-5fd78a99efce}" IsUserDefined="0" height="auto">
+                  <labels>
+                    <label description="Notes" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell showlabel="false" rowspan="15" auto="true" id="{29c4ecf1-3333-4af4-8c29-368a2f7ac69d}" locklevel="0">
+                        <labels>
+                          <label description="Note Text" languagecode="1033" />
+                        </labels>
+                        <control id="notescontrol" classid="{06375649-c143-495e-a496-c962e5b4488e}" uniqueid="{48bb5aac-c29b-6184-c1b5-3d4a0ac6b143}" disabled="false">
+                          <parameters>
+                            <DefaultTabId>NotesTab</DefaultTabId>
+                            <UClientUniqueName>Timeline</UClientUniqueName>
+                            <UClientModules>Activities,Notes</UClientModules>
+                            <UClientDefaultModuleForCreateExperience>Notes</UClientDefaultModuleForCreateExperience>
+                            <UClientShowFilterPane>true</UClientShowFilterPane>
+                            <UClientExpandFilterPane>false</UClientExpandFilterPane>
+                            <UClientOrderBy>descending</UClientOrderBy>
+                            <UClientRecordPerPage>10</UClientRecordPerPage>
+                            <UClientActivities>appointment,recurringappointmentmaster,task,ap_ain_case_activity</UClientActivities>
+                            <UClientSortActivitiesByValue>modifiedon</UClientSortActivitiesByValue>
+                            <UClientDisplayActivityHeaderUsing>defaultformat</UClientDisplayActivityHeaderUsing>
+                            <UClientCreateActivityUsing>quickcreateform</UClientCreateActivityUsing>
+                            <UClientDisplayActivityUsing>defaultfields</UClientDisplayActivityUsing>
+                            <OrderByActivityWall>descending</OrderByActivityWall>
+                            <SortActivityWall>modifiedon</SortActivityWall>
+                            <EmailConversationView>true</EmailConversationView>
+                            <ShowArticleTab>false</ShowArticleTab>
+                            <SelectDefaultLanguage>00000000-0000-0000-0000-000000000000</SelectDefaultLanguage>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row height="auto" />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{67bf9680-af8f-4852-a926-241ed654585d}" columns="111">
+        <rows>
+          <row>
+            <cell id="{6485eaac-8bba-7439-2b2d-cc4319a1ee02}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{90c42ff8-5072-462c-a577-bb3d28f3d8a4}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{1c91da50-8882-322d-5d8a-4e52abc85b5c}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Record Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" uniqueid="{c77d4818-be40-e4d2-6472-b85c28198c94}">
+                <parameters>
+                  <AutoResolve>true</AutoResolve>
+                  <DisableMru>false</DisableMru>
+                </parameters>
+              </control>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar>
+          <NavBarByRelationshipItem RelationshipName="ap_volunteer_volunteer_case_activity" Sequence="9601" Area="Info" Id="nav_ap_volunteer_volunteer_case_activity">
+            <Titles>
+              <Title LCID="1033" Text="EOIR Case Activities" />
+            </Titles>
+          </NavBarByRelationshipItem>
+        </NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{94231113-50e2-9a50-0001-3bc2ce8185bd}">
+          <customControl id="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}">
+            <parameters>
+              <datafieldname>ap_volunteer_isemailcontactallowed</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_volunteer_isemailcontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_volunteer_isemailcontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_volunteer_isemailcontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{011bd717-5414-0ccb-d6a8-572a213c01c4}">
+          <customControl id="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}">
+            <parameters>
+              <datafieldname>ap_volunteer_isphonecontactallowed</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_volunteer_isphonecontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_volunteer_isphonecontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_volunteer_isphonecontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

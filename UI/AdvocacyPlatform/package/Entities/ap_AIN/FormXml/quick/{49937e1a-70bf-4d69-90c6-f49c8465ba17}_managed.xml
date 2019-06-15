@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{49937e1a-70bf-4d69-90c6-f49c8465ba17}</formid>
+    <IntroducedVersion>1.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{ba0e5b13-d09c-4642-aef0-40b9f309f695}" IsUserDefined="1">
+          <labels>
+            <label description="" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{e6408c41-6c69-41e6-844a-6ec26357e557}">
+                  <labels>
+                    <label description="GENERAL" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{149389e9-1038-44f8-9c18-601dd9848e75}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_ain" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_ain" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d79d9159-56b6-6aae-4c52-7a9014042cbb}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_ain_lkp" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ap_person_ain_lkp" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{6cddded8-12bb-4068-bf6b-413bb8796c38}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+  </systemform>
+</forms>

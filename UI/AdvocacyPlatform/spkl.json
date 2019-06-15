@@ -1,0 +1,24 @@
+{
+  "solutions": [
+    {
+      "profile": "default,debug",
+      "solution_uniquename": "AdvocacyPlatformSolution",
+      "packagepath": "package",
+      "solutionpath": "AdvocacyPlatformSolution_managed.zip",
+      "packagetype": "managed",
+      "increment_on_import": true,
+      "map": [
+        {
+          "map": "path",
+          "from": "WebResources\\*.*",
+          "to": "..\\..\\AdvocacyPlatformWebResources\\WebResources\\**"
+        },
+        {
+          "map": "path",
+          "from": "WebResources\\**\\*.*",
+          "to": "..\\..\\AdvocacyPlatformWebResources\\WebResources\\**"
+        }
+      ]
+    }
+  ]
+}

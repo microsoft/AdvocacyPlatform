@@ -1,0 +1,498 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AdvocacyPlatform.Functions</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.CheckCallProgressHttpTrigger">
+            <summary>
+            CheckCallProgress function implementation with HTTP trigger.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.CheckCallProgressHttpTrigger.Container">
+            <summary>
+            Gets or sets the dependency injection container.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.CheckCallProgressHttpTrigger.FailedCallStatus">
+            <summary>
+            Gets the enumeration of call statuses considered to represent failures.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.CheckCallProgressHttpTrigger.InProgressCallStates">
+            <summary>
+            Gets the enumeration of call statuses considered to represent an in-progress call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.CheckCallProgressHttpTrigger.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Extensions.Logging.ILogger,Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Retrieves the state of a Twilio call.
+            </summary>
+            <param name="req">A request object who's request body respects the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressRequest"/> schema.</param>
+            <param name="log">Trace logger instance.</param>
+            <param name="context">Execution context to determine function app directory.</param>
+            <returns>
+            An OkObjectResult on successful executions, and a BadRequestObjectResult on unsuccessful executions
+            with the result body respecting the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressResponse"/> schema.
+            </returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.DeleteAccountRecordingsHttpTrigger">
+            <summary>
+            DeleteRecordings function implementation with HTTP trigger.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.DeleteAccountRecordingsHttpTrigger.Container">
+            <summary>
+            Gets or sets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.DeleteAccountRecordingsHttpTrigger.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Extensions.Logging.ILogger,Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Deletes all recordings associated with a a Twilio account.
+            </summary>
+            <param name="req">A request object who's request body respects the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsRequest"/> schema.</param>
+            <param name="log">Trace logger instance.</param>
+            <param name="context">Execution context to determine function app directory.</param>
+            <returns>
+            An OkObjectResult on successful executions, and a BadRequestObjectResult on unsuccessful executions
+            with the result body respecting the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsResponse"/> schema.
+            </returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.DeleteRecordingsHttpTrigger">
+            <summary>
+            DeleteRecordings function implementation with HTTP trigger.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.DeleteRecordingsHttpTrigger.Container">
+            <summary>
+            Gets or sets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.DeleteRecordingsHttpTrigger.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Extensions.Logging.ILogger,Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Deletes all recordings associated with a a Twilio call.
+            </summary>
+            <param name="req">A request object who's request body respects the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsRequest"/> schema.</param>
+            <param name="log">Trace logger instance.</param>
+            <param name="context">Execution context to determine function app directory.</param>
+            <returns>
+            An OkObjectResult on successful executions, and a BadRequestObjectResult on unsuccessful executions
+            with the result body respecting the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsResponse"/> schema.
+            </returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger">
+            <summary>
+            ExtractInfo function implementation with HTTP trigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger.LuisEndpointAppSettingName">
+            <summary>
+            Name of the app setting specifying the LUIS endpoint to use.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger.LuisSubscriptionKeySecretNameAppSettingName">
+            <summary>
+            Name of the app setting specifying the URI of the secret representing the LUIS subscription key.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger.LuisConfigurationAppSettingName">
+            <summary>
+            Name of the app setting specifying configuration information for setting up the LuisDataExtractor.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger.AuthorityAppSettingName">
+            <summary>
+            Name of the app setting specifying the token issuing authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger._defaultTransformations">
+            <summary>
+            Default transformations.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger.Container">
+            <summary>
+            Gets or sets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Extensions.Logging.ILogger,Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Extracts relevant information from a transcription.
+            </summary>
+            <param name="req">A request object who's request body respects the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest"/> schema.</param>
+            <param name="log">Trace logger instance.</param>
+            <param name="context">Execution context to determine function app directory.</param>
+            <returns>
+            An OkObjectResult on successful executions, and a BadRequestObjectResult on unsuccessful executions
+            with the result body respecting the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoResponse"/> schema.
+            </returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.ExtractInfoHttpTrigger.ConfigureDataExtractor(Microsoft.AdvocacyPlatform.Contracts.IDataExtractor,Microsoft.AdvocacyPlatform.Contracts.Secret,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Configures the data extractor implementation returned from the dependency injection container based on the it's type.
+            </summary>
+            <param name="dataExtractor">The data extractor implementation.</param>
+            <param name="apiKey">The api key for accessing the service wrapped by the data extractor implementation.</param>
+            <param name="config">The function configuration.</param>
+            <param name="log">Trace logger instance.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.GlobalConstants">
+            <summary>
+            Global constants.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.GlobalConstants.LocalJsonSettingsFileName">
+            <summary>
+            The local file name of the JSON settings file used for development testing.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.GlobalConstants.JsonAppSettingsFileName">
+            <summary>
+            The file name of the JSON settings file used for configuration testing.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.GlobalConstants.TwilioAccountSidSecretNameAppSettingName">
+            <summary>
+            The name of the Twilio Account SSID secret name app setting.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.GlobalConstants.TwilioAuthTokenSecretNameAppSettingName">
+            <summary>
+            The name of the Twilio auth token secret name app setting.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.GlobalConstants.AuthorityAppSettingName">
+            <summary>
+            The name of the authority app setting.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.FunctionHelper">
+            <summary>
+            Helper class for common functionality.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionHelper.GetConfiguration">
+            <summary>
+            Gets configuration information.
+            </summary>
+            <returns>Configuration information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionHelper.GetConfiguration(Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Gets configuration information.
+            </summary>
+            <param name="context">The execution context instance.</param>
+            <returns>Configuration information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionHelper.GetEnumName``1(``0)">
+            <summary>
+            Gets the name of an enum value.
+            </summary>
+            <typeparam name="T">The enum type.</typeparam>
+            <param name="value">The value to get the name for.</param>
+            <returns>The enum value name.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.FunctionHelper.ActionResultFactory``1(System.Boolean,``0)">
+            <summary>
+            Factory for setting values common across all responses.
+            </summary>
+            <typeparam name="T">The type of response to create.</typeparam>
+            <param name="isBadRequest">Flag indicating whether the request was invalid.</param>
+            <param name="responseContent">Content to set in the response object.</param>
+            <returns>The generated response object.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger">
+            <summary>
+            InitiateCall function implementation with HTTP trigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.TwiMLBaseUrl">
+            <summary>
+            The base URL for TwiML requests.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.TwilioLocalNumberSecretNameAppSettingName">
+            <summary>
+            Name of the app setting containing the identifier for the secret containing the Twilio local number to use.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.AuthorityAppSettingName">
+            <summary>
+            Name of the app setting specifying the token issuing authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.TwiMLTemplateAppSettingName">
+            <summary>
+            Name of the app setting specifying the TwiML template to use for constructing TwiML expressions.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.CallInitialPauseInSecondsAppSettingName">
+            <summary>
+            Name of the app setting specifying the number of seconds to pause after placing a call.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.CallFinalPauseInSecondsAppSettingName">
+            <summary>
+            Name of the app setting specifying the number of seconds to pause after all actions have been completed in a call.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.NumberToCallAppSettingName">
+            <summary>
+            Name of the app setting specifying the number to call.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.DefaultDtmfTemplateAppSettingName">
+            <summary>
+            Name of the app setting specifying the default Dual-tone Multi-frequency signaling (DTMF) template to use with the call.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.InputIdTemplateKey">
+            <summary>
+            Name of the placeholder in the DTMF template to replace with the input id.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.Container">
+            <summary>
+            Gets or sets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.BuildDefaultDtmfSequence(System.String,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Formats the DTMF template with the input id specified.
+            </summary>
+            <param name="defaultDtmfTemplate">The template to format.</param>
+            <param name="inputId">The input id to inject into the template.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The formatted template.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Extensions.Logging.ILogger,Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Schedules a call and returns the call sid.
+            </summary>
+            <param name="req">A request object who's request body respects the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.InitiateCallRequest"/> schema.</param>
+            <param name="log">Trace logger instance.</param>
+            <param name="context">Execution context to determine function app directory.</param>
+            <returns>
+            An OkObjectResult on successful executions, and a BadRequestObjectResult on unsuccessful executions
+            with the result body respecting the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.InitiateCallResponse"/> schema.
+            </returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.InitiateCallHttpTrigger.FormatTwiMLUrl(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Creates a fully-formed TwiML URL based on the template and parameters.
+            </summary>
+            <param name="twiMLTemplate">The template to format.</param>
+            <param name="parameters">Key-value pairs to inject into the template.</param>
+            <returns>The formatted URI.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.AzureBlobStorageModule">
+            <summary>
+            Module for use with dependency injection container for AzureBlobStorageClient
+            implementation of IStorageClient.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.AzureBlobStorageModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the AzureBlobStorageClient to fulfill IStorageClient dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.AzureKeyVaultSecretStoreModule">
+            <summary>
+            Module for use with dependency injection container for AzureKeyVaultSecretStore
+            implementation of ISecretStore.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.AzureKeyVaultSecretStoreModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the AzureKeyVaultSecretStore to fulfill ISecretStore dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.AzureTranscriberModule">
+            <summary>
+            Module for use with dependency injection container for AzureTranscriber
+            implementation of ITranscriber.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.AzureTranscriberModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the AzureKeyVaultSecretStore to fulfill ISecretStore dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.LuisDataExtractorModule">
+            <summary>
+            Module for use with dependency injection container for LuisDataExtractor
+            implementation of IDataExtractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.LuisDataExtractorModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the LuisDataExtractor to fulfill IDataExtractor dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.RegexDataExtractorModule">
+            <summary>
+            Module for use with dependency injection container for RegexDataExtractor
+            implementation of IDataExtractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.RegexDataExtractorModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the LuisDataExtractor to fulfill IDataExtractor dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.DataTransformationFactoryModule">
+            <summary>
+            Module for use with dependency injection container for DefaultDataTransformationFactory
+            implementation of IDataTransformationFactory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.DataTransformationFactoryModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the DefaultDataTransformationFactory to fulfill IDataTransformationFactory dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.HttpClientModule">
+            <summary>
+            Module for use with dependency injection container for HttpClientWrapper
+            implementation of IHttpClientWrapper.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.HttpClientModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the HttpClientWrapper to fulfill IHttpClientWrapper dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.TwilioModule">
+            <summary>
+            Module for use with dependency injection container for TwilioCallWrapper
+            implementation of ITwilioCallWrapper.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.TwilioModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+             <summary>
+             Loads the TwilioCallWrapper to fulfill ITwilioCallWrapper dependencies.
+            
+             We can improve on how we currently load this dependency.
+             </summary>
+             <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Module.ValueValidatorFactoryModule">
+            <summary>
+            Module for use with dependency injection container for DefaultValueValidatorFactory
+            implementation of IValueValidatorFactory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Module.ValueValidatorFactoryModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads the DefaultValueValidatorFactory to fulfill IValueValidatorFactory dependencies.
+            </summary>
+            <param name="services">Service collection to add the service to.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger">
+            <summary>
+            PullRecordings function implementation with HTTP trigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger.StorageAccessKeySecretNameAppSettingName">
+            <summary>
+            Name of the app setting containing the identifier for the secret containing the storage access key (rw).
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger.StorageReadAccessKeySecretNameAppSettingName">
+            <summary>
+            Name of the app setting containing the identifier for the secret containing the storage access key (w) to append to the returned full recording URL.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger.StorageAccessConnectionStringAppSettingName">
+            <summary>
+            Name of the app setting containing the connection string (sans access key) for connecting to backing storage.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger.StorageContainerNameAppSettingName">
+            <summary>
+            Name of the app setting containing the name of the container to store recordings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger.AuthorityAppSettingName">
+            <summary>
+            Name of the app setting specifying the token issuing authority.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger.Container">
+            <summary>
+            Gets or sets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.PullRecordingHttpTrigger.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Extensions.Logging.ILogger,Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Copies a recording from Twilio storage to another data store.
+            </summary>
+            <param name="req">A request object who's request body respects the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.PullRecordingRequest"/> schema.</param>
+            <param name="log">Trace logger instance.</param>
+            <param name="context">Execution context to determine function app directory.</param>
+            <returns>
+            An OkObjectResult on successful executions, and a BadRequestObjectResult on unsuccessful executions
+            with the result body respecting the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.PullRecordingResponse"/> schema.
+            </returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger">
+            <summary>
+            TranscribeCall function implementation with HTTP trigger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.ApiKeySecretNameAppSettingName">
+            <summary>
+            Name of the app setting containing the identifier for the secret containing the API key.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.StorageAccessKeySecretNameAppSettingName">
+            <summary>
+            Name of the app setting containing the identifier for the secret containing the storage access key (rw).
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.RegionAppSettingName">
+            <summary>
+            Name of the app setting specifying the region of the cognitive service resource.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.StorageAccessConnectionStringAppSettingName">
+            <summary>
+            Name of the app setting specifying the storage connection string (sans access key).
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.StorageContainerNameAppSettingName">
+            <summary>
+            Name of the app setting specifying the name of the container recordings are stored in.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.AuthorityAppSettingName">
+            <summary>
+            Name of the app setting specifying the token issuing authority.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.Container">
+            <summary>
+            Gets or sets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.TranscribeCallHttpTrigger.Run(Microsoft.AspNetCore.Http.HttpRequest,Microsoft.Extensions.Logging.ILogger,Microsoft.Azure.WebJobs.ExecutionContext)">
+            <summary>
+            Transcribes a recording.
+            </summary>
+            <param name="req">A request object who's request body respects the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest"/> schema.</param>
+            <param name="log">Trace logger instance.</param>
+            <param name="context">Execution context to determine function app directory.</param>
+            <returns>
+            An OkObjectResult on successful executions, and a BadRequestObjectResult on unsuccessful executions
+            with the result body respecting the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallResponse"/> schema.
+            </returns>
+        </member>
+    </members>
+</doc>

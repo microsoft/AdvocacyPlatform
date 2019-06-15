@@ -1,0 +1,83 @@
+﻿{
+  "query": "{expectedQuery}",
+  "topScoringIntent": {
+    "intent": "{expectedIntent}",
+    "score": 0.9898249
+  },
+  "entities": [
+    {
+      "entity": "december, 13th 2021 at one pm",
+      "type": "{expectedDateTimeEntityName}",
+      "startIndex": 106,
+      "endIndex": 134,
+      "resolution": {
+        "values": [
+          {
+            "timex": "2021-12-13T13",
+            "type": "datetime",
+            "value": "{expectedDateTime}"
+          }
+        ]
+      }
+    },
+    {
+      "entity": "newark",
+      "type": "city",
+      "startIndex": 147,
+      "endIndex": 152,
+      "score": 0.972638
+    },
+    {
+      "entity": "{expectedAdditionalEntity}",
+      "type": "{expectedAdditionalEntityType}",
+      "startIndex": 83,
+      "endIndex": 96,
+      "score": 0.9556109
+    },
+    {
+      "entity": "{expectedAdditionalEntity}",
+      "type": "{expectedAdditionalEntityType}",
+      "startIndex": 83,
+      "endIndex": 96,
+      "score": 0.9556109
+    },
+    {
+      "entity": "{expectedAdditionalEntity}",
+      "type": "{expectedAdditionalEntityType}",
+      "startIndex": 83,
+      "endIndex": 96,
+      "score": 0.9556109
+    },
+    {
+      "entity": "nj",
+      "type": "state",
+      "startIndex": 154,
+      "endIndex": 155,
+      "score": 0.9721472
+    },
+    {
+      "entity": "{expectedLocation}",
+      "type": "location",
+      "startIndex": 114,
+      "endIndex": 163,
+      "score": 0.963807344
+    }
+
+  ],
+  "compositeEntities": [
+    {
+      "parentType": "location",
+      "value": "{expectedLocation}",
+      "children": [
+        {
+          "type": "{expectedCityEntityName}",
+          "value": "{expectedCompositeCity}"
+        },
+        {
+          "type": "{expectedStateEntityName}",
+          "value": "{expectedCompositeState}"
+        }
+      ]
+    }
+  ]
+}

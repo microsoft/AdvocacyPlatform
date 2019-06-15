@@ -1,0 +1,41 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logicAppLocation": {
+      "defaultValue": "[resourceGroup().location]",
+      "allowedValues": [ "eastasia", "southeastasia", "centralus", "eastus", "eastus2", "westus", "northcentralus", "southcentralus", "northeurope", "westeurope", "japanwest", "japaneast", "brazilsouth", "australiaeast", "australiasoutheast", "southindia", "centralindia", "westindia", "canadacentral", "canadaeast", "westcentralus", "westus2", "[resourceGroup().location]" ],
+      "type": "String",
+      "metadata": { "description": "Location of the logic app." }
+    },
+    "commondataservice_Connection_Name": {
+      "defaultValue": "[parameters('commondataservice_Connection_Name')]",
+      "type": "String",
+      "metadata": { "description": "Name of the connection." }
+    },
+    "dynamicscrm_environment_name": {
+      "defaultValue": "[parameters('commondataservice_Connection_Name')]",
+      "type": "String",
+      "metadata": { "description": "Unique name of the Dynamics 365 CRM environment." }
+    }
+  },
+  "variables": {
+    "tenant_id": "[subscription().tenantId]",
+    "subscription_id": "[subscription().subscriptionId]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/connections",
+      "name": "[parameters('commondataservice_Connection_Name')]",
+      "apiVersion": "2016-06-01",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": { "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'commondataservice')]" },
+        "displayName": "[parameters('commondataservice_Connection_Name')]",
+        "parameterValues": {
+          "environment": "[parameters('dynamicscrm_environment_name')]"
+        }
+      }
+    }
+  ]
+}

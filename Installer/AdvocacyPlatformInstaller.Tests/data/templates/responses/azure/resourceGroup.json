@@ -1,0 +1,9 @@
+﻿ {
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}",
+  "name": "{resourceGroup}",
+  "location": "{location}",
+  "properties": { "provisioningState": "{provisioningState}" },
+  "tags": {
+    {tags}
+  }
+}

@@ -1,0 +1,16 @@
+﻿{
+  "value": [
+    {
+      "id": "/subscriptions/{objectId}",
+      "subscriptionId": "{subscriptionId}",
+      "displayName": "{displayName}",
+      "state": "{state}",
+      "subscriptionPolicies": {
+        "locationPlacementId": "Public_2014-09-01",
+        "quotaId": "MSDN_2014-09-01",
+        "spendingLimit": "On"
+      },
+      "authorizationSource": "Legacy"
+    }
+  ]
+}

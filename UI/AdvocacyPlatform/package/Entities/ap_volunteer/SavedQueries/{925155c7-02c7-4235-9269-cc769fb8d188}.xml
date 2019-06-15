@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{925155c7-02c7-4235-9269-cc769fb8d188}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_volunteer_record_identifier" select="1" icon="1" preview="1">
+        <row name="result" id="ap_volunteerid">
+          <cell name="ap_volunteer_given_name" width="180" />
+          <cell name="ap_volunteer_record_identifier" width="180" />
+          <cell name="ap_volunteer_phone_number" width="100" />
+          <cell name="ap_volunteer_city" width="100" />
+          <cell name="ap_volunteer_state_province" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>1</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ap_volunteer">
+          <attribute name="ap_volunteerid" />
+          <attribute name="ap_volunteer_record_identifier" />
+          <attribute name="ap_volunteer_given_name" />
+          <attribute name="ap_volunteer_phone_number" />
+          <attribute name="ap_volunteer_city" />
+          <attribute name="ap_volunteer_state_province" />
+          <order attribute="ap_volunteer_given_name" descending="false" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Volunteer Advanced Find View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

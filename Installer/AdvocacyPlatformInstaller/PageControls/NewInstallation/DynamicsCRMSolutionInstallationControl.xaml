@@ -1,0 +1,76 @@
+﻿<local:WizardPageBase x:Class="AdvocacyPlatformInstaller.DynamicsCRMSolutionInstallationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:BoolToColorConverter x:Key="BoolToColorConvert" />
+        <local:BoolToRowHeightConverter x:Key="BoolToRowHeigthConverter" />
+        <local:InverseBoolConverter x:Key="InverseBoolConvert" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="WizardProgressGrid" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Steps" Background="LightGray" FontWeight="Bold" />
+            <local:WizardProgressControl x:Name="WizardProgress" Grid.Row="1" Grid.Column="0" PagesSource="{Binding Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1" Margin="5 5 5 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="{Binding ShowDetails, Converter={StaticResource BoolToRowHeigthConverter}, ConverterParameter=90, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MaxHeight="100" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Margin="5 5 5 5" Content="Deployment Region" />
+            <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding InstallationConfiguration.PowerApps.DeploymentRegions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding InstallationConfiguration.DynamicsCrm.SelectedDeploymentRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="1" Grid.Column="0" Margin="5 5 5 5" Content="Organization Name" />
+            <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding InstallationConfiguration.PowerApps.Environments, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding InstallationConfiguration.PowerApps.SelectedEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button x:Name="GetEnvironmentsButton" Grid.Row="1" Grid.Column="2" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="GetEnvironmentsButton_Click" Background="Transparent">
+                <Image Source="pack://application:,,,/Media/refresh_icon.png" />
+            </Button>
+
+            <Label Grid.Row="2" Grid.Column="0" Margin="5 5 5 5" Content="Solution Zip File Path" />
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.DynamicsCrm.SolutionZipFilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button x:Name="SolutionPackagePathBrowseButton" Grid.Row="2" Grid.Column="3" Margin="5 5 5 5" Click="SolutionPackagePathBrowseButton_Click" Background="Transparent">
+                <Image Source="pack://application:,,,/Media/folder_icon.png" />
+            </Button>
+
+            <Label Grid.Row="3" Grid.Column="0" Margin="5 5 5 5" Content="Configuration Zip File Path" />
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.DynamicsCrm.ConfigurationZipFilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button x:Name="ConfigurationPathBrowseButton" Grid.Row="3" Grid.Column="3" Margin="5 5 5 5" Click="ConfigurationPathBrowseButton_Click" Background="Transparent">
+                <Image Source="pack://application:,,,/Media/folder_icon.png" />
+            </Button>
+
+            <CheckBox Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5 0 0 0" IsChecked="{Binding ShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Show Details" />
+
+            <RichTextBox x:Name="DetailsRichTextBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto" />
+        </Grid>
+    </Grid>
+</local:WizardPageBase>

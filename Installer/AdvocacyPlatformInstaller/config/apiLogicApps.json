@@ -1,0 +1,1199 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ap_func_aad_key_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "aadaudience_variable": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "aadclientid_variable": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "sites_ap_wu_func_name": {
+      "defaultValue": "ap-wu-func",
+      "type": "String"
+    },
+    "servicebus_Connection_Name": {
+      "defaultValue": "servicebus",
+      "type": "String"
+    },
+    "vaults_ap_wu_keyvault_name": {
+      "defaultValue": "ap-wu-keyvault",
+      "type": "String"
+    },
+    "workflows_ap_process_wu_logicapp_name": {
+      "defaultValue": "ap-process-wu-logicapp",
+      "type": "String"
+    },
+    "workflows_ap_request_wu_logicapp_name": {
+      "defaultValue": "ap-request-wu-logicapp",
+      "type": "String"
+    }
+  },
+  "variables": {
+    "tenant_id": "[subscription().tenantId]",
+    "subscription_id": "[subscription().subscriptionId]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('workflows_ap_process_wu_logicapp_name')]",
+      "location": "westus2",
+      "dependsOn": [],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Complete_the_Message_In_Queue_For_Everything_Failed": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "delete",
+                "path": "/@{encodeURIComponent(encodeURIComponent('processing-queue'))}/messages/complete",
+                "queries": {
+                  "lockToken": "@triggerBody()?['LockToken']",
+                  "queueType": "Main",
+                  "sessionId": "@triggerBody()?['SessionId']"
+                }
+              },
+              "runAfter": {
+                "Send_Everything_Failed_Error_Message_To_Results_Queue": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Compose_Everything_Failed_Error_Result_Message": {
+              "type": "Compose",
+              "inputs": {
+                "data": null,
+                "errorCode": 4000,
+                "errorDetails": "Unhandled Proccessing Error Occured. Please Validate your request information and re-submit if applicable",
+                "hasError": "@true",
+                "inputId": "@json(decodeBase64(triggerBody()?['ContentData']))?['inputId']",
+                "recordId": "@json(decodeBase64(triggerBody()?['ContentData']))?['recordId']",
+                "requestType": "@json(decodeBase64(triggerBody()?['ContentData']))?['requestType']"
+              },
+              "runAfter": {
+                "Processing_Scope": [
+                  "Failed"
+                ]
+              }
+            },
+            "DeleteRecordings_Everything_Failed": {
+              "type": "Function",
+              "inputs": {
+                "body": "@body('CheckCallProgress')",
+                "method": "POST",
+                "headers": {
+                  "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                },
+                "function": {
+                  "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/DeleteRecordings')]"
+                }
+              },
+              "runAfter": {
+                "Complete_the_Message_In_Queue_For_Everything_Failed": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Get_AAD_Token": {
+              "type": "Http",
+              "inputs": {
+                "method": "POST",
+                "uri": "https://login.microsoftonline.com/@{variables('AADTenantID')}/oauth2/token",
+                "headers": {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                },
+                "body": "grant_type=client_credentials&client_id=@{variables('AADClientID')}&resource=@{variables('AADClientID')}&client_secret=@{encodeURIComponent(body('Get_Vault_Secret')?['value'])}"
+              },
+              "runAfter": {
+                "Get_Vault_Secret": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Get_Vault_Secret": {
+              "type": "Http",
+              "inputs": {
+                "method": "GET",
+                "uri": "[concat('https://@{variables(''KeyVaultName'')}.vault.azure.net/secrets/', parameters('ap_func_aad_key_secret_name'))]",
+                "queries": {
+                  "api-version": "2016-10-01"
+                },
+                "authentication": {
+                  "type": "ManagedServiceIdentity",
+                  "audience": "https://vault.azure.net"
+                }
+              },
+              "runAfter": {
+                "Init_Unique_ID": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_AAD_Audience": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "AADAudience",
+                    "type": "String",
+                    "value": "@{parameters('$aadAudience')}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_AAD_Client_ID": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_AAD_Client_ID": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "AADClientID",
+                    "type": "String",
+                    "value": "@{parameters('$aadClientId')}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_AAD_Tenant_ID": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_AAD_Tenant_ID": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "AADTenantID",
+                    "type": "String",
+                    "value": "@{parameters('$aadTenantId')}"
+                  }
+                ]
+              },
+              "runAfter": {}
+            },
+            "Init_Key_Vault_Name": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "KeyVaultName",
+                    "type": "String",
+                    "value": "@{parameters('$keyVaultName')}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_AAD_Audience": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_Request_Payload": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "RequestPayload",
+                    "type": "Object",
+                    "value": "@json(decodeBase64(triggerBody()?['ContentData']))"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_Key_Vault_Name": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_Unique_ID": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "UniqueID",
+                    "type": "String",
+                    "value": "@{guid()}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_Request_Payload": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Processing_Scope": {
+              "type": "Scope",
+              "actions": {
+                "Condition_Call_completed_successfully": {
+                  "type": "If",
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@outputs('CheckCallProgress')['statusCode']",
+                          200
+                        ]
+                      },
+                      {
+                        "equals": [
+                          "@body('CheckCallProgress')?['hasError']",
+                          "@false"
+                        ]
+                      },
+                      {
+                        "equals": [
+                          "@body('CheckCallProgress')?['status']",
+                          "completed"
+                        ]
+                      }
+                    ]
+                  },
+                  "actions": {
+                    "Complete_the_message_in_a_queue": {
+                      "runAfter": {
+                        "DeleteRecordings": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                          }
+                        },
+                        "method": "delete",
+                        "path": "/@{encodeURIComponent(encodeURIComponent('processing-queue'))}/messages/complete",
+                        "queries": {
+                          "lockToken": "@triggerBody()?['LockToken']",
+                          "queueType": "Main",
+                          "sessionId": "@triggerBody()?['SessionId']"
+                        }
+                      }
+                    },
+                    "Condition_Check_Call_Duration": {
+                      "type": "If",
+                      "expression": {
+                        "or": [
+                          {
+                            "greaterOrEquals": [
+                              "@body('CheckCallProgress')?['duration']",
+                              45
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@equals(variables('RequestPayload')?['requestPayload']?['callRetried'],null)",
+                              "@false"
+                            ]
+                          }
+                        ]
+                      },
+                      "actions": {
+                        "Compose_Add_RecordId": {
+                          "type": "Compose",
+                          "inputs": "@addProperty(addProperty(body('ExtractInfo'),'recordId',variables('RequestPayload')?['recordId']),'inputId',variables('RequestPayload')?['inputId'])",
+                          "runAfter": {
+                            "ExtractInfo": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "Compose_Result_Message": {
+                          "type": "Compose",
+                          "inputs": "@addProperty(addProperty(outputs('Compose_Add_RecordId'),'recordingSAS',body('PullRecording')?['fullRecordingUrl']),'requestType',variables('RequestPayload')?['requestType'])",
+                          "runAfter": {
+                            "Compose_Add_RecordId": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "ExtractInfo": {
+                          "type": "Function",
+                          "inputs": {
+                            "body": "@body('TranscribeCall')",
+                            "method": "POST",
+                            "headers": {
+                              "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                            },
+                            "function": {
+                              "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/ExtractInfo')]"
+                            }
+                          },
+                          "runAfter": {
+                            "TranscribeCall": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "PullRecording": {
+                          "type": "Function",
+                          "inputs": {
+                            "body": "@variables('RequestPayload')",
+                            "method": "POST",
+                            "headers": {
+                              "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                            },
+                            "function": {
+                              "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/PullRecording')]"
+                            }
+                          },
+                          "runAfter": {}
+                        },
+                        "Send_extracted_entities_to_result_queue": {
+                          "runAfter": {
+                            "Compose_Result_Message": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection",
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                              }
+                            },
+                            "method": "post",
+                            "body": {
+                              "SessionId": "0",
+                              "ContentData": "@{base64(outputs('Compose_Result_Message'))}",
+                              "ContentType": "application/json",
+                              "MessageId": "@variables('UniqueID')"
+                            },
+                            "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages",
+                            "queries": {
+                              "systemProperties": "None"
+                            }
+                          }
+                        },
+                        "TranscribeCall": {
+                          "type": "Function",
+                          "inputs": {
+                            "body": "@body('PullRecording')",
+                            "method": "POST",
+                            "headers": {
+                              "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                            },
+                            "function": {
+                              "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/TranscribeCall')]"
+                            }
+                          },
+                          "runAfter": {
+                            "PullRecording": [
+                              "Succeeded"
+                            ]
+                          }
+                        }
+                      },
+                      "runAfter": {},
+                      "else": {
+                        "actions": {
+                          "Compose_Call_Retry_Request": {
+                            "type": "Compose",
+                            "inputs": "@addProperty(variables('RequestPayload')['requestPayload'],'callRetried',true)",
+                            "runAfter": {}
+                          },
+                          "Send_Message_Request_Queue_For_Retry": {
+                            "runAfter": {
+                              "Compose_Call_Retry_Request": [
+                                "Succeeded"
+                              ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                              "host": {
+                                "connection": {
+                                  "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                }
+                              },
+                              "method": "post",
+                              "body": {
+                                "SessionId": "0",
+                                "ContentData": "@{base64(outputs('Compose_Call_Retry_Request'))}",
+                                "ContentType": "application/json"
+                              },
+                              "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages",
+                              "queries": {
+                                "systemProperties": "None"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "DeleteRecordings": {
+                      "type": "Function",
+                      "inputs": {
+                        "body": "@body('CheckCallProgress')",
+                        "method": "POST",
+                        "headers": {
+                          "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                        },
+                        "function": {
+                          "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/DeleteRecordings')]"
+                        }
+                      },
+                      "runAfter": {
+                        "Condition_Check_Call_Duration": [
+                          "Succeeded"
+                        ]
+                      }
+                    }
+                  },
+                  "runAfter": {},
+                  "else": {
+                    "actions": {
+                      "Complete_Error_Message_in_Queue": {
+                        "runAfter": {
+                          "Send_error_message_to_results_queue": [
+                            "Succeeded"
+                          ]
+                        },
+                        "type": "ApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connection": {
+                              "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                            }
+                          },
+                          "method": "delete",
+                          "path": "/@{encodeURIComponent(encodeURIComponent('processing-queue'))}/messages/complete",
+                          "queries": {
+                            "lockToken": "@triggerBody()?['LockToken']",
+                            "queueType": "Main",
+                            "sessionId": "0"
+                          }
+                        }
+                      },
+                      "Compose_Error_Result_Message": {
+                        "type": "Compose",
+                        "inputs": "@addProperty(addProperty(addProperty(body('CheckCallProgress'),'recordId',variables('RequestPayload')?['recordId']),'inputId',variables('RequestPayload')?['inputId']),'requestType',variables('RequestPayload')?['requestType'])",
+                        "runAfter": {
+                          "DeleteRecordings_In_Error": [
+                            "Succeeded",
+                            "Failed",
+                            "TimedOut"
+                          ]
+                        }
+                      },
+                      "DeleteRecordings_In_Error": {
+                        "type": "Function",
+                        "inputs": {
+                          "body": "@json(decodeBase64(triggerBody()?['ContentData']))['callSid']",
+                          "method": "POST",
+                          "headers": {
+                            "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                          },
+                          "function": {
+                            "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/DeleteRecordings')]"
+                          }
+                        },
+                        "runAfter": {}
+                      },
+                      "Send_error_message_to_results_queue": {
+                        "runAfter": {
+                          "Compose_Error_Result_Message": [
+                            "Succeeded"
+                          ]
+                        },
+                        "type": "ApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connection": {
+                              "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                            }
+                          },
+                          "method": "post",
+                          "body": {
+                            "SessionId": "0",
+                            "ContentData": "@{base64(outputs('Compose_Error_Result_Message'))}",
+                            "ContentType": "application/json",
+                            "MessageId": "@variables('UniqueID')"
+                          },
+                          "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages",
+                          "queries": {
+                            "systemProperties": "None"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Until_Call_Completed": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Send_Everything_Failed_Error_Message_To_Results_Queue": {
+              "runAfter": {
+                "Compose_Everything_Failed_Error_Result_Message": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "SessionId": "@triggerBody()?['SessionId']",
+                  "ContentData": "@{base64(outputs('Compose_Everything_Failed_Error_Result_Message'))}",
+                  "ContentType": "application/json"
+                },
+                "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages",
+                "queries": {
+                  "systemProperties": "None"
+                }
+              }
+            },
+            "Until_Call_Completed": {
+              "type": "Until",
+              "expression": "@equals(body('CheckCallProgress')?['status'], 'completed')",
+              "limit": {
+                "count": 5,
+                "timeout": "PT1H"
+              },
+              "actions": {
+                "CheckCallProgress": {
+                  "type": "Function",
+                  "inputs": {
+                    "body": "@variables('RequestPayload')",
+                    "method": "POST",
+                    "headers": {
+                      "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                    },
+                    "function": {
+                      "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/CheckCallProgress')]"
+                    }
+                  },
+                  "runAfter": {
+                    "Delay": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Delay": {
+                  "type": "Wait",
+                  "inputs": {
+                    "interval": {
+                      "count": 30,
+                      "unit": "Second"
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Renew_lock_on_the_session_in_a_queue": {
+                  "runAfter": {
+                    "CheckCallProgress": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "post",
+                    "path": "/@{encodeURIComponent(encodeURIComponent('processing-queue'))}/sessions/@{encodeURIComponent(triggerBody()?['SessionId'])}/renewlock"
+                  }
+                }
+              },
+              "runAfter": {
+                "Get_AAD_Token": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            },
+            "$aadAudience": {
+              "defaultValue": "[parameters('aadaudience_variable')]",
+              "type": "String"
+            },
+            "$aadClientId": {
+              "defaultValue": "[parameters('aadclientid_variable')]",
+              "type": "String"
+            },
+            "$aadTenantId": {
+              "defaultValue": "[variables('tenant_id')]",
+              "type": "String"
+            },
+            "$keyVaultName": {
+              "defaultValue": "[parameters('vaults_ap_wu_keyvault_name')]",
+              "type": "String"
+            }
+          },
+          "triggers": {
+            "When_a_message_is_received_in_a_queue_(peek-lock)": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/@{encodeURIComponent(encodeURIComponent('processing-queue'))}/messages/head/peek",
+                "queries": {
+                  "queueType": "Main",
+                  "sessionId": "0"
+                }
+              },
+              "recurrence": {
+                "frequency": "Minute",
+                "interval": 1
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('workflows_ap_request_wu_logicapp_name')]",
+      "location": "westus2",
+      "dependsOn": [],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Condition_Messages_Found": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "not": {
+                      "equals": [
+                        "@length(body('Get_messages_from_request_queue_(peek-lock)'))",
+                        0
+                      ]
+                    }
+                  }
+                ]
+              },
+              "actions": {
+                "For_each_queue_message": {
+                  "type": "Foreach",
+                  "foreach": "@body('Get_messages_from_request_queue_(peek-lock)')",
+                  "actions": {
+                    "Complete_the_Message_In_Queue_For_Everything_Failed": {
+                      "runAfter": {
+                        "Send_Everything_Failed_Error_Message_To_Result_Queue": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                          }
+                        },
+                        "method": "delete",
+                        "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages/complete",
+                        "queries": {
+                          "lockToken": "@items('For_each_queue_message')?['LockToken']",
+                          "queueType": "Main",
+                          "sessionId": "@items('For_each_queue_message')?['SessionId']"
+                        }
+                      }
+                    },
+                    "Compose_Everything_Failed_Error_Result_Message": {
+                      "type": "Compose",
+                      "inputs": {
+                        "data": null,
+                        "errorCode": 4000,
+                        "errorDetails": "Unhandled Proccessing Error Occured On Initial Call Process. Please Validate your request information and re-submit if applicable",
+                        "hasError": "@true",
+                        "inputId": "@json(decodeBase64(items('For_each_queue_message')?['ContentData']))?['inputId']",
+                        "recordId": "@json(decodeBase64(items('For_each_queue_message')?['ContentData']))?['recordId']",
+                        "requestType": "@json(decodeBase64(items('For_each_queue_message')?['ContentData']))?['requestType']"
+                      },
+                      "runAfter": {
+                        "Processing_Scope": [
+                          "Failed"
+                        ]
+                      }
+                    },
+                    "Processing_Scope": {
+                      "type": "Scope",
+                      "actions": {
+                        "Condition_-_Call_Initiated": {
+                          "type": "If",
+                          "expression": {
+                            "and": [
+                              {
+                                "equals": [
+                                  "@outputs('Initiate_Call')['statusCode']",
+                                  200
+                                ]
+                              },
+                              {
+                                "equals": [
+                                  "@body('Initiate_Call')?['hasError']",
+                                  "@false"
+                                ]
+                              }
+                            ]
+                          },
+                          "actions": {
+                            "Complete_the_message_in_a_queue": {
+                              "runAfter": {
+                                "Send_message_to_processing_queue": [
+                                  "Succeeded"
+                                ]
+                              },
+                              "type": "ApiConnection",
+                              "inputs": {
+                                "host": {
+                                  "connection": {
+                                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                  }
+                                },
+                                "method": "delete",
+                                "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages/complete",
+                                "queries": {
+                                  "lockToken": "@items('For_each_queue_message')?['LockToken']",
+                                  "queueType": "Main",
+                                  "sessionId": "@items('For_each_queue_message')?['SessionId']"
+                                }
+                              }
+                            },
+                            "Compose_Add_Original_Request_to_Processing_Message": {
+                              "type": "Compose",
+                              "inputs": "@addProperty(outputs('Compose_Processing_Message'),'requestPayload',body('Parse_JSON_Request_Payload'))",
+                              "runAfter": {
+                                "Compose_Processing_Message": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Compose_Processing_Message": {
+                              "type": "Compose",
+                              "inputs": "@addProperty(addProperty(body('Initiate_Call'),'recordId',body('Parse_JSON_Request_Payload')?['recordId']),'requestType',body('Parse_JSON_Request_Payload')?['requestType'])",
+                              "runAfter": {}
+                            },
+                            "Send_message_to_processing_queue": {
+                              "runAfter": {
+                                "Compose_Add_Original_Request_to_Processing_Message": [
+                                  "Succeeded"
+                                ]
+                              },
+                              "type": "ApiConnection",
+                              "inputs": {
+                                "body": {
+                                  "ContentData": "@{base64(outputs('Compose_Add_Original_Request_to_Processing_Message'))}",
+                                  "ContentType": "application/json",
+                                  "SessionId": "0"
+                                },
+                                "host": {
+                                  "connection": {
+                                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                  }
+                                },
+                                "method": "post",
+                                "path": "/@{encodeURIComponent(encodeURIComponent('processing-queue'))}/messages",
+                                "queries": {
+                                  "systemProperties": "None"
+                                }
+                              }
+                            }
+                          },
+                          "runAfter": {
+                            "Initiate_Call": [
+                              "Succeeded"
+                            ]
+                          },
+                          "else": {
+                            "actions": {
+                              "Complete_Error_Message_In_Queue": {
+                                "runAfter": {
+                                  "Send_Error_Message_To_Result_Queue": [
+                                    "Succeeded"
+                                  ]
+                                },
+                                "type": "ApiConnection",
+                                "inputs": {
+                                  "host": {
+                                    "connection": {
+                                      "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                    }
+                                  },
+                                  "method": "delete",
+                                  "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages/complete",
+                                  "queries": {
+                                    "lockToken": "@items('For_each_queue_message')?['LockToken']",
+                                    "queueType": "Main",
+                                    "sessionId": "@items('For_each_queue_message')?['SessionId']"
+                                  }
+                                }
+                              },
+                              "Compose_Error_Result_Message": {
+                                "type": "Compose",
+                                "inputs": "@addProperty(addProperty(body('Initiate_Call'),'recordId',body('Parse_JSON_Request_Payload')?['recordId']),'requestType',body('Parse_JSON_Request_Payload')?['requestType'])",
+                                "runAfter": {}
+                              },
+                              "Send_Error_Message_To_Result_Queue": {
+                                "runAfter": {
+                                  "Compose_Error_Result_Message": [
+                                    "Succeeded"
+                                  ]
+                                },
+                                "type": "ApiConnection",
+                                "inputs": {
+                                  "body": {
+                                    "ContentData": "@{base64(outputs('Compose_Error_Result_Message'))}",
+                                    "ContentType": "application/json",
+                                    "SessionId": "0"
+                                  },
+                                  "host": {
+                                    "connection": {
+                                      "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                    }
+                                  },
+                                  "method": "post",
+                                  "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages",
+                                  "queries": {
+                                    "systemProperties": "None"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "Delay": {
+                          "type": "Wait",
+                          "inputs": {
+                            "interval": {
+                              "count": 30,
+                              "unit": "Second"
+                            }
+                          },
+                          "runAfter": {
+                            "Condition_-_Call_Initiated": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "Get_AAD_Token": {
+                          "type": "Http",
+                          "inputs": {
+                            "method": "POST",
+                            "uri": "https://login.microsoftonline.com/@{variables('AADTenantID')}/oauth2/token",
+                            "headers": {
+                              "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            "body": "grant_type=client_credentials&client_id=@{variables('AADClientID')}&resource=@{variables('AADAudience')}&client_secret=@{encodeURIComponent(body('Get_Vault_Secret')?['value'])}"
+                          },
+                          "runAfter": {
+                            "Get_Vault_Secret": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "Get_Vault_Secret": {
+                          "type": "Http",
+                          "inputs": {
+                            "method": "GET",
+                            "uri": "[concat('https://@{variables(''KeyVaultName'')}.vault.azure.net/secrets/', parameters('ap_func_aad_key_secret_name'))]",
+                            "queries": {
+                              "api-version": "2016-10-01"
+                            },
+                            "authentication": {
+                              "type": "ManagedServiceIdentity",
+                              "audience": "https://vault.azure.net"
+                            }
+                          },
+                          "runAfter": {
+                            "Parse_JSON_Request_Payload": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "Initiate_Call": {
+                          "type": "Function",
+                          "inputs": {
+                            "body": "@body('Parse_JSON_Request_Payload')",
+                            "method": "POST",
+                            "headers": {
+                              "Authorization": "@{concat('Bearer ',body('Get_AAD_Token')?['access_token'])}"
+                            },
+                            "function": {
+                              "id": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/InitiateCall')]"
+                            }
+                          },
+                          "runAfter": {
+                            "Get_AAD_Token": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "Parse_JSON_Request_Payload": {
+                          "type": "ParseJson",
+                          "inputs": {
+                            "content": "@decodeBase64(items('For_each_queue_message')?['ContentData'])",
+                            "schema": {
+                              "properties": {
+                                "dtmf": {
+                                  "properties": {
+                                    "dtmf": {
+                                      "type": "string"
+                                    },
+                                    "finalPause": {
+                                      "type": "integer"
+                                    },
+                                    "initPause": {
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "inputId": {
+                                  "type": "string"
+                                },
+                                "recordId": {
+                                  "type": "string"
+                                },
+                                "requestType": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "runAfter": {}
+                        }
+                      },
+                      "runAfter": {}
+                    },
+                    "Send_Everything_Failed_Error_Message_To_Result_Queue": {
+                      "runAfter": {
+                        "Compose_Everything_Failed_Error_Result_Message": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "body": {
+                          "ContentData": "@{base64(outputs('Compose_Everything_Failed_Error_Result_Message'))}",
+                          "ContentType": "application/json",
+                          "SessionId": "@items('For_each_queue_message')?['SessionId']"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages",
+                        "queries": {
+                          "systemProperties": "None"
+                        }
+                      }
+                    }
+                  },
+                  "runAfter": {},
+                  "runtimeConfiguration": {
+                    "concurrency": {
+                      "repetitions": 1
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Init_Key_Vault_Name": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Get_messages_from_request_queue_(peek-lock)": {
+              "runAfter": {},
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages/batch/peek",
+                "queries": {
+                  "maxMessageCount": 10,
+                  "queueType": "Main",
+                  "sessionId": "0"
+                }
+              }
+            },
+            "Init_AAD_Audience": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "AADAudience",
+                    "type": "String",
+                    "value": "@{parameters('$aadAudience')}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_AAD_Client_ID": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_AAD_Client_ID": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "AADClientID",
+                    "type": "String",
+                    "value": "@{parameters('$aadClientId')}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_AAD_Tenant_ID": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_AAD_Tenant_ID": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "AADTenantID",
+                    "type": "String",
+                    "value": "@{parameters('$aadTenantId')}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Get_messages_from_request_queue_(peek-lock)": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Init_Key_Vault_Name": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "KeyVaultName",
+                    "type": "String",
+                    "value": "@{parameters('$keyVaultName')}"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Init_AAD_Audience": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            },
+            "$aadAudience": {
+              "defaultValue": "[parameters('aadaudience_variable')]",
+              "type": "String"
+            },
+            "$aadClientId": {
+              "defaultValue": "[parameters('aadclientid_variable')]",
+              "type": "String"
+            },
+            "$aadTenantId": {
+              "defaultValue": "[variables('tenant_id')]",
+              "type": "String"
+            },
+            "$keyVaultName": {
+              "defaultValue": "[parameters('vaults_ap_wu_keyvault_name')]",
+              "type": "String"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "Recurrence",
+              "recurrence": {
+                "frequency": "Minute",
+                "interval": 1
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

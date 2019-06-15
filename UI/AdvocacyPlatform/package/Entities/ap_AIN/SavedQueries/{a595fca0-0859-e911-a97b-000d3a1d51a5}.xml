@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{a595fca0-0859-e911-a97b-000d3a1d51a5}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_ain" select="1" icon="1" preview="1">
+        <row name="result" id="ap_ain">
+          <cell name="ap_ain" width="60" />
+          <cell name="a_24b0b325deff464fbd3a6b149afec189.ap_person_given_name" width="150" />
+          <cell name="ap_removal_order_issued" width="151" />
+          <cell name="ap_casedecision_case_decision" width="170" />
+          <cell name="ap_casedecision_issued_date" width="174" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="ap_ain">
+          <attribute name="ap_ain" />
+          <attribute name="ap_casedecision_issued_date" />
+          <attribute name="ap_removal_order_issued" />
+          <attribute name="ap_casedecision_case_decision" />
+          <filter type="and">
+            <condition attribute="ap_casedecision_info_available" operator="eq" value="1" />
+          </filter>
+          <link-entity alias="a_24b0b325deff464fbd3a6b149afec189" name="ap_person" to="ap_person_ain_lkp" from="ap_personid" link-type="outer" visible="false">
+            <attribute name="ap_person_given_name" />
+          </link-entity>
+          <order attribute="ap_casedecision_issued_date" descending="true" />
+          <attribute name="ap_ainid" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Cases - Decisions View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

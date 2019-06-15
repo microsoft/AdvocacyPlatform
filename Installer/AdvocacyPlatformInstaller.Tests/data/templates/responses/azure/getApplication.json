@@ -1,0 +1,75 @@
+﻿{
+	"@odata.context": "https://graph.microsoft.com/beta/$metadata#applications",
+	"value": [
+		{
+			"id": "{objectId}",
+			"deletedDateTime": null,
+			"isFallbackPublicClient": null,
+			"appId": "{appId}",
+			"applicationTemplateId": null,
+			"identifierUris": [ "{identifierUri}" ],
+			"createdDateTime": "2019-05-28T02:17:31.3693322Z",
+			"displayName": "{displayName}",
+			"isDeviceOnlyAuthSupported": null,
+			"groupMembershipClaims": null,
+			"optionalClaims": null,
+			"orgRestrictions": [],
+			"publisherDomain": "{domain}.onmicrosoft.com",
+			"signInAudience": "{signInAudience}",
+			"tags": [],
+			"tokenEncryptionKeyId": null,
+			"api": {
+				"requestedAccessTokenVersion": null,
+				"acceptMappedClaims": null,
+				"knownClientApplications": [],
+				"oauth2PermissionScopes": [],
+				"preAuthorizedApplications": []
+			},
+			"appRoles": [],
+			"publicClient": { "redirectUris": [] },
+			"info": {
+				"termsOfServiceUrl": null,
+				"supportUrl": null,
+				"privacyStatementUrl": null,
+				"marketingUrl": null,
+				"logoUrl": null
+			},
+			"keyCredentials": [],
+			"parentalControlSettings": {
+				"countriesBlockedForMinors": [],
+				"legalAgeGroupRule": "Allow"
+			},
+			"passwordCredentials": [
+				{
+					"customKeyIdentifier": null,
+					"endDateTime": "2020-05-28T02:17:34.3366275Z",
+					"keyId": "{keyId}",
+					"startDateTime": "2019-05-28T02:17:34.3366275Z",
+					"secretText": null,
+					"hint": "{hint}",
+					"displayName": null
+				}
+			],
+			"requiredResourceAccess": [
+				{
+					"resourceAppId": "{resourceAppId}",
+					"resourceAccess": [
+						{
+							"id": "{accessObjectId}",
+							"type": "{accessScopeOrRole}"
+						}
+					]
+				}
+			],
+			"web": {
+				"redirectUris": [],
+				"homePageUrl": null,
+				"logoutUrl": null,
+				"implicitGrantSettings": {
+					"enableIdTokenIssuance": false,
+					"enableAccessTokenIssuance": false
+				}
+			}
+		}
+	]
+}

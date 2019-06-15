@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<optionset Name="ap_configuration_type" localizedName="Configuration Type" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OptionSetType>picklist</OptionSetType>
+  <IsGlobal>1</IsGlobal>
+  <IntroducedVersion>1.0.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <displaynames>
+    <displayname description="Configuration Type" languagecode="1033" />
+  </displaynames>
+  <Descriptions>
+    <Description description="" languagecode="1033" />
+  </Descriptions>
+  <options>
+    <option value="683710000">
+      <labels>
+        <label description="Blob Data Retention (Days)" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710001">
+      <labels>
+        <label description="Max Calls Retries" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710002">
+      <labels>
+        <label description="Telemetry Notifications Email" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710003">
+      <labels>
+        <label description="Time Between Calls Retries (Days)" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710004">
+      <labels>
+        <label description="Call Initial Pause (Seconds)" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710005">
+      <labels>
+        <label description="Call Final Pause (Seconds)" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710006">
+      <labels>
+        <label description="Call Case Decision DTMF" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710007">
+      <labels>
+        <label description="Call Court Hearing DTMF" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710008">
+      <labels>
+        <label description="Call Court Hearing Long Message DTMF" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710009">
+      <labels>
+        <label description="Call Case Decision Long Message DTMF" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710010">
+      <labels>
+        <label description="Call Case Appeal DTMF" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710011">
+      <labels>
+        <label description="Call Case Appeal Long Message DTMF" languagecode="1033" />
+      </labels>
+    </option>
+  </options>
+</optionset>

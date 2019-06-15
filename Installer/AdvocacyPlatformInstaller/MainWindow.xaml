@@ -1,0 +1,65 @@
+﻿<Window x:Class="AdvocacyPlatformInstaller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+        mc:Ignorable="d"
+        Title="Advocacy Platform Setup"
+        WindowStartupLocation="CenterScreen"
+        Background="LightGray"
+        Height="800" 
+        Width="1100"
+        Closing="Window_Closing"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <local:BoolToRowHeightConverter x:Key="BoolToRowHeigthConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding ShowDescription, Converter={StaticResource BoolToRowHeigthConverter}, ConverterParameter=90, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MaxHeight="90" />
+            <RowDefinition Height="{Binding ShowStatus, Converter={StaticResource BoolToRowHeigthConverter}, ConverterParameter=40, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MaxHeight="40" />
+            <RowDefinition Height="{Binding ShowAnyProgress, Converter={StaticResource BoolToRowHeigthConverter}, ConverterParameter=50, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MaxHeight="50" />
+            <RowDefinition />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="0" Grid.Column="0" Stretch="Fill" Source="pack://application:,,,/Media/justice-scales2.jpg" />
+            
+            <RichTextBox Grid.Row="0" Grid.Column="1" BorderThickness="0" Visibility="{Binding ShowDescription, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="White" Padding="5 5 5 5">
+                <FlowDocument>
+                    <Paragraph Padding="5 10 5 0" FontWeight="Bold">
+                        <Run Text="{Binding Page.PageName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Paragraph>
+                    <Paragraph Margin="5 5 5 5" TextIndent="40">
+                        <Run Text="{Binding Page.PageDescription, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+        </Grid>
+
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="5 5 5 5" VerticalAlignment="Bottom" Visibility="{Binding ShowStatus, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="{Binding StatusMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="{Binding StatusMessageBgColor, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding StatusMessageFgColor, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" />
+        <ProgressBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="15 5 15 15" IsIndeterminate="True" Visibility="{Binding ShowProgressIndeterminate, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ProgressBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="15 5 15 15" Minimum="0" Value="{Binding CurrentOperationRunner.CurrentOperationIndex, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding CurrentOperationRunner.OperationsCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ShowProgress, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Grid x:Name="WizardPageGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" />
+
+        <Button x:Name="WizardPreviousButton" Grid.Row="4" Grid.Column="1" Margin="5 5 5 5" Content="Previous" IsEnabled="{Binding PreviousEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ShowPrevious, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="WizardPreviousButton_Click" />
+        <Button x:Name="WizardNextButton" Grid.Row="4" Grid.Column="2" Margin="5 5 5 5" Content="Next" IsEnabled="{Binding NextEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ShowNext, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="WizardNextButton_Click" />
+        <Button x:Name="WizardCancelButton" Grid.Row="4" Grid.Column="3" Margin="5 5 5 5" Content="Cancel" Visibility="{Binding ShowCancel, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="WizardCancelButton_Click" />
+        <Button x:Name="WizardFinishButton" Grid.Row="4" Grid.Column="3" Margin="5 5 5 5" Content="Finish" IsEnabled="{Binding FinishEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding ShowFinish, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="WizardFinishButton_Click" />
+    </Grid>
+</Window>

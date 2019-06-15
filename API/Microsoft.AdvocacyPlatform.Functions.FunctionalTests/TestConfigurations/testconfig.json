@@ -1,0 +1,14 @@
+﻿{
+  "InputId": "{inputId}",
+  "InitSeconds": 0,
+  "FinalSeconds": 45,
+  "Dtmf": "",
+  "CallSid": "{callSid}",
+  "RecordingUri": "",
+  "Transcript": "",
+  "ExpectedEntities": [
+  ],
+  "ExpectedAdditionalEntities": {
+  },
+  "CallbackUrl": ""
+}

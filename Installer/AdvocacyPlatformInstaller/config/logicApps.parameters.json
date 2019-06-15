@@ -1,0 +1,36 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newCase_logicAppName": {
+      "value": "ap-{newId(logicapp)}-new-case-put-on-queue-wu"
+    },
+    "resultsUpdateCase_logicAppName": {
+      "value": "ap-{newId(logicapp)}-results-available-update-case-wu"
+    },
+    "addressUpdateCase_logicAppName": {
+      "value": "ap-{newId(logicapp)}-updated-location-update-case-wu"
+    },
+    "getRetryRecords_logicAppName": {
+      "value": "ap-{newId(logicapp)}-records-for-retry-wu"
+    },
+    "logicAppLocation": {
+      "value": "westus2"
+    },
+    "servicebus_Connection_Name": {
+      "value": "ap-{newId(servicebus)}-servicebus"
+    },
+    "commondataservice_Connection_Name": {
+      "value": "ap-{newId(cds)}-cds"
+    },
+    "dynamicscrm_environment_name": {
+      "value": "String"
+    },
+    "bingmaps_Connection_Name": {
+      "value": "ap-{newId(bingmaps)}-bingMaps"
+    },
+    "bingmaps_api_key": {
+      "value": "String"
+    }
+  }
+}

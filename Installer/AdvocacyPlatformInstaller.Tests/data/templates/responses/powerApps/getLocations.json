@@ -1,0 +1,37 @@
+﻿{
+  "value": [
+    {
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{name1}",
+      "type": "Microsoft.BusinessAppPlatform/locations",
+      "name": "{name1}",
+      "properties": {
+        "displayName": "{displayName1}",
+        "code": "{code1}",
+        "isDefault": true,
+        "isDisabled": false
+      }
+    },
+    {
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{name2}",
+      "type": "Microsoft.BusinessAppPlatform/locations",
+      "name": "{name2}",
+      "properties": {
+        "displayName": "{displayName2}",
+        "code": "{code2}",
+        "isDefault": false,
+        "isDisabled": false
+      }
+    },
+    {
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{name3}",
+      "type": "Microsoft.BusinessAppPlatform/locations",
+      "name": "{name3}",
+      "properties": {
+        "displayName": "{displayName3}",
+        "code": "{code3}",
+        "isDefault": false,
+        "isDisabled": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+﻿{
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Resources/deployments/{deploymentName}",
+  "name": "{deploymentName}",
+  "properties": {
+    "templateHash": "{templateHash}",
+    "parameters": {
+      "ap_function_app_zip_sas_token": {
+        "type": "String",
+        "value": ""
+      }
+    },
+    "mode": "Incremental",
+    "provisioningState": "{provisioningState}",
+    "timestamp": "2019-05-28T02:17:33.9671717Z",
+    "duration": "PT1.1087997S",
+    "correlationId": "03a8f351-3b12-4016-830c-a7b63d3f4847",
+    "providers": [
+      {
+        "namespace": "{resourceProvider}",
+        "resourceTypes": [
+          {
+            "resourceType": "{resourceType}",
+            "locations": [ "westus2" ]
+          }
+        ]
+      }
+    ],
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/{resourceProvider}/{resourceType}/{resourceName}",
+            "resourceType": "{resourceProvider}/{resourceType}",
+            "resourceName": "{resourceName}"
+          }
+        ],
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/{resourceProvider}/{resourceType}/{resourceName}",
+        "resourceType": "{resourceProvider}/{resourceType}",
+        "resourceName": "{resourceName}"
+      }
+    ]
+  }
+}

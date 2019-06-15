@@ -1,0 +1,28 @@
+﻿{
+  "query": "{expectedQuery}",
+  "topScoringIntent": {
+    "intent": "{expectedIntent}",
+    "score": 0.9898249
+  },
+  "entities": null,
+  "compositeEntities": [
+    {
+      "parentType": "{expectedLocationEntityName}",
+      "value": "100 , montgomery st suite . eight hundred san francisco ca 94105",
+      "children": [
+        {
+          "type": "{expectedCityEntityName}",
+          "value": "{expectedCompositeCity}"
+        },
+        {
+          "type": "{expectedZipcodeEntityName}",
+          "value": "{expectedCompositeZipcode}"
+        },
+        {
+          "type": "{expectedStateEntityName}",
+          "value": "{expectedCompositeState}"
+        }
+      ]
+    }
+  ]
+}

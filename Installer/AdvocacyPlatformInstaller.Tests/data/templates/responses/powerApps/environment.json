@@ -1,0 +1,56 @@
+﻿{
+  "id": "/providers/Microsoft.BusinessAppPlatform/scopes/admin/environments/{environmentName}",
+  "type": "Microsoft.BusinessAppPlatform/scopes/environments",
+  "name": "{environmentName}",
+  "location": "{location}",
+  "properties": {
+    "azureRegionHint": "westus",
+    "displayName": "{displayName}",
+    "createdTime": "2018-11-16T00:52:36.4897032Z",
+    "createdBy": {
+      "id": "SYSTEM",
+      "displayName": "SYSTEM",
+      "type": "NotSpecified"
+    },
+    "provisioningState": "{provisioningState}",
+    "creationType": "DefaultTenant",
+    "environmentSku": "Default",
+    "environmentType": "Production",
+    "isDefault": true,
+    "runtimeEndpoints": {
+      "microsoft.BusinessAppPlatform": "https://unitedstates.api.bap.microsoft.com",
+      "microsoft.CommonDataModel": "https://unitedstates.api.cds.microsoft.com",
+      "microsoft.PowerApps": "https://unitedstates.api.powerapps.com",
+      "microsoft.Flow": "https://unitedstates.api.flow.microsoft.com",
+      "microsoft.PowerAppsAdvisor": "https://unitedstates.api.advisor.powerapps.com"
+    },
+    "linkedEnvironmentMetadata": {
+      "type": "Dynamics365Instance",
+      "resourceId": "{crmResourceId}",
+      "friendlyName": "{crmFriendlyName}",
+      "uniqueName": "{crmUniqueName}",
+      "domainName": "{crmDomainName}",
+      "version": "9.1.0.4632",
+      "instanceUrl": "https://{crmDomainName}.crm.dynamics.com/",
+      "instanceApiUrl": "https://{crmDomainName}.api.crm.dynamics.com",
+      "baseLanguage": 1033,
+      "instanceState": "{crmInstanceState}",
+      "createdTime": "2019-03-07T05:05:26.4403735Z",
+      "modifiedTime": "2019-05-27T21:06:57.7653578Z",
+      "hostNameSuffix": "crm.dynamics.com",
+      "bapSolutionId": "00000001-0000-0000-0001-00000000009b",
+      "creationTemplates": [ "D365_CDS" ],
+      "webApiVersion": "v9.0"
+    },
+    "cdsMigrationDetails": {
+      "phase": "Completed",
+      "status": "Completed",
+      "migratedBy": {
+        "id": "{migratedById}",
+        "displayName": "{migratedByDisplayName}",
+        "type": "User",
+        "tenantId": "{tenantId}"
+      }
+    }
+  }
+}

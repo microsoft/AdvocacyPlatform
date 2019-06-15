@@ -1,0 +1,24 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/System800Proj/v15
+/System800Proj/.vscode
+/System800Proj.Tests/bin/Debug/netcoreapp2.1
+/System800Proj.Tests/obj
+/.vs
+/System800Proj.FunctionalTests/bin/Debug/netcoreapp2.1
+/System800Proj.FunctionalTests/obj
+/System800Proj.FunctionalTests/testconfig.json
+/System800Proj.TestCallbackHost/bin/Debug/netcoreapp2.1
+/System800Proj.TestCallbackHost/obj
+/System800Proj.Contracts/bin/Debug/netcoreapp2.1
+/System800Proj.Contracts/obj
+/System800Proj.TestCallbackHost/bin/Debug/netcoreapp2.2
+/System800Proj/Properties/PublishProfiles/asap-wu-func - Web Deploy.pubxml
+/System800Proj.Contracts/bin/Release/netcoreapp2.1
+/System800Proj/local.settings.secrets.json
+/System800Proj/local.settings.values.json
+/TestResults/2753d44a-80ad-45de-a82a-c76d4db52813/c.d.ritchie_WIN10-VUB5HEC6 2019-04-01 10_30_11.coverage
+/System800Proj.Clients/bin
+/System800Proj.Clients/obj

@@ -1,0 +1,726 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{ea7ee1b0-3b6b-4c34-92d7-4893e847ab19}</formid>
+    <IntroducedVersion>1.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="{f3a7f12f-0619-447d-a779-9d74436eedaa}" name="{f3a7f12f-0619-447d-a779-9d74436eedaa}" verticallayout="true" IsUserDefined="1" expanded="true" locklevel="0" showlabel="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section id="{cbd7b601-5603-4e8c-b8d2-950cc2ead999}" name="{cbd7b601-5603-4e8c-b8d2-950cc2ead999}" IsUserDefined="0" locklevel="0" showlabel="true" showbar="true" columns="1" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{ab49aaa5-1333-1aae-2eb9-96eda1170be0}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Record Identifier" languagecode="1033" />
+                        </labels>
+                        <control disabled="true" id="ap_record_identifier" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_record_identifier" uniqueid="{4002eb2a-b696-dd56-0791-94d5305aadd5}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{ce59a662-fb0d-40bf-b985-d27cdb7a5da2}">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_ain" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_ain" uniqueid="{6bc2097a-6593-3ea2-7d3c-6a3ae1603641}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{9811d68d-5588-807a-2c4c-97eba54715dc}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_person_ain_lkp" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ap_person_ain_lkp" uniqueid="{1a9d442a-ea1d-7a63-6838-a265b8e95190}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{bcd39041-164b-203d-2a8e-45e142a1a530}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="createdon" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="createdon" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section id="{6dbd0800-6266-1938-9dbc-ae1e3d3d930d}" name="{f3a7f12f-0619-447d-a779-9d74436eedaa}_section_5" IsUserDefined="0" locklevel="0" showlabel="true" showbar="true" columns="1" labelwidth="130" celllabelalignment="Left" celllabelposition="Left" layout="varwidth">
+                  <labels>
+                    <label description="Transcription Configuration" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{b535ba10-2362-a754-99cd-e0441eea4036}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Get Court Hearing" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_extract_court_hearing_info" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_extract_court_hearing_info" uniqueid="{0626dc65-d718-a3dd-3e6e-abe024cc5c56}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5aab528b-8800-83d0-7141-0e916a2e2d98}" locklevel="0" showlabel="true">
+                        <labels>
+                          <label description="Get Case Decision" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_extract_case_decision_info" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_extract_case_decision_info" uniqueid="{01de8231-ec73-ac52-31d9-497ab0713a4c}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{739b874e-283e-0e35-7c70-d21b94714da1}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="Get Case Appeal" languagecode="1033" />
+                        </labels>
+                        <control id="ap_extract_case_appeal_info" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_extract_case_appeal_info" disabled="false" uniqueid="{bd2b2a35-582d-9cb3-282c-08c889c23736}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{3a2d9d3a-d020-5603-3082-9914cd06a8e3}" showlabel="false" userspacer="true">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{4e57954b-0a26-ec12-c7e5-56380a0381db}" name="Court_Information_Tab" IsUserDefined="0" expanded="false" locklevel="0" showlabel="true">
+          <labels>
+            <label description="Court Hearing Information" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section id="{073686ed-27d5-cd33-ed98-c8b4e6834ddc}" name="tab_3_section_1" IsUserDefined="0" locklevel="0" showlabel="true" showbar="true" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" layout="varwidth">
+                  <labels>
+                    <label description="Court Hearing Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{dee6e7ec-7dce-d251-c1b1-d80a037b4c13}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Transcription Status" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_courthearing_transcription_status" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="ap_courthearing_transcription_status" uniqueid="{168972dd-4b67-2456-c70c-cc02d077951c}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{94264d95-0b48-8c79-7a5c-db6ca7b772ae}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Court Hearing Date" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_courthearing_datetime" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_courthearing_datetime" uniqueid="{e083ead4-63b0-40c5-c710-234c73c96d68}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{eed02089-2128-03bc-cb56-dde22aba55a3}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_courthearing_judge" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_courthearing_judge" uniqueid="{8ace3ece-ed5a-b7b6-1709-5caea0a91b73}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{a60e1b2e-1958-1745-a499-5ad548549656}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_courthearing_type" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_courthearing_type" disabled="false" uniqueid="{ebcc703e-d919-7973-e46b-893c7e492028}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{9458444c-0c1a-a645-b16d-c908c80be386}" locklevel="0" showlabel="true" visible="false" rowspan="2">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_courthearing_location" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_courthearing_location" uniqueid="{512d0d4e-3a4c-9055-9a34-32aea61ccc4e}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row>
+                      <cell id="{1e2ddbae-b4dc-9783-752c-4165a4c74d23}" locklevel="0" showlabel="true" rowspan="2" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_courthearing_location_composite" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_courthearing_location_composite" uniqueid="{65aa8b1b-859b-2651-54c1-ee5ae41bbb6d}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row>
+                      <cell id="{badb377a-7de8-0ed8-d9e4-9c053d8472c6}" locklevel="0" showlabel="true" visible="false" rowspan="3">
+                        <labels>
+                          <label description="Additional Information" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_courthearing_additional_info" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_courthearing_additional_info" uniqueid="{d0b2b535-429c-0185-88e6-cda40ce09973}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section id="{41debd7a-482d-a0be-966a-65ea9288ca5c}" name="tab_3_section_2" IsUserDefined="0" locklevel="0" showlabel="true" showbar="true" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" layout="varwidth">
+                  <labels>
+                    <label description="Call Transcription Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{8e6cc399-d8e9-a54a-c010-c66c2a4eb285}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Call Recording" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_courthearing_recording_url" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_courthearing_recording_url" uniqueid="{ba10c4c7-7d81-ce77-8ee8-830dd792e421}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b6a51519-41b4-1840-5208-bbd96d7a641d}" locklevel="0" showlabel="true" visible="false" rowspan="8" auto="false">
+                        <labels>
+                          <label description="Call Transcription" languagecode="1033" />
+                        </labels>
+                        <control disabled="true" id="ap_courthearing_transcription_raw" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_courthearing_transcription_raw" uniqueid="{545ddea5-025b-082a-217c-ddbeb1b32d75}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{35e32b8c-90b7-0a88-030a-70902a062346}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Last Call Date" languagecode="1033" />
+                        </labels>
+                        <control disabled="true" id="ap_courthearing_transcription_changed_on" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_courthearing_transcription_changed_on" uniqueid="{ab720933-bb85-09b2-d5d4-5c8c59376268}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{51250c84-5677-43cb-572a-03edb4678bb1}" locklevel="0" showlabel="true" visible="false" rowspan="2">
+                        <labels>
+                          <label description="Transcription Errors" languagecode="1033" />
+                        </labels>
+                        <control disabled="true" id="ap_courthearing_transcription_errors" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_courthearing_transcription_errors" uniqueid="{015a63c9-c70a-2860-30d8-5a996b7771ea}" />
+                      </cell>
+                    </row>
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{a28b2730-5280-ea6e-391c-977ee669bc79}" name="tab_4" IsUserDefined="0" expanded="false" locklevel="0" showlabel="true">
+          <labels>
+            <label description="Case Decision Information" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section id="{118476ad-b4d4-8693-152a-348ebbedbdde}" name="tab_4_section_2" IsUserDefined="0" locklevel="0" showlabel="true" showbar="true" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" layout="varwidth">
+                  <labels>
+                    <label description="Case Decision Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{46e54dc9-b703-6d4d-02b0-183d5aeb0543}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Transcription Status" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_casedecision_transcription_status" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="ap_casedecision_transcription_status" uniqueid="{822b3558-9170-40d1-83e6-9d3512c8280d}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{05c78412-84b4-6017-8718-aad309893a44}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_casedecision_case_decision" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_casedecision_case_decision" uniqueid="{60735731-bba1-4348-6a8c-2e9c41a92818}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{20e86c49-1645-2562-b4ed-614da5d2a182}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_casedecision_issued_date" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_casedecision_issued_date" uniqueid="{6649787e-6899-1313-3564-166826789e9c}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d7957e68-3801-ac9e-5628-bed72ddce128}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_removal_order_issued" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="ap_removal_order_issued" uniqueid="{aa733ab1-b636-24a1-0436-82e3a6598606}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{700c895b-3812-dc3d-c9a5-c4dd87ba916b}" locklevel="0" showlabel="true" visible="false" rowspan="3">
+                        <labels>
+                          <label description="Additional Information" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_casedecision_additional_info" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_casedecision_additional_info" uniqueid="{6ecd2a73-8d2a-0802-aad2-652d2ab8b28b}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{5aeb2956-86d0-b330-36cb-a995c45a1262}" showlabel="false" userspacer="true">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section id="{0ca3c2bb-b34b-6d58-5925-e9c13e66bb19}" name="tab_4_section_1" IsUserDefined="0" locklevel="0" showlabel="true" showbar="true" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left" layout="varwidth">
+                  <labels>
+                    <label description="Call Transcription Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{cded8265-57be-6183-d670-96bd3873ac51}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Call Recording" languagecode="1033" />
+                        </labels>
+                        <control disabled="false" id="ap_casedecision_call_recording_url" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_casedecision_call_recording_url" uniqueid="{2d54884c-c9d5-07dc-52d7-d0d1bc086bc8}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{9b829d34-d31e-2da0-c04d-4293a9b67ce9}" locklevel="0" showlabel="true" visible="false" rowspan="8">
+                        <labels>
+                          <label description="Call Transcription" languagecode="1033" />
+                        </labels>
+                        <control disabled="true" id="ap_casedecision_transcription_raw" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_casedecision_transcription_raw" uniqueid="{c4de9ebc-b4ce-5d13-40ac-7ccc2ba3a728}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{46b6e22e-4b7b-9b92-9669-534ece5c7a17}" locklevel="0" showlabel="true" visible="false">
+                        <labels>
+                          <label description="Last Call Date" languagecode="1033" />
+                        </labels>
+                        <control disabled="true" id="ap_casedecision_transcription_changed_on" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_casedecision_transcription_changed_on" uniqueid="{a5e8d64d-5a3a-d232-c03b-e3a539a7a030}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d567eb53-e701-c040-5c4b-a6c33e2a1783}" locklevel="0" showlabel="true" visible="false" rowspan="2">
+                        <labels>
+                          <label description="Transcription Errors" languagecode="1033" />
+                        </labels>
+                        <control disabled="true" id="ap_casedecision_transcription_errors" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_casedecision_transcription_errors" uniqueid="{ac4a618d-01e1-299a-8a75-24611b1d2b55}" />
+                      </cell>
+                    </row>
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="tab_6" id="{62a2e4e6-555d-25a2-2c8d-023089b7681a}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="false">
+          <labels>
+            <label description="Case Appeal Information" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section name="tab_6_section_1" showlabel="true" showbar="true" locklevel="0" id="{10ca1286-4878-5bb8-2077-aa9aa06b533e}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Case Appeal Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{754c7156-5564-e314-0642-5e8ee2571798}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="Transcription Status" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_transcription_status" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="ap_caseappeal_transcription_status" disabled="false" uniqueid="{3b87eda7-c1cc-c1b6-b0c5-ec4dbdbba036}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c3ebcc02-b6bd-8a12-14d1-2641b6cdd4e4}" showlabel="true" locklevel="0" rowspan="4" visible="false">
+                        <labels>
+                          <label description="Appeal Status Information" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_status_info" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_caseappeal_status_info" disabled="false" uniqueid="{5d787432-5903-8dda-d501-c97639e148a9}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{1a063d85-c2e0-6ed7-2578-ebe54c5eb10d}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="Appeal Status Date" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_submitted_date" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_caseappeal_submitted_date" disabled="false" uniqueid="{b1448995-5d01-b4a4-8a0e-ece5cd807ac9}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{1d9c9bc4-9e33-a7d0-2210-0d20e0ead456}" showlabel="true" locklevel="0" rowspan="3" visible="false">
+                        <labels>
+                          <label description="Additional Information" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_additional_info" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_caseappeal_additional_info" disabled="false" uniqueid="{8bed0d0d-e107-5d8c-3080-69c93cea669e}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="tab_6_section_2" showlabel="true" showbar="true" locklevel="0" id="{12850bbc-7273-ea83-d252-3bc1011d477c}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Call transcription Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{2752dc9b-279e-d0e2-522a-bca24ab4795c}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="Call Recording" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_call_recording_url" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_caseappeal_call_recording_url" disabled="false" uniqueid="{11866002-0372-4cdc-2ad8-58903028eb4a}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{37184236-6689-7495-8ada-6c59096975cd}" showlabel="true" locklevel="0" visible="false" rowspan="8">
+                        <labels>
+                          <label description="Call Transcription" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_transcription_raw" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_caseappeal_transcription_raw" disabled="true" uniqueid="{4eb7d77c-c532-d9c2-0c20-a4d627bbb9bd}" />
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row>
+                      <cell id="{b65286d0-5202-4559-6900-a4267566ebde}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="Last Call Date" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_transcription_changed_on" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_caseappeal_transcription_changed_on" disabled="true" uniqueid="{b9a4e88d-198b-176b-5177-a016c1dc9947}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{c53e8de3-dd55-7cd4-6677-c167e33dbe0b}" showlabel="true" locklevel="0" visible="false" rowspan="2">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_caseappeal_transcription_errors" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_caseappeal_transcription_errors" disabled="true" uniqueid="{c71565c8-9034-242c-7829-8657e7a1a605}" />
+                      </cell>
+                    </row>
+                    <row />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="{97a635e7-6ecc-34ae-aade-7b445949b131}" name="tab_5" IsUserDefined="0" expanded="false" locklevel="0" showlabel="true">
+          <labels>
+            <label description="Notes" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{5d4269ac-1efc-4385-8ab8-448b0200a3b9}" height="auto" IsUserDefined="0" showlabel="false" showbar="false">
+                  <labels>
+                    <label description="Notes" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{394f7148-f308-405c-b74c-cd951535a844}" showlabel="false" rowspan="15" auto="false">
+                        <labels>
+                          <label description="Note Text" languagecode="1033" />
+                        </labels>
+                        <control id="notescontrol" classid="{06375649-c143-495e-a496-c962e5b4488e}" uniqueid="{b0a93408-e0a5-4d81-82c0-b58355464c10}">
+                          <parameters>
+                            <DefaultTabId>NotesTab</DefaultTabId>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row height="auto" />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{7ce4343e-255d-45b8-a081-c6e9d2282271}" columns="111">
+        <rows>
+          <row>
+            <cell id="{c3c6cd6b-46f8-4ca8-ae60-32a40f815440}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{d076fc5d-abce-4484-a6d7-57d68d9ff172}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{5e72195c-1431-b449-31d7-c826a57e6a7a}" locklevel="0" showlabel="true">
+              <labels>
+                <label description="Record Owner" languagecode="1033" />
+              </labels>
+              <control disabled="false" id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" uniqueid="{06d960ec-bb09-46c3-1e36-41013b235391}">
+                <parameters>
+                  <AutoResolve>true</AutoResolve>
+                  <DisableMru>false</DisableMru>
+                </parameters>
+              </control>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title Text="Common" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title Text="Sales" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title Text="Service" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title Text="Marketing" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title Text="Process Sessions" LCID="1033" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{ba10c4c7-7d81-ce77-8ee8-830dd792e421}">
+          <customControl id="{71716B6C-711E-476c-8AB8-5D11542BFB47}">
+            <parameters>
+              <datafieldname>ap_courthearing_recording_url</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_courthearing_recording_url</url>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_courthearing_recording_url</url>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_courthearing_recording_url</url>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{2d54884c-c9d5-07dc-52d7-d0d1bc086bc8}">
+          <customControl id="{71716B6C-711E-476c-8AB8-5D11542BFB47}">
+            <parameters>
+              <datafieldname>ap_casedecision_call_recording_url</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_casedecision_call_recording_url</url>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_casedecision_call_recording_url</url>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_casedecision_call_recording_url</url>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{0626dc65-d718-a3dd-3e6e-abe024cc5c56}">
+          <customControl id="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}">
+            <parameters>
+              <datafieldname>ap_extract_court_hearing_info</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_court_hearing_info</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_court_hearing_info</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_court_hearing_info</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{01de8231-ec73-ac52-31d9-497ab0713a4c}">
+          <customControl id="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}">
+            <parameters>
+              <datafieldname>ap_extract_case_decision_info</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_case_decision_info</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_case_decision_info</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_case_decision_info</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{11866002-0372-4cdc-2ad8-58903028eb4a}">
+          <customControl id="{71716B6C-711E-476c-8AB8-5D11542BFB47}">
+            <parameters>
+              <datafieldname>ap_caseappeal_call_recording_url</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_caseappeal_call_recording_url</url>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_caseappeal_call_recording_url</url>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.Multimedia.MultimediaPlayerControl">
+            <parameters>
+              <url>ap_caseappeal_call_recording_url</url>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{bd2b2a35-582d-9cb3-282c-08c889c23736}">
+          <customControl id="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}">
+            <parameters>
+              <datafieldname>ap_extract_case_appeal_info</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_case_appeal_info</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_case_appeal_info</value>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_extract_case_appeal_info</value>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <footer id="{48337948-d794-4cfe-be01-0e5d437bc523}" columns="111" labelwidth="115" celllabelalignment="Left" celllabelposition="Top">
+        <rows>
+          <row>
+            <cell id="{2d6b9002-8cfd-44b2-a24f-c7ec8e307c4c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{928bb723-b348-4d71-9f94-6b0500f8913c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{c978618a-a773-4fbe-acfa-3443468b6afe}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions FallbackForm="true" Order="0" />
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

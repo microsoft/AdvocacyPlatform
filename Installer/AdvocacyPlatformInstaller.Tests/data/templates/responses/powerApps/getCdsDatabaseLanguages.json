@@ -1,0 +1,37 @@
+﻿{
+  "value": [
+    {
+      "name": "{name1}",
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{location}/environmentLanguages/{name1}",
+      "type": "Microsoft.BusinessAppPlatform/locations/environmentLanguages",
+      "properties": {
+        "localeId": {name1},
+        "localizedName": "{displayName1}",
+        "displayName": "{displayName1}",
+        "isTenantDefault": true
+      }
+    },
+    {
+      "name": "{name2}",
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{location}/environmentLanguages/{name2}",
+      "type": "Microsoft.BusinessAppPlatform/locations/environmentLanguages",
+      "properties": {
+        "localeId": {name2},
+        "localizedName": "{displayName2}",
+        "displayName": "{displayName2}",
+        "isTenantDefault": true
+      }
+    },
+    {
+      "name": "{name3}",
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{location}/environmentLanguages/{name3}",
+      "type": "Microsoft.BusinessAppPlatform/locations/environmentLanguages",
+      "properties": {
+        "localeId": {name3},
+        "localizedName": "{displayName3}",
+        "displayName": "{displayName3}",
+        "isTenantDefault": true
+      }
+    }
+  ]
+}

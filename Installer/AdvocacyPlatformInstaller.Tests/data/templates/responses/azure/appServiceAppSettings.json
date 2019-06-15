@@ -1,0 +1,9 @@
+﻿{
+	"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Web/sites/{appServiceName}/config/appsettings",
+	"name": "appsettings",
+	"type": "Microsoft.Web/sites/config",
+	"location": "West US 2",
+	"properties": {
+		"{settings}"
+	}
+}

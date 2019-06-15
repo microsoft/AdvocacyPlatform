@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<optionset Name="ap_case_transcription_status" localizedName="Transcription Status" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <OptionSetType>picklist</OptionSetType>
+  <IsGlobal>1</IsGlobal>
+  <IntroducedVersion>1.0.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <displaynames>
+    <displayname description="Transcription Status" languagecode="1033" />
+  </displaynames>
+  <Descriptions>
+    <Description description="" languagecode="1033" />
+  </Descriptions>
+  <options>
+    <option value="683710000">
+      <labels>
+        <label description="Not Started" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710001">
+      <labels>
+        <label description="In Progress" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710002">
+      <labels>
+        <label description="Resubmit (Retry)" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710003">
+      <labels>
+        <label description="In Error" languagecode="1033" />
+      </labels>
+    </option>
+    <option value="683710004">
+      <labels>
+        <label description="Completed" languagecode="1033" />
+      </labels>
+    </option>
+  </options>
+</optionset>

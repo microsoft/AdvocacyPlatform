@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{84D1EDA2-B163-4043-84D5-6E1D0D2FC52F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AdvocacyPlatformInstaller</RootNamespace>
+    <AssemblyName>AdvocacyPlatformInstaller</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\APStyleCopRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\APStyleCopRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x64\Debug\AdvocacyPlatformInstaller.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\APStyleCopRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AdvocacyPlatformInstaller.InstallerProgram</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.12\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.5.0.5\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.16\lib\net462\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.12\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk.Deployment, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.Deployment.9.0.2.12\lib\net462\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.12\lib\net462\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Tooling.Connector, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.0.2.16\lib\net462\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Activities.Presentation" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Converters\InstallerActionTypeToBoolConverter.cs" />
+    <Compile Include="Converters\OperationStatusCodeToColorConverter.cs" />
+    <Compile Include="DataModel\Installation\OperationsProgress.cs" />
+    <Compile Include="DataModel\Installation\OperationStatus.cs" />
+    <Compile Include="DataModel\Installation\OperationStatusCode.cs" />
+    <Compile Include="DataModel\InstallerActionType.cs" />
+    <Compile Include="Events\LogEventArgs.cs" />
+    <Compile Include="Events\ProcessCompletedEventArgs.cs" />
+    <Compile Include="Helpers\ArmSummarizer.cs" />
+    <Compile Include="Helpers\ArmTemplateHelper.cs" />
+    <Compile Include="Converters\BoolToRowHeightConverter.cs" />
+    <Compile Include="Converters\InverseBoolToVisibilityConverter.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="InstallerProgram.cs" />
+    <Compile Include="Converters\IntToBoolConverter.cs" />
+    <Compile Include="Converters\InverseBoolConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToColorConverter.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="DataModel\Azure\AzureConfiguration.cs" />
+    <Compile Include="DataModel\Azure\AzureResourceGroup.cs" />
+    <Compile Include="DataModel\Azure\AzureSubscription.cs" />
+    <Compile Include="DataModel\Bing\BingMapsConfiguration.cs" />
+    <Compile Include="DataModel\InstallerPageDescriptor.cs" />
+    <Compile Include="DataModel\InstallerPermission.cs" />
+    <Compile Include="DataModel\PowerApps\DynamicsCrmConfiguration.cs" />
+    <Compile Include="DataModel\Features\Feature.cs" />
+    <Compile Include="DataModel\Features\FeatureNames.cs" />
+    <Compile Include="DataModel\Features\FeatureTree.cs" />
+    <Compile Include="DataModel\Azure\FunctionApp\FunctionAppConfiguration.cs" />
+    <Compile Include="DataModel\Installation\InstallationConfiguration.cs" />
+    <Compile Include="OperationRunner\LogLevel.cs" />
+    <Compile Include="OperationRunner\Operation.cs" />
+    <Compile Include="DataModel\InstallerModel.cs" />
+    <Compile Include="InstallerWizard.cs" />
+    <Compile Include="DataModel\Azure\KeyVaultConfiguration.cs" />
+    <Compile Include="DataModel\Azure\LogicApps\LogicAppsConfiguration.cs" />
+    <Compile Include="DataModel\Azure\LuisConfiguration.cs" />
+    <Compile Include="DataModel\Azure\ManagementConfiguration.cs" />
+    <Compile Include="DataModel\PowerApps\PowerAppsCdsCurrency.cs" />
+    <Compile Include="DataModel\PowerApps\PowerAppsCdsLanguage.cs" />
+    <Compile Include="DataModel\PowerApps\PowerAppsConfiguration.cs" />
+    <Compile Include="DataModel\PowerApps\PowerAppsEnvironment.cs" />
+    <Compile Include="DataModel\Azure\ServiceBusConfiguration.cs" />
+    <Compile Include="DataModel\Azure\SpeechCognitiveServiceConfiguration.cs" />
+    <Compile Include="DataModel\WizardPage.cs" />
+    <Compile Include="DataModel\WizardProgress.cs" />
+    <Compile Include="Abstract\NotifyPropertyChangedBase.cs" />
+    <Compile Include="OperationRunner\OperationRunner.cs" />
+    <Compile Include="OperationRunner\OperationRunnerLogger.cs" />
+    <Compile Include="PageControls\Common\OperationsProgressControl.xaml.cs">
+      <DependentUpon>OperationsProgressControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\IWizardPage.cs" />
+    <Compile Include="PageControls\ModifyInstallation\Azure\AzureUpdateInstallationControl.xaml.cs">
+      <DependentUpon>AzureUpdateInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\ModifyInstallation\UpdateDynamicsCRMSolutionInstallationControl.xaml.cs">
+      <DependentUpon>UpdateDynamicsCRMSolutionInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\RemoveInstallation\UninstallRemoveInstallationControl.xaml.cs">
+      <DependentUpon>UninstallRemoveInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\InstallerCompleteInstallationControl.xaml.cs">
+      <DependentUpon>InstallerCompleteInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\InstallerConfirmActionsInstallationControl.xaml.cs">
+      <DependentUpon>InstallerConfirmActionsInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\NewInstallation\Azure\AzureDeployInstallationControl.xaml.cs">
+      <DependentUpon>AzureDeployInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\Azure\AzureFunctionAppInstallationControl.xaml.cs">
+      <DependentUpon>AzureFunctionAppInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\NewInstallation\DeployDynamicsCRMSolutionInstallationControl.xaml.cs">
+      <DependentUpon>DeployDynamicsCRMSolutionInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\RemoveInstallation\UninstallInstallationControl.xaml.cs">
+      <DependentUpon>UninstallInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\NewInstallation\PowerAppsInstallationControl.xaml.cs">
+      <DependentUpon>PowerAppsInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\WizardProgressControl.xaml.cs">
+      <DependentUpon>WizardProgressControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\Azure\AzureKeyVaultInstallationControl.xaml.cs">
+      <DependentUpon>AzureKeyVaultInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\NewInstallation\DynamicsCRMSolutionInstallationControl.xaml.cs">
+      <DependentUpon>DynamicsCRMSolutionInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\WelcomeInstallationControl.xaml.cs">
+      <DependentUpon>WelcomeInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\Azure\AzureInstallationControl.xaml.cs">
+      <DependentUpon>AzureInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\DependenciesControl.xaml.cs">
+      <DependentUpon>DependenciesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Azure\StorageAccountConfiguration.cs" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="scripts\Integrate-LogicAppDefinitions.ps1" />
+    <None Include="scripts\Register-InstallerApplication.ps1" />
+    <None Include="template\apiLogicApps.template.json" />
+    <None Include="template\azuredeploy.template.json" />
+    <None Include="template\logicApps.template.json" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="PageControls\Common\OperationsProgressControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageControls\ModifyInstallation\Azure\AzureUpdateInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\ModifyInstallation\UpdateDynamicsCRMSolutionInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\RemoveInstallation\UninstallRemoveInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\Common\InstallerCompleteInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\Common\InstallerConfirmActionsInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\NewInstallation\Azure\AzureDeployInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\Common\Azure\AzureFunctionAppInstallationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="PageControls\NewInstallation\DeployDynamicsCRMSolutionInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\RemoveInstallation\UninstallInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\NewInstallation\PowerAppsInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\Common\WizardProgressControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageControls\Common\Azure\AzureKeyVaultInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\NewInstallation\DynamicsCRMSolutionInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\Common\WelcomeInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\Common\Azure\AzureInstallationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageControls\Common\DependenciesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageControls\Common\Azure\AzureLuisModelInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\Common\Azure\AzureLogicAppsInstallationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageControls\Common\FeatureSelectionInstallationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageControls\NewInstallation\DeployPowerAppsInstallationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PageControls\Common\Azure\AzureLuisModelInstallationControl.xaml.cs">
+      <DependentUpon>AzureLuisModelInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\Azure\AzureLogicAppsInstallationControl.xaml.cs">
+      <DependentUpon>AzureLogicAppsInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\Common\FeatureSelectionInstallationControl.xaml.cs">
+      <DependentUpon>FeatureSelectionInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\NewInstallation\DeployPowerAppsInstallationControl.xaml.cs">
+      <DependentUpon>DeployPowerAppsInstallationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageControls\WizardPageBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="config\apiLogicApps.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\apiLogicApps.parameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\APEntityExtraction.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\azuredeploy.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\azuredeploy.parameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\cdsLogicApps.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\cdsLogicApps.parameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\configurationOptions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\logicApps.parameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="config\logicApps.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\justice-scales2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\justice-scales.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\refresh_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Media\folder_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdvocacyPlatformInstaller.Contracts\AdvocacyPlatformInstaller.Contracts.csproj">
+      <Project>{b8d1bc4f-ad23-4f65-a335-60c78686733b}</Project>
+      <Name>AdvocacyPlatformInstaller.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AdvocacyPlatformInstaller.Clients\AdvocacyPlatformInstaller.Clients.csproj">
+      <Project>{918eae41-edd7-486b-9ec9-eb1f186a9505}</Project>
+      <Name>AdvocacyPlatformInstaller.Clients</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="IntegrateLogicApps" BeforeTargets="BeforeBuild" AfterTargets="Restore">
+    <Exec Command="PowerShell.exe –ExecutionPolicy Bypass -Command &quot;$(SolutionDir)AdvocacyPlatformInstaller\scripts\Integrate-LogicAppDefinitions.ps1 -PackageDir $(SolutionDir)packages -TemplateDir $(SolutionDir)AdvocacyPlatformInstaller\template -ConfigDir $(SolutionDir)AdvocacyPlatformInstaller\config -SourceDir $(SolutionDir)..\API\Microsoft.AdvocacyPlatform.LogicApps&quot;" />
+  </Target>
+</Project>

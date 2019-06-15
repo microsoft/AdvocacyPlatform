@@ -1,0 +1,57 @@
+﻿<local:WizardPageBase x:Class="AdvocacyPlatformInstaller.DependenciesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <local:BoolToRowHeightConverter x:Key="BoolToRowHeightConverter" />
+    </UserControl.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="{Binding ShowDetails, Converter={StaticResource BoolToRowHeightConverter}, ConverterParameter=90, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MaxHeight="100" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="WizardProgressGrid" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Steps" Background="LightGray" FontWeight="Bold" />
+            <local:WizardProgressControl x:Name="WizardProgress" Grid.Row="1" Grid.Column="0" PagesSource="{Binding Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5 5 5 5" Visibility="{Binding ShowBrowser, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock TextWrapping="Wrap">
+                The installer requires the following permissions to successfully deploy the Advocacy Platform Solution:<LineBreak />
+            </TextBlock>
+
+            <DataGrid ItemsSource="{Binding Permissions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="True" IsReadOnly="True" />
+
+            <TextBlock TextWrapping="Wrap">
+                <LineBreak />
+                Some of these permissions require administrator consent in your tenant. Please click on
+                <Hyperlink x:Name="AdminConsentHyperlink" NavigateUri="about:blank" Click="AdminConsentHyperlink_Click">this link</Hyperlink>
+                to open a new browser window to provide administrator consent for your tenant.
+            </TextBlock>
+        </StackPanel>
+
+        <WebBrowser x:Name="ConsentBrowser" Grid.Row="0" Grid.Column="1" Visibility="{Binding ShowBrowser, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5 0 0 0" IsChecked="{Binding ShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Show Details" />
+
+        <RichTextBox x:Name="DetailsRichTextBox" Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</local:WizardPageBase>

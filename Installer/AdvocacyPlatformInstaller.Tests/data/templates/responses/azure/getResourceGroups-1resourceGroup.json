@@ -1,0 +1,13 @@
+﻿{
+  "value": [
+    {
+      "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}",
+      "name": "{resourceGroup}",
+      "location": "westus2",
+      "properties": { "provisioningState": "Succeeded" },
+      "tags": {
+        {tags}
+      }
+    }
+  ]
+}

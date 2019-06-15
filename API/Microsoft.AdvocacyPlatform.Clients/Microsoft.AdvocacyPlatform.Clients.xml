@@ -1,0 +1,949 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AdvocacyPlatform.Clients</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.AzureBlobStorageClient">
+            <summary>
+            IStorageClient implementation for interacting with an Azure Blob Storage resource.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureBlobStorageClient.ReadToStreamAsync(System.IO.Stream,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String)">
+            <summary>
+            Reads data from a blob to a stream.
+            </summary>
+            <param name="outputStream">The stream to read to.</param>
+            <param name="connectionString">Connection string to the source blob storage.</param>
+            <param name="containerName">Name of the container containing the blob.</param>
+            <param name="sourcePath">The relative path (from the container) of the blob.</param>
+            <returns>A Task representing the work.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureBlobStorageClient.WriteStreamAsync(System.IO.Stream,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,System.Boolean)">
+            <summary>
+            Writes data from a stream to a blob.
+            </summary>
+            <param name="fileStream">The stream to read from.</param>
+            <param name="connectionString">The connection string for the destination blob storage.</param>
+            <param name="containerName">The name of the container to place the blob.</param>
+            <param name="destinationPath">The relative path (from the container) for the blob.</param>
+            <param name="createContainerIfNotExists">Specifies if the container should be created if it does not exist.</param>
+            <returns>A <see cref="T:Microsoft.AdvocacyPlatform.Contracts.FileInfo"/> object representing the new blob.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.AzureKeyVaultSecretStore">
+            <summary>
+            ISecretStore implementation for interacting with an Azure Key Vault resource.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.AzureKeyVaultSecretStore._cacheKey">
+            <summary>
+            Name of the memory cache for caching retrieved secrets.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.AzureKeyVaultSecretStore._cache">
+            <summary>
+            Memory cache for caching retrieved secrets.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureKeyVaultSecretStore.GetSecretAsync(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Retrieves a secret from an Azure Key Vault resource.
+            </summary>
+            <param name="secretIdentifier">The URI identifying the secret to receive.</param>
+            <param name="authority">The token issuing authority.</param>
+            <param name="expireInCacheSeconds">The lifetime of a cached secret.</param>
+            <param name="associatedUserName">A user name to associate with the secret when creating the cached secret.</param>
+            <returns>A <see cref="T:Microsoft.AdvocacyPlatform.Contracts.Secret"/> object representing the secret.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber">
+            <summary>
+            Wrapper for the Azure speech to text service.
+            See
+            https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/quickstart-csharp-dotnetcore-windows
+            and
+            https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/csharp/sharedcontent/console/speech_recognition_samples.cs.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber._speechRecognizer">
+            <summary>
+            Speech recognizer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber._transcriptBuilder">
+            <summary>
+            StringBuilder for continuously building transcription text.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber._cancellationDetails">
+            <summary>
+            Describes cancellation details if operation was canceled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber._log">
+            <summary>
+            Trace logging instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber._stopRecognition">
+            <summary>
+            Task to wait on.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.TranscribeAudioFileUriAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.AdvocacyPlatform.Contracts.IStorageClient,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Common routine for transcribing an audio file.
+            </summary>
+            <param name="apiKey">The subscription key.</param>
+            <param name="region">The region of the resource.</param>
+            <param name="audioFileUri">The public URI of the audio file to transcribe.</param>
+            <param name="storageClient">The implementation of IStorageClient to use when reading the audio file from a source data store.</param>
+            <param name="storageConnectionString">The connection string to use when connecting the source data store.</param>
+            <param name="storageContainerName">The container containing the audio file.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A Task returning the transcribed speech.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.TranscribeAudioFileUriAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Common routine for transcribing an audio file.
+            </summary>
+            <param name="apiKey">The subscription key.</param>
+            <param name="region">The region of the resource.</param>
+            <param name="audioFileUri">The public URI of the audio file to transcribe.</param>
+            <param name="httpClient">The implementation of IHttpClientWrapper to use when making transcription requests.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A Task returning the transcribed speech.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.TranscribeAudioFilePathAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Common routine for transcribing an audio file.
+            </summary>
+            <param name="apiKey">The subscription key.</param>
+            <param name="region">The region of the resource.</param>
+            <param name="audioFilePath">The local file path of the audio file to transcribe.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A Task returning the transcribed speech.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.ReadWaveHeader(System.IO.BinaryReader)">
+            <summary>
+            From https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/csharp/sharedcontent/console/helper.cs .
+            </summary>
+            <param name="reader">A BinaryReader wrapping the audio stream to read.</param>
+            <returns>The audio format of the stream.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.SessionStopped(System.Object,Microsoft.CognitiveServices.Speech.SessionEventArgs)">
+            <summary>
+            Callback that stops continuous recognition upon receiving an event.
+            </summary>
+            <param name="sender">The object sending the event.</param>
+            <param name="ev">Session event arguments.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.Recognized(System.Object,Microsoft.CognitiveServices.Speech.SpeechRecognitionEventArgs)">
+            <summary>
+            As recognition is continuous, every sentence gets recognized separately.
+            Therefore, we need to concatenate all the sentences and return the full transcript.
+            </summary>
+            <param name="sender">The object sending the event.</param>
+            <param name="ev">Speech recognition event arguments.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.Canceled(System.Object,Microsoft.CognitiveServices.Speech.SpeechRecognitionCanceledEventArgs)">
+            <summary>
+            Sets cancellation details after the operation is canceled.
+            </summary>
+            <param name="sender">The object sending the event.</param>
+            <param name="ev">Speech recognition cancellation event arguments.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.TranscribeAudioCommonAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.IO.BinaryReader)">
+            <summary>
+            Common routine for transcribing an audio file.
+            </summary>
+            <param name="apiKey">The subscription key.</param>
+            <param name="region">The region of the resource.</param>
+            <param name="reader">BinaryReader instance for reading the input stream.</param>
+            <returns>A Task returning the transcribed speech.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.TranscribeAudioPublicUriCommonAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,System.Boolean,Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Common routine for transcribing an audio file.
+            </summary>
+            <param name="apiKey">The subscription key.</param>
+            <param name="region">The region of the resource.</param>
+            <param name="audioFilePath">The public URI of the audio file to transcribe.</param>
+            <param name="isUri">Specifies if the <paramref name="audioFilePath"/> is a URI (true) or local file path (false).</param>
+            <param name="httpClient">The implementation of IHttpClientWrapper to use when making transcription requests.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A Task returning the transcribed speech.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AzureTranscriber.TranscribeAudioStorageUriCommonAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.AdvocacyPlatform.Contracts.IStorageClient,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Common routine for transcribing an audio file.
+            </summary>
+            <param name="apiKey">The subscription key.</param>
+            <param name="region">The region of the resource.</param>
+            <param name="audioFileUri">The public URI of the audio file to transcribe.</param>
+            <param name="storageClient">The implementation of IStorageClient to use when reading the audio file from a source data store.</param>
+            <param name="storageConnectionString">The connection string to use when connecting the source data store.</param>
+            <param name="storageContainerName">The container containing the audio file.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A Task returning the transcribed speech.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor">
+            <summary>
+            INlpDataExtractor implementation for interacting with a LUIS endpoint.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor._httpClient">
+            <summary>
+            IHttpClientWrapper implementation to use for making REST calls.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor._config">
+            <summary>
+            Configuration for data extraction.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor.Initialize(Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration,Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper)">
+            <summary>
+            Initializes the data extractor.
+            </summary>
+            <param name="config">Configuration for data extraction.</param>
+            <param name="httpClient">IHttpClientWrapper implementation to use for making REST calls.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor.ExtractAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts data from a transcription.
+            </summary>
+            <param name="transcript">The transcript to extract data from.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the data extracted from the transcription.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor.ExtractDateTime(Microsoft.AdvocacyPlatform.Contracts.LuisResponse,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts date and time information from the transcript.
+            </summary>
+            <param name="luisResponse">The transcript.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>The extracted date and time information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor.ExtractLocation(Microsoft.AdvocacyPlatform.Contracts.LuisResponse,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts location information from the transcript.
+            </summary>
+            <param name="luisResponse">The transcript.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>The extracted location information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor.ExtractPerson(Microsoft.AdvocacyPlatform.Contracts.LuisResponse,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts person information from the transcript.
+            </summary>
+            <param name="luisResponse">The transcript.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>The extracted person information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.LuisDataExtractor.EnumerateAdditionalEntities(Microsoft.AdvocacyPlatform.Contracts.LuisResponse,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Enumerates and returns additional entities returned by LUIS.
+            </summary>
+            <param name="luisResponse">The response from LUIS.</param>
+            <param name="log">A logger instance.</param>
+            <returns>A dictionary representing the additional entities.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor">
+            <summary>
+            IDataExtractor implementation for extracting information using regular expressions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.ExtractAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts data from a transcription.
+            </summary>
+            <param name="transcript">The transcript to extract data from.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the data extracted from the transcription.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.CreateDigitsForDateParsing(System.String,Microsoft.Extensions.Logging.ILogger)">
+             <summary>
+             Creates digits from number words.
+            
+             Examples:
+             'april thirteenth two thousand sixteen at two thirty PM'
+             -> 'april 13th, 2016 at 2:30 PM'
+            
+             'april thirteen two thousand sixteen at two thirty PM'
+             -> 'april 13, 2016, at 2:30 PM'
+            
+             'april thirteenth two thousand and sixteen at two thirty PM'
+             -> 'april 13th, 2016 at 2:30 PM'
+            
+             'april thirteenth two thousand sixteen at two PM'
+             -> 'april 13th, 2016, at 2 PM'
+            
+             'april two thousand sixteen at two thirty PM'
+             -> 'april, 2016 at 2:30 PM'.
+             </summary>
+             <param name="dateText">The text to transform.</param>
+             <param name="log">Trace logging instance.</param>
+             <returns>The transformed text.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.ExtractDateTime(System.String,Microsoft.Extensions.Logging.ILogger)">
+             <summary>
+             Extracts the date and time information using multiple strategies.
+            
+             If extract_date_time_base doesn't succeed, try again after having changed words to digits
+             and replaced homonyms.
+             </summary>
+             <param name="dateText">The text to extract date and time from.</param>
+             <param name="log">Trace logging instance.</param>
+             <returns>The extracted date and time information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.ExtractDateTimeBase(System.String,Microsoft.Extensions.Logging.ILogger,System.Boolean)">
+             <summary>
+             Base function for extracting date and time information.
+            
+             Example:
+                 s = 'blah blah thirty one may st new york new york on april third,
+                  two thousand seventeen at one thirty PM blah blah'
+             returns
+             dict('year': 2017,
+                  'month': 4,
+                  'day': 3,
+                  'hour': 13,
+                  'minute': 30)
+            
+             minute default to 0 if none found.
+             All other keys default to None.
+            
+             Loops through possible dates, returns as soon as dparser succeeds in
+             parsing date (dates are ordered by length)
+            
+             The parser seems to always return something, e.g.
+             'on march 2021 at 4:30 pm' -->
+             {'year': 2021, 'month': 3, 'day': 2, 'hour': 16, 'minute': 30}
+             even though 'day' should be None.
+            
+             We get around this problem by adding two different defaults and checking if the
+             dict returned are the same.
+             </summary>
+             <param name="dateText">The text to extract the date and time from.</param>
+             <param name="log">Trace logger instance.</param>
+             <param name="wordsToNumbers">Specifies if number words should be transformed to numbers.</param>
+             <returns>The extracted date and time information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.ExtractLocation(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts location information from text.
+            </summary>
+            <param name="text">The text to extract location information from.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>The extracted location information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.ExtractPerson(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts person information from text.
+            </summary>
+            <param name="text">The text to extract location information from.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>The extracted person information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.FindPossibleDateTimes(System.String,System.Boolean,Microsoft.Extensions.Logging.ILogger)">
+             <summary>
+             Finds segments containing potential (partial or full) datetime values.
+            
+             Example:
+                    s = 'blah blah thirty one may st new york new york on april third,
+                     two thousand seventeen at one thirty PM blah blah'
+                returns
+                list('april 3rd, 2017 at 1:30 p.m.',
+                     'may st new york new york on april 3rd, 2017 at 1:30 PM')
+            
+                The returned list is ordered by length.
+                Duplicates are removed.
+             </summary>
+             <param name="dateText">The text to find potential datetime values from.</param>
+             <param name="wordsToNumbers">Specifies if number words should be transformed into numbers.</param>
+             <param name="log">Trace logging instance.</param>
+             <returns>A list of potential segments containing datetime information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.FindPossibleLocations(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Finds segments containing potential location values.
+            </summary>
+            <param name="text">The text to find potential datetime values from.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A list of potential segments containing location information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.GetRegExForDateParsing(Microsoft.Extensions.Logging.ILogger)">
+             <summary>
+             Basically matches strings beginning with a month, and ending in AM or PM
+                    In between the month and AM/PM, matching is non-greedy.
+                    Uses lookahead with grouping to find overlapping matches.
+                    Example:
+                s = '31 may st new york new york on april 3rd, 2017 at 1:30 p.m.'
+            
+                    The re will catch both:
+                    'may st new york new york on april 3rd, 2017 at 1:30 p.m.'
+            
+                    and
+                        'april 3rd, 2017 at 1:30 p.m.'.
+             </summary>
+             <param name="log">Trace logging instance.</param>
+             <returns>The regular expression to use for matching.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RegexDataExtractor.GetRegExForLocationParsing(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Returns regular expression for location parsing.
+            </summary>
+            <param name="log">Trace logging instance.</param>
+            <returns>The regular expression to use for matching.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.DefaultTransformationFactory">
+            <summary>
+            Default factory for creating a TrimStrategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.DefaultTransformationFactory.TrimEndTransformationName">
+            <summary>
+            Name of the TrimEnd transformation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.DefaultTransformationFactory.RemovePunctuationTransformationName">
+            <summary>
+            Name of the RemovePunctuation transformation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.DefaultTransformationFactory.Create(System.String)">
+            <summary>
+            Returns the IDataTransformation matching <paramref name="dataTransformationType" />.
+            </summary>
+            <param name="dataTransformationType">The name of the transformation to create.</param>
+            <returns>An instance of the IDataTransformation if <paramref name="dataTransformationType"/> is valid.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.RemovePunctuationTransformation">
+            <summary>
+            Data transformation to remove punctuation from sentences.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.RemovePunctuationTransformation.PunctuationRegEx">
+            <summary>
+            Regular expression for sentence punctuation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.RemovePunctuationTransformation.Transform(System.Text.StringBuilder,System.Collections.Generic.Dictionary{System.String,System.String},Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Transforms data to remove punctuation.
+            </summary>
+            <param name="input">The input string.</param>
+            <param name="parameters">Parameters to affect the behavior of the transformation.</param>
+            <param name="log">A logger instance.</param>
+            <returns>The transformed string.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.TrimEndTransformation">
+            <summary>
+            Data transformation for trimming at the end.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.TrimEndTransformation.MaxLengthKey">
+            <summary>
+            Parameter key for specifying the maximum length before trimming.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TrimEndTransformation.Transform(System.Text.StringBuilder,System.Collections.Generic.Dictionary{System.String,System.String},Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Trims <paramref name="input"/>.
+            </summary>
+            <param name="input">Text to trim.</param>
+            <param name="parameters">Parameters to affect the behavior of the transformation.</param>
+            <param name="log">A logger instance.</param>
+            <returns>The trimmed text.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.Utils">
+            <summary>
+            Utility helper class.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.Utils._homonyms">
+            <summary>
+            Mapping of number homonyms.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.Utils._stateAbbreviations">
+            <summary>
+            Mapping of full state names to abbreviations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.Utils._stateAbbreviationsLowercase">
+            <summary>
+            Mapping of full state names in lower case to abbreviations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.Utils._dateTimeFormats">
+            <summary>
+            Collection of date time formats for parsing datetimes.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.Utils._dtime">
+            <summary>
+            Internal dictionary mapping datetime utterances to datetime values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.MonthNames">
+            <summary>
+            Gets the collection of month names.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.MonthNamesLower">
+            <summary>
+            Gets the collection of month names in lower case.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.YearValues">
+            <summary>
+            Gets the mapping of year utterances to numerical year values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.Ordinals">
+            <summary>
+            Gets the mapping of ordinal utterances to shortened alphanumeric ordinal values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.Numbers">
+            <summary>
+            Gets the mapping of number utterances to numerical values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.Hours">
+            <summary>
+            Gets the collection of hour utterances.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.Minutes">
+            <summary>
+            Gets the collection of minute utterances.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.DTime">
+            <summary>
+            Gets the _dtime dictionary.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.Homonyms">
+            <summary>
+            Gets the mapping of number homonyms.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.StateAbbreviations">
+            <summary>
+            Gets the mapping of full state names to abbreviations.
+            </summary>.
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.StateAbbreviationsLowercase">
+            <summary>
+            Gets the mapping of full state names in lower case to abbreviations.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Clients.Utils.DateTimeFormats">
+            <summary>
+            Gets the collection of date time formats for parsing datetimes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.Utils.YearsToDigits(System.String)">
+             <summary>
+             Transforms year utterance to numerical year values
+            
+             Examples:
+             'two thousand seventeen' -> '2017'
+             'two thousand and seventeen' -> '2017'
+            
+             Up to 2030.
+             </summary>
+             <param name="value">Segment with utterances.</param>
+             <returns>Segment with utterances transformed to the appropriate numerical year values.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.Utils.OrdinalsToOrdinals(System.String)">
+             <summary>
+             Transforms ordinal utterance to shortened alphanumerical ordinal values
+            
+             'third' -> '3rd'
+            
+             Up to 31st(intended for dates).
+             </summary>
+             <param name="value">Segment with utterances.</param>
+             <returns>Segment with utterances transformed to the appropriate shortened alphanumerical ordinal values.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.Utils.WordnumsToNums(System.String)">
+             <summary>
+             Transforms number utterance to numerical values
+            
+             Examples:
+             'four' -> '4'
+             'fourteen' -> '14'
+             'four teen' -> '14'
+            
+             Up to 31 (intended for dates, hours, and digits in zipcodes).
+             </summary>
+             <param name="value">Segment with utterances.</param>
+             <returns>Segment with utterances transformed to the appropriate numerical values.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.Utils.HourWithMinuteToTime(System.String)">
+             <summary>
+             Transforms time utterances to time value
+            
+             Example:
+             'one forty five' -> '1:45'
+            
+             Only considers 15, 30, 45 for now.
+             </summary>
+             <param name="value">Segment with utterance.</param>
+             <returns>Segment with utterances transformed to the appropriate time values.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.Utils.ReplaceHomonyms(System.String)">
+             <summary>
+             Replaces numerical homonyms with the appropriate numerical word
+            
+             Trying to catch examples where a number was transcribed as a homonym
+             of that number.
+            
+             Example:
+             'for' -> 'four'.
+             </summary>
+             <param name="value">Segment with utterances.</param>
+             <returns>Segment with utterances transformed to the appropriate numerical words.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.Utils.GetFullStorageConnectionString(System.String,Microsoft.AdvocacyPlatform.Contracts.Secret)">
+            <summary>
+            Builds a full connection string with access key included and returns as a <see cref="T:Microsoft.AdvocacyPlatform.Contracts.Secret"/>.
+            </summary>
+            <param name="storageConnectionString">The data store connection string.</param>
+            <param name="storageAccessKey">The access key for the data store.</param>
+            <returns>The full connection string as a <see cref="T:Microsoft.AdvocacyPlatform.Contracts.Secret"/>.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper">
+            <summary>
+            HttpClient wrapper for making REST calls.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper._httpClient">
+            <summary>
+            Internal HttpClient instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper._twilioHttpClient">
+            <summary>
+            Internal Twilio HttpClient instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.GetHttpClient">
+            <summary>
+            Gets the HttpClient instance.
+            </summary>
+            <returns>The HttpClient instance.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.InitTwilioClient(Microsoft.AdvocacyPlatform.Contracts.Secret,Microsoft.AdvocacyPlatform.Contracts.Secret)">
+            <summary>
+            Initializes the Twilio client.
+            </summary>
+            <param name="accountSid">The account SID to authenticate with Twilio as.</param>
+            <param name="authToken">The account token to authenticate with Twilio with.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.GetTwilioHttpClient">
+            <summary>
+            Returns the Twilio HttpClient.
+            </summary>
+            <returns>The Twilio HttpClient.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.GetAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Performs a GET request.
+            </summary>
+            <param name="requestUri">The URI to perform the GET request to.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the response.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.GetStreamAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Performs a GET request.
+            </summary>
+            <param name="requestUri">The URI to GET.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the response as a stream.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.HttpClientWrapper.PostAsync(System.String,System.Net.Http.HttpContent,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Performs a POST request.
+            </summary>
+            <param name="requestUri">The URI to POST to.</param>
+            <param name="content">The content of the request.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the response message.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.ContainerBuilder">
+            <summary>
+            As Azure Functions does not currently have an easy way to support dependency injection (DI),
+            utilizing the method described at https://platform.deloitte.com.au/articles/dependency-injections-on-azure-functions-v2
+            to provide an DI container to functions.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.ContainerBuilder._services">
+            <summary>
+            Internal service collection to register services.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.ContainerBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Clients.ContainerBuilder"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.ContainerBuilder.RegisterModule(Microsoft.AdvocacyPlatform.Contracts.IModule)">
+            <summary>
+            Registers a module with the dependency injection container.
+            </summary>
+            <param name="module">An instance of the module to register.</param>
+            <returns>The current ContainerBuilder object.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.ContainerBuilder.Build">
+            <summary>
+            Builds the service provider.
+            </summary>
+            <returns>The service provider instance.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader">
+            <summary>
+            Adapter class to the native stream api.
+            From https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/csharp/sharedcontent/console/helper.cs.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader.disposed">
+            <summary>
+            Indicates if the reader has been disposed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader._reader">
+            <summary>
+            Internal binary reader.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader"/> class.
+            </summary>
+            <param name="reader">The underlying stream to read the audio data from. Note: The stream contains the bare sample data, not the container (like wave header data, etc).</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader"/> class.
+            </summary>
+            <param name="stream">The underlying stream to read the audio data from. Note: The stream contains the bare sample data, not the container (like wave header data, etc).</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader.Read(System.Byte[],System.UInt32)">
+            <summary>
+            Reads binary data from the stream.
+            </summary>
+            <param name="dataBuffer">The buffer to fill.</param>
+            <param name="size">The size of data in the buffer.</param>
+            <returns>The number of bytes filled, or 0 in case the stream hits its end and there is no more data available.
+            If there is no data immediate available, Read() blocks until the next data becomes available.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.BinaryAudioStreamReader.Dispose(System.Boolean)">
+            <summary>
+            This method performs cleanup of resources.
+            The Boolean parameter <paramref name="disposing"/> indicates whether the method is called from <see cref="M:System.IDisposable.Dispose"/> (if <paramref name="disposing"/> is true) or from the finalizer (if <paramref name="disposing"/> is false).
+            Derived classes should override this method to dispose resource if needed.
+            </summary>
+            <param name="disposing">Flag to request disposal.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.BinaryReaderFactory">
+            <summary>
+            Factory for creating BinaryReaders.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.BinaryReaderFactory.GetBinaryReader(System.String,System.Boolean,Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Returns a BinaryReader instance for reading a public URI or local file.
+            </summary>
+            <param name="filePath">Path of the file to read.</param>
+            <param name="isUri">Species if the path is a URI.</param>
+            <param name="httpClient">The IHttpClientWrapper implementation to use when reading from remote URIs.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A BinaryReader instance.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.BinaryReaderFactory.GetBinaryReader(System.String,System.IO.Stream,Microsoft.AdvocacyPlatform.Contracts.IStorageClient,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Returns a BinaryReader instance for reading using an IStorageClient.
+            </summary>
+            <param name="fileUri">URI of the resource to read.</param>
+            <param name="outputStream">Stream to read data into.</param>
+            <param name="storageClient">IStorageClient implementation to use when reading from the source data store.</param>
+            <param name="storageConnectionString">Connection string to the source data store.</param>
+            <param name="storageContainerName">The name of the container containing the file to read.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A BinaryReader instance.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper">
+            <summary>
+            Wrapper for making Twilio calls.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.TwilioUriBase">
+             <summary>
+             Base URL for Twilio REST calls.
+            
+             Base is mentioned here: https://www.twilio.com/docs/voice/api/recording .
+             </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper._httpClient">
+            <summary>
+            Internal IHttpClientWrapper instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper._secretStore">
+            <summary>
+            Internal ISecretStore instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper._twilioClient">
+            <summary>
+            Internal ITwilioRestClient instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.#ctor(Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper,Microsoft.AdvocacyPlatform.Contracts.ISecretStore)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper"/> class.
+            </summary>
+            <param name="httpClient">The IHttpClientWrapper implementation to use for making REST calls.</param>
+            <param name="secretStore">The ISecretStore implementation for obtaining secrets.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.InitializeAsync(System.String,System.String,System.String)">
+            <summary>
+            Initializes the Twilio client.
+            </summary>
+            <param name="twilioAccountSidSecretName">The SSID of the Twilio account to authenticate as.</param>
+            <param name="twilioAuthTokenSecretName">The auth token to use for authentication.</param>
+            <param name="authority">The authority to authenticate against.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.DeleteCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Deletes the call with the given call sid.
+            </summary>
+            <param name="callSid">The SID of the Twilio call resource.</param>
+            <param name="log">A logger instance.</param>
+            <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.DeleteRecordingsAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Delete all recordings for given call sid.
+            </summary>
+            <param name="callSid">the SID of the Twilio call resource the recordings are associated with.</param>
+            <param name="log">A logger instance.</param>
+            <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.DeleteAccountRecordingsAsync(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Delete all recordings for the current account.
+            </summary>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.FetchCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Retrieves a call object from the call sid.
+            </summary>
+            <param name="callSid">The SID of the call resource to retrieve.</param>
+            <param name="log">A logger instance.</param>
+            <returns>A Task returning the call resource.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.FetchRecordingsAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Get list of recordings for given call sid.
+            </summary>
+            <param name="callSid">The SID of the call resource to get recordings for.</param>
+            <param name="log">A logger instance.</param>
+            <returns>A Task returning a collection of recording resources.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.FetchAccountRecordingsAsync(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Get list of recordings for given call sid.
+            </summary>
+            <param name="log">A logger instance.</param>
+            <returns>A Task returning a collection of recording resources.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.FetchStatusAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Get the status of the call with the given call sid.
+            </summary>
+            <param name="callSid">The SID of the call resource to get the status of.</param>
+            <param name="log">A logger instance.</param>
+            <returns>A Task returning the call status.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.GetFullRecordingUri(Twilio.Rest.Api.V2010.Account.RecordingResource,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Constructs the full recording URI of the Twilio recording resource.
+            </summary>
+            <param name="recording">The recording resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>The URI of the recording.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.HangupCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+             <summary>
+             Ends a call if it is still in progress
+            
+             See: https://www.twilio.com/docs/voice/tutorials/how-to-modify-calls-in-progress-python .
+             </summary>
+             <param name="callSid">The SID of the call resource.</param>
+             <param name="log">A logger instance.</param>
+             <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.PlaceAndRecordCallAsync(System.Uri,System.String,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Places a call which is recorded.
+            </summary>
+            <param name="twiMLUrl">The TwiML URL to use when making the call.</param>
+            <param name="numberToCall">The number to call.</param>
+            <param name="twilioLocalNumber">The local number to use to make the call.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the SID of the call resource.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.TwilioCallWrapper.GetTwilioUri(System.String)">
+            <summary>
+            Returns the full URI for a Twilio recording.
+            </summary>
+            <param name="uriFromRecording">Relative recording URI.</param>
+            <returns>The full URI for the recording.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.AINValueValidator">
+            <summary>
+            Validate an Alien Identification Number (AIN) is valid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.AINValueValidator.Validate(System.String,System.String@)">
+            <summary>
+            Validates the AIN.
+            </summary>
+            <param name="value">The AIN.</param>
+            <param name="acceptedValue">The accepted value.</param>
+            <returns>True if valid and false if invalid.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Clients.DefaultValueValidatorFactory">
+            <summary>
+            Default factory for creating IValueValidators.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Clients.DefaultValueValidatorFactory.Create(System.String)">
+            <summary>
+            Creates an IValueValidator for <paramref name="valueTypeName"/>.
+            </summary>
+            <param name="valueTypeName">The type of value to create an IValueValidator for.</param>
+            <returns>An instance of the appropriate IValueValidator if known for <paramref name="valueTypeName"/>.</returns>
+        </member>
+    </members>
+</doc>

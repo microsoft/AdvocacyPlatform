@@ -1,0 +1,826 @@
+{
+	"info": {
+		"_postman_id": "894e7b92-23b3-44ba-901f-3546eceb4401",
+		"name": "AdvocacyPlatform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d03b908-0beb-41ee-a613-bb0a14ed3ee5",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						},
+						{
+							"key": "resource",
+							"value": "{{resource}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/{{tenantId}}/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"{{tenantId}}",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initiate Call for AIN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d541d8c-ae7d-4795-b896-4d332e3c2ef4",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"callSid\", jsonData.callSid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"inputId\": \"209383593\"\n}"
+				},
+				"url": {
+					"raw": "https://{{functionAppHost}}.azurewebsites.net/api/InitiateCall?code={{functionHostCode}}",
+					"protocol": "https",
+					"host": [
+						"{{functionAppHost}}",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"InitiateCall"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{functionHostCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initiate Call for AIN (Local)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d541d8c-ae7d-4795-b896-4d332e3c2ef4",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"callSid\", jsonData.callSid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"inputId\": \"206431704\",\n\t\"dtmf\": {\n\t\t\"initPause\": 0,\n\t\t\"dtmf\": \"1ww206431704ww1ww1ww1\",\n\t\t\"finalPause\": 45\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{localPort}}/api/InitiateCall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{localPort}}",
+					"path": [
+						"api",
+						"InitiateCall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Call Progress",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callsid\": \"{{callSid}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{functionAppHost}}.azurewebsites.net/api/CheckCallProgress?code={{functionHostCode}}",
+					"protocol": "https",
+					"host": [
+						"{{functionAppHost}}",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"CheckCallProgress"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{functionHostCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Call Progress (Local)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/javascript"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callsid\": \"{{callSid}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{localPort}}/api/CheckCallProgress",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{localPort}}",
+					"path": [
+						"api",
+						"CheckCallProgress"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pull Recording",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a848d09d-49ef-46b5-b0fb-0fb06d8f976a",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"recordingUri\", jsonData.recordingUri);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"inputId\": \"206431704\",\n\t\"callSid\": \"{{callSid}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{functionAppHost}}.azurewebsites.net/api/PullRecording?code={{functionHostCode}}",
+					"protocol": "https",
+					"host": [
+						"{{functionAppHost}}",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"PullRecording"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{functionHostCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pull Recording (Local)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a848d09d-49ef-46b5-b0fb-0fb06d8f976a",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"recordingUri\", jsonData.recordingUri);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"inputId\": \"206431704\",\n\t\"callSid\": \"{{callSid}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{localPort}}/api/PullRecording",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{localPort}}",
+					"path": [
+						"api",
+						"PullRecording"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transcribe Call",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "582ed412-dc2a-474d-8773-1c130ffd1c91",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"transcript\", jsonData.text)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callSid\": \"{{callSid}}\",\n\t\"recordingUri\": \"{{recordingUri}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{functionAppHost}}.azurewebsites.net/api/TranscribeCall?code={{functionHostCode}}",
+					"protocol": "https",
+					"host": [
+						"{{functionAppHost}}",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"TranscribeCall"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{functionHostCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transcribe Call (Local)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "582ed412-dc2a-474d-8773-1c130ffd1c91",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"transcript\", jsonData.text)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callSid\": \"{{callSid}}\",\n\t\"recordingUri\": \"{{recordingUri}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{localPort}}/api/TranscribeCall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{localPort}}",
+					"path": [
+						"api",
+						"TranscribeCall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Extract Info",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callSid\": \"{{callSid}}\",\n\t\"text\": \"{{transcript}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{functionAppHost}}.azurewebsites.net/api/ExtractInfo?code={{functionHostCode}}",
+					"protocol": "https",
+					"host": [
+						"{{functionAppHost}}",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"ExtractInfo"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{functionHostCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Extract Info (Local)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callSid\": \"{{callSid}}\",\n\t\"text\": \"{{transcript}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{localPort}}/api/ExtractInfo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{localPort}}",
+					"path": [
+						"api",
+						"ExtractInfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recording from Twilio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callSid\": \"{{callSid}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{functionAppHost}}.azurewebsites.net/api/DeleteRecordings?code={{functionHostCode}}",
+					"protocol": "https",
+					"host": [
+						"{{functionAppHost}}",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"DeleteRecordings"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{functionHostCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account Recordings from Twilio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"confirmDelete\": \"yes\"\n}"
+				},
+				"url": {
+					"raw": "https://{{functionAppHost}}.azurewebsites.net/api/DeleteAccountRecordings?code={{functionHostCode}}",
+					"protocol": "https",
+					"host": [
+						"{{functionAppHost}}",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"DeleteAccountRecordings"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "{{functionHostCode}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account Recordings from Twilio (Local)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"confirmDelete\": \"yes\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{localPort}}/api/DeleteAccountRecordings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{localPort}}",
+					"path": [
+						"api",
+						"DeleteAccountRecordings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Recording from Twilio (Local)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"callSid\": \"{{callSid}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:{{localPort}}/api/DeleteRecordings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{localPort}}",
+					"path": [
+						"api",
+						"DeleteRecordings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Recordings",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{twilioAuthToken}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{twilioAccountSid}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.twilio.com/2010-04-01/Accounts/{{twilioAccountSid}}/Recordings.json",
+					"protocol": "https",
+					"host": [
+						"api",
+						"twilio",
+						"com"
+					],
+					"path": [
+						"2010-04-01",
+						"Accounts",
+						"{{twilioAccountSid}}",
+						"Recordings.json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

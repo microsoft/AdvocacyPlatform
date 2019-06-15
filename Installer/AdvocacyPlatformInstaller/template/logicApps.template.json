@@ -1,0 +1,199 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newCase_logicAppName": {
+      "type": "String",
+      "metadata": { "description": "Name of the logic app." }
+    },
+    "resultsUpdateCase_logicAppName": {
+      "type": "String",
+      "metadata": { "description": "Name of the logic app." }
+    },
+    "addressUpdateCase_logicAppName": {
+      "type": "String",
+      "metadata": { "description": "Name of the logic app." }
+    },
+    "getRetryRecords_logicAppName": {
+      "type": "String",
+      "metadata": { "description": "Name of the logic app." }
+    },
+    "logicAppLocation": {
+      "defaultValue": "[resourceGroup().location]",
+      "allowedValues": [ "eastasia", "southeastasia", "centralus", "eastus", "eastus2", "westus", "northcentralus", "southcentralus", "northeurope", "westeurope", "japanwest", "japaneast", "brazilsouth", "australiaeast", "australiasoutheast", "southindia", "centralindia", "westindia", "canadacentral", "canadaeast", "westcentralus", "westus2", "[resourceGroup().location]" ],
+      "type": "String",
+      "metadata": { "description": "Location of the logic app." }
+    },
+    "servicebus_Connection_Name": {
+      "defaultValue": "[parameters('servicebus_Connection_Name')]",
+      "type": "String",
+      "metadata": { "description": "Name of the connection." }
+    },
+    "commondataservice_Connection_Name": {
+      "defaultValue": "[parameters('commondataservice_Connection_Name')]",
+      "type": "String",
+      "metadata": { "description": "Name of the connection." }
+    },
+    "dynamicscrm_environment_name": {
+      "defaultValue": "[parameters('commondataservice_Connection_Name')]",
+      "type": "String",
+      "metadata": { "description": "Unique name of the Dynamics 365 CRM environment." }
+    },
+    "bingmaps_Connection_Name": {
+      "defaultValue": "bingmaps",
+      "type": "String",
+      "metadata": {
+        "description": "Name of the connection."
+      }
+    },
+    "bingmaps_api_key": {
+      "defaultValue": "bingmaps",
+      "type": "String",
+      "metadata": {
+        "description": "Name of the connection."
+      }
+    }
+  },
+  "variables": {
+    "tenant_id": "[subscription().tenantId]",
+    "subscription_id": "[subscription().subscriptionId]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/connections",
+      "name": "[parameters('bingmaps_Connection_Name')]",
+      "apiVersion": "2016-06-01",
+      "location": "[parameters('logicAppLocation')]",
+      "properties": {
+        "api": {
+          "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('logicAppLocation'), '/managedApis/', 'bingmaps')]"
+        },
+        "displayName": "[parameters('bingmaps_Connection_Name')]",
+        "parameterValues": {
+          "api_key": "[parameters('bingmaps_api_key')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('newCase_logicAppName')]",
+      "location": "westus2",
+      "dependsOn": [
+      ],
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-new-case-put-on-queue.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('commondataservice_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/commondataservice')]"
+              },
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('resultsUpdateCase_logicAppName')]",
+      "location": "westus2",
+      "dependsOn": [
+      ],
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-results-available-update-case.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('commondataservice_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/commondataservice')]"
+              },
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('addressUpdateCase_logicAppName')]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('bingmaps_Connection_Name'))]"
+      ],
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-address-updated-update-case.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('bingmaps_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('bingmaps_Connection_Name'))]",
+                "connectionName": "[parameters('bingmaps_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/bingmaps')]"
+              },
+              "[parameters('commondataservice_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/commondataservice')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('getRetryRecords_logicAppName')]",
+      "location": "westus2",
+      "dependsOn": [
+      ],
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-records-for-retry.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('commondataservice_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/commondataservice')]"
+              },
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

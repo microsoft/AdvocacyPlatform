@@ -1,0 +1,58 @@
+﻿{
+  "query": "{expectedQuery}",
+  "topScoringIntent": {
+    "intent": "{expectedIntent}",
+    "score": 0.9898249
+  },
+  "entities": [
+    {
+      "entity": "december, 13th 2021 at one pm",
+      "type": "{expectedDateTimeEntityName}",
+      "startIndex": 106,
+      "endIndex": 134,
+      "resolution": {
+        "values": [
+          {
+            "timex": "2021-12-13T13",
+            "type": "datetime",
+            "value": "{expectedDateTime}"
+          }
+        ]
+      }
+    },
+    {
+      "entity": "{expectedPersonName}",
+      "type": "{expectedPersonEntityName}",
+      "startIndex": 137,
+      "endIndex": 152
+    },
+    {
+      "entity": "94105",
+      "type": "zipcode",
+      "startIndex": 214,
+      "endIndex": 218
+    },
+    {
+      "entity": "san francisco",
+      "type": "city",
+      "startIndex": 197,
+      "endIndex": 209,
+      "score": 0.997413635
+    },
+    {
+      "entity": "ca",
+      "type": "state",
+      "startIndex": 211,
+      "endIndex": 212,
+      "score": 0.9997236
+    },
+    {
+      "entity": "{expectedLocation}",
+      "type": "{expectedLocationEntityName}",
+      "startIndex": 157,
+      "endIndex": 218,
+      "score": 0.992200434
+    }
+  ],
+  "compositeEntities": null
+}

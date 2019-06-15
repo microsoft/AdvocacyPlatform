@@ -1,0 +1,30 @@
+﻿{
+  "query": "{expectedQuery}",
+  "topScoringIntent": {
+    "intent": "{expectedIntent}",
+    "score": 0.9898249
+  },
+  "entities": [
+    {
+      "entity": "december, 13th 2021 at one pm",
+      "type": "{expectedDateTimeEntityName}",
+      "startIndex": 106,
+      "endIndex": 134,
+      "resolution": {
+        "values": [
+          {
+            "timex": "2021-12-13T13",
+            "type": "datetime",
+            "value": "{expectedDateTime}"
+          }
+        ]
+      }
+    },
+    {
+      "entity": "{expectedAdditionalEntity}",
+      "type": "{expectedAdditionalEntityType}",
+      "startIndex": 137,
+      "endIndex": 152
+    }
+  ]
+}

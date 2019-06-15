@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{f95a5f18-96c9-452e-8901-9c6206b0f053}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_person_record_identifier" select="1" icon="1" preview="1">
+        <row name="result" id="ap_personid">
+          <cell name="ap_person_given_name" width="180" />
+          <cell name="ap_person_record_identifier" width="184" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ap_person">
+          <attribute name="ap_personid" />
+          <attribute name="ap_person_record_identifier" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+          <attribute name="ap_person_given_name" />
+          <order attribute="ap_person_record_identifier" descending="true" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Person" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

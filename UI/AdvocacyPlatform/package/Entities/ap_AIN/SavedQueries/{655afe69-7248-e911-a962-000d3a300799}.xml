@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{655afe69-7248-e911-a962-000d3a300799}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_ain" select="1" icon="1" preview="1">
+        <row name="result" id="ap_ain">
+          <cell name="ap_ain" width="60" />
+          <cell name="a_59148c70d2f5498790421576b015690d.ap_person_given_name" width="150" />
+          <cell name="ap_courthearing_transcription_status" width="220" />
+          <cell name="ap_casedecision_transcription_status" width="220" />
+          <cell name="ap_ain_last_call_date" width="100" />
+          <cell name="createdon" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="ap_ain">
+          <attribute name="ap_ain" />
+          <filter type="and">
+            <condition attribute="ap_courthearing_transcription_status" operator="in">
+              <value>683710000</value>
+              <value>683710002</value>
+              <value>683710001</value>
+            </condition>
+          </filter>
+          <link-entity alias="a_59148c70d2f5498790421576b015690d" name="ap_person" to="ap_person_ain_lkp" from="ap_personid" link-type="outer" visible="false">
+            <attribute name="ap_person_given_name" />
+          </link-entity>
+          <attribute name="ap_ain_last_call_date" />
+          <attribute name="ap_courthearing_transcription_status" />
+          <attribute name="createdon" />
+          <attribute name="ap_casedecision_transcription_status" />
+          <order attribute="createdon" descending="true" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="In Progress" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="In Progress" languagecode="1033" />
+    </Descriptions>
+  </savedquery>
+</savedqueries>

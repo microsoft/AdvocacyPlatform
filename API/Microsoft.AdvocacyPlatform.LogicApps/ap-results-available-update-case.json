@@ -1,0 +1,1151 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "servicebus_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "servicebus_1_connectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure Service Bus Connection String"
+      }
+    },
+    "commondataservice_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "dynamicscrm_environment_name": {
+      "type": "string",
+      "metadata": {
+        "description": "Environment id"
+      },
+      "defaultValue": ""
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2"
+      ],
+      "defaultValue": ""
+    },
+    "resultsUpdateCase_logicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "subscription_id": "[subscription().subscriptionId]",
+    "tenant_id": "[subscription().tenantId]"
+  },
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            },
+            "$crmOrgName": {
+              "defaultValue": "[concat(parameters('dynamicscrm_environment_name'),'.crm')]",
+              "type": "String"
+            }
+          },
+          "triggers": {
+            "When_a_message_is_received_in_a_queue_(peek-lock)": {
+              "recurrence": {
+                "frequency": "Minute",
+                "interval": 1
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages/head/peek",
+                "queries": {
+                  "queueType": "Main",
+                  "sessionId": "0"
+                }
+              }
+            }
+          },
+          "actions": {
+            "Abandon_the_message_in_a_queue": {
+              "runAfter": {},
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "post",
+                "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages/abandon",
+                "queries": {
+                  "lockToken": "@triggerBody()?['LockToken']",
+                  "queueType": "Main",
+                  "sessionId": "@triggerBody()?['SessionId']"
+                }
+              }
+            },
+            "For_each_queue_message": {
+              "foreach": "@body('Get_messages_from_result_queue_(peek-lock)')",
+              "actions": {
+                "Complete_the_message_in_a_queue": {
+                  "runAfter": {
+                    "Condition_Request_Type_Is_CourtHearingInfo": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "delete",
+                    "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages/complete",
+                    "queries": {
+                      "lockToken": "@items('For_each_queue_message')?['LockToken']",
+                      "queueType": "Main",
+                      "sessionId": "@items('For_each_queue_message')?['SessionId']"
+                    }
+                  }
+                },
+                "Condition_Request_Type_Is_CourtHearingInfo": {
+                  "actions": {
+                    "Condition_Does_Court_Info_Request_Has_Entities_And_No_Errors": {
+                      "actions": {
+                        "Update_Case_Record_For_Court_Hearing_Info": {
+                          "runAfter": {},
+                          "type": "ApiConnection",
+                          "inputs": {
+                            "body": {
+                              "_ownerid_type": "",
+                              "ap_ain_last_call_date": "@{utcNow()}",
+                              "ap_call_retry_use_longmessage_dtmf": false,
+                              "ap_courthearing_city": "@{body('Parse_JSON')?['data']?['location']?['city']}",
+                              "ap_courthearing_date": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',formatDateTime(body('Parse_JSON')?['data']?['date']?['fullDate'],'MM/dd/yyyy hh:mm:tt'))}",
+                              "ap_courthearing_dateonly": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                              "ap_courthearing_datetime": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                              "ap_courthearing_info_available": true,
+                              "ap_courthearing_judge": "@{body('Parse_JSON')?['data']?['additionalData']?['judge']}",
+                              "ap_courthearing_location": "@{body('Parse_JSON')?['data']?['location']?['location']}",
+                              "ap_courthearing_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                              "ap_courthearing_state": "@{body('Parse_JSON')?['data']?['location']?['state']}",
+                              "ap_courthearing_transcription_changed_on": "@{utcNow()}",
+                              "ap_courthearing_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
+                              "ap_courthearing_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
+                              "ap_courthearing_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
+                              "ap_courthearing_transcription_status": 683710004,
+                              "ap_courthearing_type": "@{if(equals(body('Parse_JSON')?['data']?['additionalData'],null),null,if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseType'),body('Parse_JSON')?['data']?['additionalData']?['caseType'],null))}",
+                              "ap_courthearing_zipcode": "@{body('Parse_JSON')?['data']?['location']?['zipcode']}",
+                              "ap_extract_court_hearing_info": false,
+                              "ap_total_call_retries": 1
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                              }
+                            },
+                            "method": "patch",
+                            "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                          }
+                        }
+                      },
+                      "runAfter": {},
+                      "else": {
+                        "actions": {
+                          "Condition_Court_Hearing_Request_Has_AddedGovernmentMessageAtStart_Entity": {
+                            "actions": {
+                              "Update_Court_Hearing_Case_Record_To_Retry_with_Long_Message_DTMF": {
+                                "runAfter": {},
+                                "type": "ApiConnection",
+                                "inputs": {
+                                  "body": {
+                                    "_ownerid_type": "",
+                                    "ap_call_retry_use_longmessage_dtmf": true,
+                                    "ap_courthearing_info_available": false
+                                  },
+                                  "host": {
+                                    "connection": {
+                                      "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                    }
+                                  },
+                                  "method": "patch",
+                                  "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                }
+                              }
+                            },
+                            "runAfter": {
+                              "Update_Court_Info_Case_Record_For_Retry": [
+                                "Succeeded"
+                              ]
+                            },
+                            "expression": {
+                              "or": [
+                                {
+                                  "equals": [
+                                    "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
+                                    "@true"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
+                                    "@true"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
+                                    "@true"
+                                  ]
+                                }
+                              ]
+                            },
+                            "type": "If"
+                          },
+                          "Get_Court_Info_Case_Record_To_Increase_Retries": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                              "host": {
+                                "connection": {
+                                  "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                }
+                              },
+                              "method": "get",
+                              "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                            }
+                          },
+                          "Update_Court_Info_Case_Record_For_Retry": {
+                            "runAfter": {
+                              "Get_Court_Info_Case_Record_To_Increase_Retries": [
+                                "Succeeded"
+                              ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                              "body": {
+                                "_ownerid_type": "",
+                                "ap_ain_last_call_date": "@{utcNow()}",
+                                "ap_courthearing_city": "@{body('Parse_JSON')?['data']?['location']?['city']}",
+                                "ap_courthearing_date": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),null,formatDateTime(body('Parse_JSON')?['data']?['date']?['fullDate'],'MM/dd/yyyy hh:mm:tt'))}",
+                                "ap_courthearing_dateonly": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                                "ap_courthearing_datetime": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                                "ap_courthearing_info_available": false,
+                                "ap_courthearing_judge": "@{body('Parse_JSON')?['data']?['additionalData']?['judge']}",
+                                "ap_courthearing_location": "@{body('Parse_JSON')?['data']?['location']?['location']}",
+                                "ap_courthearing_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                                "ap_courthearing_state": "@{body('Parse_JSON')?['data']?['location']?['state']}",
+                                "ap_courthearing_transcription_changed_on": "@{utcNow()}",
+                                "ap_courthearing_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
+                                "ap_courthearing_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
+                                "ap_courthearing_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
+                                "ap_courthearing_transcription_status": 683710002,
+                                "ap_courthearing_type": "@{if(equals(body('Parse_JSON')?['data']?['additionalData'],null),null,if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseType'),body('Parse_JSON')?['data']?['additionalData']?['caseType'],null))}",
+                                "ap_courthearing_zipcode": "@{body('Parse_JSON')?['data']?['location']?['zipcode']}",
+                                "ap_total_call_retries": "@add(if(equals(body('Get_Court_Info_Case_Record_To_Increase_Retries')?['ap_total_call_retries'],null),0,body('Get_Court_Info_Case_Record_To_Increase_Retries')?['ap_total_call_retries']),1)"
+                              },
+                              "host": {
+                                "connection": {
+                                  "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                }
+                              },
+                              "method": "patch",
+                              "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                            }
+                          }
+                        }
+                      },
+                      "expression": {
+                        "and": [
+                          {
+                            "equals": [
+                              "@equals(body('Parse_JSON')?['data']?['date']?['fullDate'],null)",
+                              "@false"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@equals(body('Parse_JSON')?['data']?['location']?['location'],null)",
+                              "@false"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@equals(body('Parse_JSON')?['data']?['additionalData']?['caseType'],null)",
+                              "@false"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@body('Parse_JSON')?['hasError']",
+                              "@false"
+                            ]
+                          }
+                        ]
+                      },
+                      "type": "If"
+                    }
+                  },
+                  "runAfter": {
+                    "Scope_Create_History_Record": [
+                      "Succeeded"
+                    ]
+                  },
+                  "else": {
+                    "actions": {
+                      "Condition_Request_Type_Is_CaseDecision": {
+                        "actions": {
+                          "Condition_Does_Case_Decision_Request_Has_Date_Entity_And_No_Errors": {
+                            "actions": {
+                              "Update_Case_Decision_Record": {
+                                "runAfter": {},
+                                "type": "ApiConnection",
+                                "inputs": {
+                                  "body": {
+                                    "_ownerid_type": "",
+                                    "ap_ain_last_call_date": "@{utcNow()}",
+                                    "ap_call_retry_use_longmessage_dtmf": false,
+                                    "ap_casedecision_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                                    "ap_casedecision_case_decision": "@{if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseDecision'),body('Parse_JSON')?['data']?['additionalData']?['caseDecision'],null)}",
+                                    "ap_casedecision_info_available": true,
+                                    "ap_casedecision_issued_date": "@{body('Parse_JSON')?['data']?['date']?['fullDate']}",
+                                    "ap_casedecision_transcription_changed_on": "@{utcNow()}",
+                                    "ap_casedecision_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
+                                    "ap_casedecision_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
+                                    "ap_casedecision_transcription_status": 683710004,
+                                    "ap_extract_case_decision_info": false,
+                                    "ap_removal_order_issued": "@if(contains(body('Parse_JSON')?['data']?['additionalData'],'removalOrder'),683710001,683710002)",
+                                    "ap_total_call_retries": 1
+                                  },
+                                  "host": {
+                                    "connection": {
+                                      "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                    }
+                                  },
+                                  "method": "patch",
+                                  "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                }
+                              }
+                            },
+                            "runAfter": {},
+                            "else": {
+                              "actions": {
+                                "Condition_Case_Decision_Request_Has_AddedGovernmentMessageAtStart_Entity": {
+                                  "actions": {
+                                    "Update_Case_Decision_Record_To_Retry_with_Long_Message_DTMF": {
+                                      "runAfter": {},
+                                      "type": "ApiConnection",
+                                      "inputs": {
+                                        "body": {
+                                          "_ownerid_type": "",
+                                          "ap_call_retry_use_longmessage_dtmf": true
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                          }
+                                        },
+                                        "method": "patch",
+                                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                      }
+                                    }
+                                  },
+                                  "runAfter": {
+                                    "Update_Case_Decision_Record_For_Retry": [
+                                      "Succeeded"
+                                    ]
+                                  },
+                                  "expression": {
+                                    "or": [
+                                      {
+                                        "equals": [
+                                          "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
+                                          "@true"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
+                                          "@true"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
+                                          "@true"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "type": "If"
+                                },
+                                "Get_Case_Decision_Record_To_Increase_Retries": {
+                                  "runAfter": {},
+                                  "type": "ApiConnection",
+                                  "inputs": {
+                                    "host": {
+                                      "connection": {
+                                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                      }
+                                    },
+                                    "method": "get",
+                                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                  }
+                                },
+                                "Update_Case_Decision_Record_For_Retry": {
+                                  "runAfter": {
+                                    "Get_Case_Decision_Record_To_Increase_Retries": [
+                                      "Succeeded"
+                                    ]
+                                  },
+                                  "type": "ApiConnection",
+                                  "inputs": {
+                                    "body": {
+                                      "_ownerid_type": "",
+                                      "ap_ain_last_call_date": "@{utcNow()}",
+                                      "ap_casedecision_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                                      "ap_casedecision_info_available": false,
+                                      "ap_casedecision_transcription_changed_on": "@{utcNow()}",
+                                      "ap_casedecision_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
+                                      "ap_casedecision_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
+                                      "ap_casedecision_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
+                                      "ap_casedecision_transcription_status": 683710002,
+                                      "ap_total_call_retries": "@add(if(equals(body('Get_Case_Decision_Record_To_Increase_Retries')?['ap_total_call_retries'],null),0,body('Get_Case_Decision_Record_To_Increase_Retries')?['ap_total_call_retries']),1)"
+                                    },
+                                    "host": {
+                                      "connection": {
+                                        "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                      }
+                                    },
+                                    "method": "patch",
+                                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                  }
+                                }
+                              }
+                            },
+                            "expression": {
+                              "and": [
+                                {
+                                  "equals": [
+                                    "@equals(body('Parse_JSON')?['data']?['date']?['fullDate'],null)",
+                                    "@false"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@body('Parse_JSON')?['hasError']",
+                                    "@false"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@equals(body('Parse_JSON')?['data']?['additionalData'],null)",
+                                    "@false"
+                                  ]
+                                }
+                              ]
+                            },
+                            "type": "If"
+                          }
+                        },
+                        "runAfter": {},
+                        "else": {
+                          "actions": {
+                            "Condition_Request_Type_Is_CaseAppeal": {
+                              "actions": {
+                                "Condition_Does_Case_Appeal_Request_Has_Date_Entity_And_No_Errors": {
+                                  "actions": {
+                                    "Update_Case_Appeal_Record": {
+                                      "runAfter": {},
+                                      "type": "ApiConnection",
+                                      "inputs": {
+                                        "body": {
+                                          "_ownerid_type": "",
+                                          "ap_ain_last_call_date": "@{utcNow()}",
+                                          "ap_caseappeal_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                                          "ap_caseappeal_info_available": true,
+                                          "ap_caseappeal_status_info": "@{if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseAppealStatus'),body('Parse_JSON')?['data']?['additionalData']?['caseAppealStatus'],null)}",
+                                          "ap_caseappeal_submitted_date": "@{if(or(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),equals(body('Parse_JSON')?['data']?['date']?['fullDate'],'0001-01-01T00:00:00')),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                                          "ap_caseappeal_transcription_changed_on": "@{utcNow()}",
+                                          "ap_caseappeal_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
+                                          "ap_caseappeal_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
+                                          "ap_caseappeal_transcription_status": 683710004,
+                                          "ap_extract_case_appeal_info": false
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                          }
+                                        },
+                                        "method": "patch",
+                                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                      }
+                                    }
+                                  },
+                                  "runAfter": {},
+                                  "else": {
+                                    "actions": {
+                                      "Condition_Case_Appeal_Request_Has_AddedGovernmentMessageAtStart_Entity": {
+                                        "actions": {
+                                          "Update_Case_Appeal_Record_To_Retry_with_Long_Message_DTMF": {
+                                            "runAfter": {},
+                                            "type": "ApiConnection",
+                                            "inputs": {
+                                              "body": {
+                                                "_ownerid_type": "",
+                                                "ap_call_retry_use_longmessage_dtmf": true
+                                              },
+                                              "host": {
+                                                "connection": {
+                                                  "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                                }
+                                              },
+                                              "method": "patch",
+                                              "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Get_Case_Appeal_Record_To_Increase_Retries')?['ap_ainid']))}"
+                                            }
+                                          }
+                                        },
+                                        "runAfter": {
+                                          "Update_Case_Appeal_Record_For_Retry": [
+                                            "Succeeded"
+                                          ]
+                                        },
+                                        "expression": {
+                                          "or": [
+                                            {
+                                              "equals": [
+                                                "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
+                                                "@true"
+                                              ]
+                                            },
+                                            {
+                                              "equals": [
+                                                "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
+                                                "@true"
+                                              ]
+                                            },
+                                            {
+                                              "equals": [
+                                                "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
+                                                "@true"
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        "type": "If"
+                                      },
+                                      "Get_Case_Appeal_Record_To_Increase_Retries": {
+                                        "runAfter": {},
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                          "host": {
+                                            "connection": {
+                                              "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                            }
+                                          },
+                                          "method": "get",
+                                          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                        }
+                                      },
+                                      "Update_Case_Appeal_Record_For_Retry": {
+                                        "runAfter": {
+                                          "Get_Case_Appeal_Record_To_Increase_Retries": [
+                                            "Succeeded"
+                                          ]
+                                        },
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                          "body": {
+                                            "_ownerid_type": "",
+                                            "ap_ain_last_call_date": "@{utcNow()}",
+                                            "ap_caseappeal_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                                            "ap_caseappeal_transcription_changed_on": "@{utcNow()}",
+                                            "ap_caseappeal_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
+                                            "ap_caseappeal_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
+                                            "ap_caseappeal_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
+                                            "ap_caseappeal_transcription_status": 683710002,
+                                            "ap_total_call_retries": "@add(if(equals(body('Get_Case_Appeal_Record_To_Increase_Retries')?['ap_total_call_retries'],null),0,body('Get_Case_Appeal_Record_To_Increase_Retries')?['ap_total_call_retries']),1)"
+                                          },
+                                          "host": {
+                                            "connection": {
+                                              "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                            }
+                                          },
+                                          "method": "patch",
+                                          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Get_Case_Appeal_Record_To_Increase_Retries')?['ap_ainid']))}"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "expression": {
+                                    "and": [
+                                      {
+                                        "equals": [
+                                          "@equals(body('Parse_JSON')?['data']?['date']?['fullDate'],null)",
+                                          "@false"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@body('Parse_JSON')?['hasError']",
+                                          "@false"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@equals(body('Parse_JSON')?['data']?['additionalData'],null)",
+                                          "@false"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "type": "If"
+                                }
+                              },
+                              "runAfter": {},
+                              "else": {
+                                "actions": {
+                                  "Condition_Is_Get_Case_Appeal_Info_Flag_On": {
+                                    "actions": {
+                                      "Update_Case_Appeal_Info_Record_To_In_Error": {
+                                        "runAfter": {},
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                          "body": {
+                                            "_ownerid_type": "",
+                                            "ap_caseappeal_info_available": false,
+                                            "ap_caseappeal_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
+                                            "ap_caseappeal_transcription_status": 683710003
+                                          },
+                                          "host": {
+                                            "connection": {
+                                              "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                            }
+                                          },
+                                          "method": "patch",
+                                          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                        }
+                                      }
+                                    },
+                                    "runAfter": {
+                                      "Condition_Is_Get_Court_Hearing_Info_Flag_On": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "expression": {
+                                      "and": [
+                                        {
+                                          "equals": [
+                                            "@body('Get_Case_Record')?['ap_extract_case_appeal_info']",
+                                            "@true"
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    "type": "If"
+                                  },
+                                  "Condition_Is_Get_Case_Decision_Info_Flag_On": {
+                                    "actions": {
+                                      "Update_Case_Decision_Info_Record_To_In_Error": {
+                                        "runAfter": {},
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                          "body": {
+                                            "_ownerid_type": "",
+                                            "ap_casedecision_info_available": false,
+                                            "ap_casedecision_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
+                                            "ap_casedecision_transcription_status": 683710003
+                                          },
+                                          "host": {
+                                            "connection": {
+                                              "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                            }
+                                          },
+                                          "method": "patch",
+                                          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                        }
+                                      }
+                                    },
+                                    "runAfter": {
+                                      "Get_Case_Record": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "expression": {
+                                      "equals": [
+                                        "@body('Get_Case_Record')?['ap_extract_case_decision_info']",
+                                        "@true"
+                                      ]
+                                    },
+                                    "type": "If"
+                                  },
+                                  "Condition_Is_Get_Court_Hearing_Info_Flag_On": {
+                                    "actions": {
+                                      "Update_Case_Court_Hearing_Info_Record_To_In_Error": {
+                                        "runAfter": {},
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                          "body": {
+                                            "_ownerid_type": "",
+                                            "ap_courthearing_info_available": false,
+                                            "ap_courthearing_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
+                                            "ap_courthearing_transcription_status": 683710003
+                                          },
+                                          "host": {
+                                            "connection": {
+                                              "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                            }
+                                          },
+                                          "method": "patch",
+                                          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                        }
+                                      }
+                                    },
+                                    "runAfter": {
+                                      "Condition_Is_Get_Case_Decision_Info_Flag_On": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "expression": {
+                                      "equals": [
+                                        "@body('Get_Case_Record')?['ap_extract_court_hearing_info']",
+                                        "@true"
+                                      ]
+                                    },
+                                    "type": "If"
+                                  },
+                                  "Get_Case_Record": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "get",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                                    }
+                                  }
+                                }
+                              },
+                              "expression": {
+                                "and": [
+                                  {
+                                    "equals": [
+                                      "@equals(body('Parse_JSON')?['requestType'],'CaseAppealInfo')",
+                                      "@true"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "type": "If"
+                            }
+                          }
+                        },
+                        "expression": {
+                          "equals": [
+                            "@equals(body('Parse_JSON')?['requestType'],'CaseDecisionInfo')",
+                            "@true"
+                          ]
+                        },
+                        "type": "If"
+                      }
+                    }
+                  },
+                  "expression": {
+                    "equals": [
+                      "@equals(body('Parse_JSON')?['requestType'],'CourtHearingInfo')",
+                      "@true"
+                    ]
+                  },
+                  "type": "If"
+                },
+                "Parse_JSON": {
+                  "runAfter": {},
+                  "type": "ParseJson",
+                  "inputs": {
+                    "content": "@decodeBase64(items('For_each_queue_message')?['ContentData'])",
+                    "schema": {
+                      "properties": {
+                        "callSid": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "data": {
+                          "properties": {
+                            "additionalData": {
+                              "type": [
+                                "object",
+                                "null"
+                              ]
+                            },
+                            "date": {
+                              "properties": {
+                                "day": {
+                                  "type": "integer"
+                                },
+                                "fullDate": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "hour": {
+                                  "type": "integer"
+                                },
+                                "minute": {
+                                  "type": "integer"
+                                },
+                                "month": {
+                                  "type": "integer"
+                                },
+                                "year": {
+                                  "type": "integer"
+                                }
+                              },
+                              "type": [
+                                "object",
+                                "null"
+                              ]
+                            },
+                            "intent": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "intentConfidence": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "location": {
+                              "properties": {
+                                "city": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "location": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "state": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "zipcode": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "type": [
+                                "object",
+                                "null"
+                              ]
+                            },
+                            "person": {
+                              "properties": {
+                                "name": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "type": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "type": [
+                                "object",
+                                "null"
+                              ]
+                            },
+                            "recordingSAS": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "transcription": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "type": [
+                            "object",
+                            "null"
+                          ]
+                        },
+                        "errorCode": {
+                          "type": "integer"
+                        },
+                        "errorDetails": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "hasError": {
+                          "type": "boolean"
+                        },
+                        "recordId": {
+                          "type": "string"
+                        },
+                        "requestType": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "statusCode": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "statusDesc": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    }
+                  }
+                },
+                "Scope_Create_History_Record": {
+                  "actions": {
+                    "Create_a_new_EOIR_History_record": {
+                      "runAfter": {
+                        "Get_Current_EOIR_Record": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "body": {
+                          "_ap_eoircasehistory_value": "@body('Get_Current_EOIR_Record')?['ap_ainid']",
+                          "_ownerid_type": "",
+                          "ap_ain_key_history": "@body('Get_Current_EOIR_Record')['ap_ain']",
+                          "ap_ain_last_call_date_history": "@body('Get_Current_EOIR_Record')?['ap_ain_last_call_date']",
+                          "ap_caseappeal_additional_info_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_additional_info']",
+                          "ap_caseappeal_call_recording_url_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_call_recording_url']",
+                          "ap_caseappeal_info_available_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_info_available']",
+                          "ap_caseappeal_status_info_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_status_info']",
+                          "ap_caseappeal_submitted_date_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_submitted_date']",
+                          "ap_caseappeal_transcript_changedon_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_transcription_changed_on']",
+                          "ap_caseappeal_transcript_confidence_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_transcription_confidence']",
+                          "ap_caseappeal_transcription_errors_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_transcription_errors']",
+                          "ap_caseappeal_transcription_raw_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_transcription_raw']",
+                          "ap_caseappeal_transcriptstatus_history": "@body('Get_Current_EOIR_Record')?['ap_caseappeal_transcription_status']",
+                          "ap_casedecision_additional_info_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_additional_info']",
+                          "ap_casedecision_call_recording_url_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_call_recording_url']",
+                          "ap_casedecision_case_decision_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_case_decision']",
+                          "ap_casedecision_info_available_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_info_available']",
+                          "ap_casedecision_issued_date_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_issued_date']",
+                          "ap_casedecision_transcriptchangedon_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_transcription_changed_on']",
+                          "ap_casedecision_transcriptconfidence_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_transcription_confidence']",
+                          "ap_casedecision_transcription_errors_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_transcription_errors']",
+                          "ap_casedecision_transcription_raw_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_transcription_raw']",
+                          "ap_casedecision_transcriptstatus_history": "@body('Get_Current_EOIR_Record')?['ap_casedecision_transcription_status']",
+                          "ap_courthearing_additional_info_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_additional_info']",
+                          "ap_courthearing_city_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_city']",
+                          "ap_courthearing_date_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_date']",
+                          "ap_courthearing_dateonly_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_dateonly']",
+                          "ap_courthearing_datetime_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_datetime']",
+                          "ap_courthearing_info_available_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_info_available']",
+                          "ap_courthearing_judge_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_judge']",
+                          "ap_courthearing_location_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_location']",
+                          "ap_courthearing_recording_url_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_recording_url']",
+                          "ap_courthearing_state_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_state']",
+                          "ap_courthearing_transcriptchangedon_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_transcription_changed_on']",
+                          "ap_courthearing_transcriptconfidence_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_transcription_confidence']",
+                          "ap_courthearing_transcription_errors_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_transcription_errors']",
+                          "ap_courthearing_transcription_raw_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_transcription_raw']",
+                          "ap_courthearing_transcriptstatus_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_transcription_status']",
+                          "ap_courthearing_type_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_type']",
+                          "ap_courthearing_zipcode_history": "@body('Get_Current_EOIR_Record')?['ap_courthearing_zipcode']"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ain_histories'))}/items"
+                      }
+                    },
+                    "Get_Current_EOIR_Record": {
+                      "runAfter": {},
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                          }
+                        },
+                        "method": "get",
+                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['recordId']))}"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Parse_JSON": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "Scope"
+                }
+              },
+              "runAfter": {
+                "Get_messages_from_result_queue_(peek-lock)": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Foreach"
+            },
+            "Get_messages_from_result_queue_(peek-lock)": {
+              "runAfter": {
+                "Abandon_the_message_in_a_queue": [
+                  "Succeeded"
+                ]
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages/batch/peek",
+                "queries": {
+                  "maxMessageCount": 50,
+                  "queueType": "Main",
+                  "sessionId": "0"
+                }
+              }
+            }
+          },
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('servicebus_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'servicebus')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]"
+              },
+              "[parameters('commondataservice_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('resultsUpdateCase_logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "apiVersion": "2016-06-01",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('servicebus_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'servicebus')]"
+        },
+        "displayName": "[parameters('servicebus_Connection_Name')]",
+        "parameterValues": {
+          "connectionString": "[parameters('servicebus_1_connectionString')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('commondataservice_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]"
+        },
+        "displayName": "[parameters('commondataservice_Connection_Name')]",
+        "nonSecretParameterValues": {
+          "environment": "[parameters('dynamicscrm_environment_name')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

@@ -1,0 +1,34 @@
+﻿{
+	"value": [
+    {
+      "name": "{name1}",
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{location}/environmentCurrencies/{name1}",
+      "type": "Microsoft.BusinessAppPlatform/locations/environmentCurrencies",
+      "properties": {
+        "code": "{code1}",
+        "symbol": "{symbol1}",
+        "isTenantDefault": false
+      }
+    },
+    {
+      "name": "{name2}",
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{location}/environmentCurrencies/{name2}",
+      "type": "Microsoft.BusinessAppPlatform/locations/environmentCurrencies",
+      "properties": {
+        "code": "{code2}",
+        "symbol": "{symbol2}",
+        "isTenantDefault": false
+      }
+    },
+    {
+      "name": "{name3}",
+      "id": "/providers/Microsoft.BusinessAppPlatform/locations/{location}/environmentCurrencies/{name3}",
+      "type": "Microsoft.BusinessAppPlatform/locations/environmentCurrencies",
+      "properties": {
+        "code": "{code3}",
+        "symbol": "{symbol3}",
+        "isTenantDefault": false
+      }
+    }
+	]
+}

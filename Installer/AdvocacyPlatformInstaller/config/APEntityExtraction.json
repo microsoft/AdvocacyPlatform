@@ -1,0 +1,2824 @@
+{
+  "luis_schema_version": "3.2.0",
+  "versionId": "0.2",
+  "name": "APEntityExtraction",
+  "desc": "Advocacy Platform Entity Extraction",
+  "culture": "en-us",
+  "tokenizerVersion": "1.0.0",
+  "intents": [
+    {
+      "name": "AddedGovernmentMessageAtStart"
+    },
+    {
+      "name": "CaseAppealNameEntity"
+    },
+    {
+      "name": "CaseDecisionNameEntity"
+    },
+    {
+      "name": "CourtHearingNameEntity"
+    },
+    {
+      "name": "None"
+    }
+  ],
+  "entities": [
+    {
+      "name": "administrativeOrder",
+      "roles": []
+    },
+    {
+      "name": "caseAppealStatus",
+      "roles": []
+    },
+    {
+      "name": "city",
+      "roles": []
+    },
+    {
+      "name": "governmentShutdown",
+      "roles": []
+    },
+    {
+      "name": "grantedRelief",
+      "roles": []
+    },
+    {
+      "name": "individualCourtHearing",
+      "roles": []
+    },
+    {
+      "name": "masterCourtHearing",
+      "roles": []
+    },
+    {
+      "name": "noCaseMatch",
+      "roles": []
+    },
+    {
+      "name": "removalOrder",
+      "roles": []
+    },
+    {
+      "name": "state",
+      "roles": []
+    },
+    {
+      "name": "systemMaintenance",
+      "roles": []
+    }
+  ],
+  "composites": [
+    {
+      "name": "caseDecision",
+      "children": [
+        "administrativeOrder",
+        "grantedRelief",
+        "removalOrder"
+      ],
+      "roles": []
+    },
+    {
+      "name": "caseType",
+      "children": [
+        "masterCourtHearing",
+        "individualCourtHearing"
+      ],
+      "roles": []
+    },
+    {
+      "name": "judge",
+      "children": [
+        "personName"
+      ],
+      "roles": []
+    },
+    {
+      "name": "location",
+      "children": [
+        "zipcode",
+        "city",
+        "state"
+      ],
+      "roles": []
+    }
+  ],
+  "closedLists": [],
+  "patternAnyEntities": [],
+  "regex_entities": [
+    {
+      "name": "zipcode",
+      "regexPattern": "[0-9]{5}(?:-[0-9]{4})?",
+      "roles": []
+    }
+  ],
+  "prebuiltEntities": [
+    {
+      "name": "datetimeV2",
+      "roles": []
+    },
+    {
+      "name": "personName",
+      "roles": []
+    }
+  ],
+  "model_features": [],
+  "regex_features": [],
+  "patterns": [],
+  "utterances": [
+    {
+      "text": "affordable insurance washington ave albany ny 12222 please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "bayonne yellow cab please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "bbq near olympia wa please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "be conducting system maintenance starting june 5th, 2020",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "systemMaintenance",
+          "startPos": 14,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "bend oregon exotic restaurants please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "book for me lana del rey tickets in west palm",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "book for me tickets to lollapalooza in chicago",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "boudoir photo shoot ballard",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "bus options from the space needle in seattle to the international district at 7pm",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "check for seattle i - 5 accident",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "cilantro please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "distance from taco bell to my location",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "dog friendly hotel shasta california",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "fatima luas stop dublin please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "find 2 tickets to the steven tyler show in seattle",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "find redmond ridge golf",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "find tickets for toto in huber heights ohio",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "from lax to disneyland please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "government shutdown",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "governmentShutdown",
+          "startPos": 0,
+          "endPos": 18
+        }
+      ]
+    },
+    {
+      "text": "hearing date is 13 of december 2024 10 pm before judge john opaciuch at 6007 grand river dr ne, ada, mi 49301. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. or filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "location",
+          "startPos": 72,
+          "endPos": 108
+        },
+        {
+          "entity": "city",
+          "startPos": 96,
+          "endPos": 98
+        },
+        {
+          "entity": "state",
+          "startPos": 101,
+          "endPos": 102
+        }
+      ]
+    },
+    {
+      "text": "hearing date is may 13 of 2071 at ten richard phelps at 360 command viewsuite 104, colorado springs,colorado 80915 for your next hearing date press one for case processing information press 2 4 decision information press 3 for case appeal information press 4 for filing information press, 5 to repeat these options",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "judge",
+          "startPos": 38,
+          "endPos": 51
+        },
+        {
+          "entity": "location",
+          "startPos": 56,
+          "endPos": 113
+        },
+        {
+          "entity": "city",
+          "startPos": 83,
+          "endPos": 98
+        },
+        {
+          "entity": "state",
+          "startPos": 100,
+          "endPos": 107
+        }
+      ]
+    },
+    {
+      "text": "hermosillo sonora to obreg ? sonora",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "holomap stockholm metro (3d map) please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "how far from manchester airport",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "i ' d like to go to a concert in new york city",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "i ' d like to go to a concert in toronto",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "i ' d like to go to a concert in zurich this weekend",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "i ' d like to see a concert in toronto",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "i ' d like to take dinner in a quiet restaurant in downtown",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "i want to see a concert in kitchener",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "immigration judge granted relief on your case at 334 broad st room twelve hundred newark nj 07? 02. on 20 of january 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3 for case appeal information press 4. or filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "grantedRelief",
+          "startPos": 18,
+          "endPos": 31
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 18,
+          "endPos": 31
+        },
+        {
+          "entity": "location",
+          "startPos": 49,
+          "endPos": 98
+        },
+        {
+          "entity": "city",
+          "startPos": 82,
+          "endPos": 87
+        },
+        {
+          "entity": "state",
+          "startPos": 89,
+          "endPos": 90
+        }
+      ]
+    },
+    {
+      "text": "immigration judge ordered ordered removal on your case. market street, san jose, california 98076. on july 30 of 2010 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 26,
+          "endPos": 40
+        },
+        {
+          "entity": "location",
+          "startPos": 56,
+          "endPos": 96
+        },
+        {
+          "entity": "city",
+          "startPos": 71,
+          "endPos": 78
+        },
+        {
+          "entity": "state",
+          "startPos": 81,
+          "endPos": 90
+        }
+      ]
+    },
+    {
+      "text": "immigration judge ordered ordered removal on your case. market street, san jose, california 98076. on july 30 of 1980 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 26,
+          "endPos": 40
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 26,
+          "endPos": 40
+        },
+        {
+          "entity": "location",
+          "startPos": 56,
+          "endPos": 96
+        },
+        {
+          "entity": "city",
+          "startPos": 71,
+          "endPos": 78
+        },
+        {
+          "entity": "state",
+          "startPos": 81,
+          "endPos": 90
+        }
+      ]
+    },
+    {
+      "text": "immigration judge ordered removal on your case at 6007 grand river dr ne, ada, mi 49301. on 16 of may 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 18,
+          "endPos": 32
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 18,
+          "endPos": 32
+        },
+        {
+          "entity": "location",
+          "startPos": 50,
+          "endPos": 86
+        },
+        {
+          "entity": "city",
+          "startPos": 74,
+          "endPos": 76
+        },
+        {
+          "entity": "state",
+          "startPos": 79,
+          "endPos": 80
+        }
+      ]
+    },
+    {
+      "text": "jacks to joints layer",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "maintenance starting april 5th, 2000 and the alien registration number",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "systemMaintenance",
+          "startPos": 0,
+          "endPos": 10
+        }
+      ]
+    },
+    {
+      "text": "ojai apple picking",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "or will be conducting system maintenance starting april 5th 2 the early you enter a please try again you entered press one to confirm or 2 to reenter please try again you entered press one to confirm or 2 to reenter please try again",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "systemMaintenance",
+          "startPos": 22,
+          "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "or will be conducting system maintenance starting april 5th you entered please try again. you entered press one to confirm or 2 to reenter",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "systemMaintenance",
+          "startPos": 22,
+          "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "or will be conducting system maintenance starting april 5th, 2000 and the alien registration number. you entered",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "systemMaintenance",
+          "startPos": 22,
+          "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "or will be conducting system maintenance starting april 5th, 2019, you enter please try again you entered press one to confirm or 2 to reenter",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "systemMaintenance",
+          "startPos": 22,
+          "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "ordered removal on your case 1961 stout street, suite 3101 denver, co 80294 on june 30 2020 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 0,
+          "endPos": 14
+        },
+        {
+          "entity": "removalOrder",
+          "startPos": 0,
+          "endPos": 14
+        },
+        {
+          "entity": "location",
+          "startPos": 34,
+          "endPos": 74
+        },
+        {
+          "entity": "city",
+          "startPos": 59,
+          "endPos": 64
+        },
+        {
+          "entity": "state",
+          "startPos": 67,
+          "endPos": 68
+        }
+      ]
+    },
+    {
+      "text": "ordered removal on your case market street, san jose, california 98076. on july 30 of 2020 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 0,
+          "endPos": 14
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 0,
+          "endPos": 14
+        },
+        {
+          "entity": "location",
+          "startPos": 29,
+          "endPos": 69
+        },
+        {
+          "entity": "city",
+          "startPos": 44,
+          "endPos": 51
+        },
+        {
+          "entity": "state",
+          "startPos": 54,
+          "endPos": 63
+        }
+      ]
+    },
+    {
+      "text": "public transportation to the hospital ?",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "purple cafe kirkland reservations",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "santa barbara maine postal please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "search dearham swimming pool timetable",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "show me driving directions from akaka falls",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "show me the opening hours of smokey park",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "shutdown you enter please try again you entered press one to confirm or 2 to reenter",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "governmentShutdown",
+          "startPos": 0,
+          "endPos": 7
+        }
+      ]
+    },
+    {
+      "text": "soda popinski sf",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "tacoma please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "tesco ' s catterick garrison address please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "the a number information you entered did not match a record in the cyst",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "noCaseMatch",
+          "startPos": 45,
+          "endPos": 58
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter you entered o the a number information you entered did not match a record in the system",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "noCaseMatch",
+          "startPos": 139,
+          "endPos": 152
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter, a and is followed by a. you entered the system. for your next. your next individual. hearing date is may 6th 2019 at 10:30 am before judge. harris. at 5701 executive center suite 400 charlotte, north carolina 28212. for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4. for filing information press, 5 to rip.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 154,
+          "endPos": 163
+        },
+        {
+          "entity": "caseType",
+          "startPos": 154,
+          "endPos": 163
+        },
+        {
+          "entity": "judge",
+          "startPos": 221,
+          "endPos": 226
+        },
+        {
+          "entity": "location",
+          "startPos": 232,
+          "endPos": 294
+        },
+        {
+          "entity": "city",
+          "startPos": 264,
+          "endPos": 272
+        },
+        {
+          "entity": "state",
+          "startPos": 275,
+          "endPos": 288
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter, a and is followed by an. you entered the system for your next. your next master hearing date is may 9th, 2019 at one pm before judge. at 700 east san antonio suite, 750 el paso, texas, 79901. for your next hearing date press one. for case processing information press 2. poor decision information press 3. for case appeal information press 4. for filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 154,
+          "endPos": 159
+        },
+        {
+          "entity": "caseType",
+          "startPos": 154,
+          "endPos": 159
+        },
+        {
+          "entity": "location",
+          "startPos": 218,
+          "endPos": 270
+        },
+        {
+          "entity": "city",
+          "startPos": 259,
+          "endPos": 263
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter, a and is followed by an. you entered the system. you're next. but immigration judge granted relief on your case at. 970 broad st room. 1200 newark, new jersey 07102. on january 19th 2016 for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4. for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "grantedRelief",
+          "startPos": 165,
+          "endPos": 178
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 165,
+          "endPos": 178
+        },
+        {
+          "entity": "location",
+          "startPos": 195,
+          "endPos": 244
+        },
+        {
+          "entity": "state",
+          "startPos": 233,
+          "endPos": 238
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter, a and is followed by an. you entered the system. you're next. your next individual. hearing date is july, 8th 2015 at one pm eva saltzmana. 525 west van buren suite 500 chicago, illinois 60607. for your next hearing date press one. for case processing information press 2",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 153,
+          "endPos": 162
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 153,
+          "endPos": 162
+        },
+        {
+          "entity": "judge",
+          "startPos": 206,
+          "endPos": 218
+        },
+        {
+          "entity": "location",
+          "startPos": 221,
+          "endPos": 272
+        },
+        {
+          "entity": "city",
+          "startPos": 250,
+          "endPos": 256
+        },
+        {
+          "entity": "state",
+          "startPos": 259,
+          "endPos": 266
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter, a and is followed by an. you entered the system. you're next. your next individual. hearing date is july, 8th 2017 at one pm before judge mario sturla at 000 west van buren suite 500 chicago, illinois 60607 for your next hearing date press one. for case processing information press 2",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 153,
+          "endPos": 162
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 153,
+          "endPos": 162
+        },
+        {
+          "entity": "judge",
+          "startPos": 219,
+          "endPos": 230
+        },
+        {
+          "entity": "location",
+          "startPos": 235,
+          "endPos": 286
+        },
+        {
+          "entity": "city",
+          "startPos": 264,
+          "endPos": 270
+        },
+        {
+          "entity": "state",
+          "startPos": 273,
+          "endPos": 280
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter, a? you entered o the a number did not match a record in the cyst",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "noCaseMatch",
+          "startPos": 119,
+          "endPos": 132
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number also known as the a number begins with the letter, a? you entered o the a number information you entered did not match a record in the cyst",
+      "intent": "None",
+      "entities": [
+        {
+          "entity": "noCaseMatch",
+          "startPos": 139,
+          "endPos": 156
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number known as the age. you entered",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "the alien registration number you entered the system for your next your next individual hearing date is may 13th 2021 at one pm jesus clemente at 111 creek road, lake alfred,florida 33850 for your next hearing date press one for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 77,
+          "endPos": 86
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 77,
+          "endPos": 86
+        },
+        {
+          "entity": "judge",
+          "startPos": 128,
+          "endPos": 141
+        },
+        {
+          "entity": "location",
+          "startPos": 146,
+          "endPos": 186
+        },
+        {
+          "entity": "city",
+          "startPos": 162,
+          "endPos": 172
+        },
+        {
+          "entity": "state",
+          "startPos": 174,
+          "endPos": 180
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. the alien registration number. the alien registration number. you enter.",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 1901 south bell street suite 200 arlington, virginia 22. 02. on may 16th 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 181
+        },
+        {
+          "entity": "city",
+          "startPos": 156,
+          "endPos": 164
+        },
+        {
+          "entity": "state",
+          "startPos": 167,
+          "endPos": 174
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 19010 south bell street suite 200 arlington, virginia 22. 02. on may 16th 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 182
+        },
+        {
+          "entity": "city",
+          "startPos": 157,
+          "endPos": 165
+        },
+        {
+          "entity": "state",
+          "startPos": 168,
+          "endPos": 175
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 238 w. 23rd street,chicago,illinois 60616. on august 13 2010 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 163
+        },
+        {
+          "entity": "city",
+          "startPos": 142,
+          "endPos": 148
+        },
+        {
+          "entity": "state",
+          "startPos": 150,
+          "endPos": 157
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 250 metacom avenue,bristol,rhode island 02809. on august 13 2012 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 167
+        },
+        {
+          "entity": "city",
+          "startPos": 142,
+          "endPos": 148
+        },
+        {
+          "entity": "state",
+          "startPos": 150,
+          "endPos": 161
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 3130 n. oakland street aurora, co 80010. november 30 of 2000 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 161
+        },
+        {
+          "entity": "city",
+          "startPos": 146,
+          "endPos": 151
+        },
+        {
+          "entity": "state",
+          "startPos": 154,
+          "endPos": 155
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 315 unversity ave. w.suite a,saint paul,minnesota 55103. on august 13 2010 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 177
+        },
+        {
+          "entity": "city",
+          "startPos": 152,
+          "endPos": 161
+        },
+        {
+          "entity": "state",
+          "startPos": 163,
+          "endPos": 171
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 3600 north pace boulevard,pensacola,florida 32505. on august 13 2050 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 171
+        },
+        {
+          "entity": "city",
+          "startPos": 149,
+          "endPos": 157
+        },
+        {
+          "entity": "state",
+          "startPos": 159,
+          "endPos": 165
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 3600 north pace boulevard,pensacola,florida 32505. on may 15 2011 for your next hearing date press one.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 171
+        },
+        {
+          "entity": "city",
+          "startPos": 149,
+          "endPos": 157
+        },
+        {
+          "entity": "state",
+          "startPos": 159,
+          "endPos": 165
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 4450 beechcraft rd.,robstown,texas 78380. on 13 of june 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 162
+        },
+        {
+          "entity": "city",
+          "startPos": 143,
+          "endPos": 150
+        },
+        {
+          "entity": "state",
+          "startPos": 152,
+          "endPos": 156
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 4450 beechcraft rd.,robstown,texas 78380. on august 13 2013 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 162
+        },
+        {
+          "entity": "city",
+          "startPos": 143,
+          "endPos": 150
+        },
+        {
+          "entity": "state",
+          "startPos": 152,
+          "endPos": 156
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 56789 arlington, virginia 22202. november 30 of 2000 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 153
+        },
+        {
+          "entity": "city",
+          "startPos": 129,
+          "endPos": 137
+        },
+        {
+          "entity": "state",
+          "startPos": 140,
+          "endPos": 147
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 68 franklin ave,brooklyn,new york 11205. on august 13 2010 for your next hearing date press one. for case processing information press 2. 4 decision information pres",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 161
+        },
+        {
+          "entity": "city",
+          "startPos": 139,
+          "endPos": 146
+        },
+        {
+          "entity": "state",
+          "startPos": 152,
+          "endPos": 155
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 700 e san antonio avenue suite 750 el paso, texas 79901 on december 15 2019 for your next hearing date press one. for case processing information press 2",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 177
+        },
+        {
+          "entity": "city",
+          "startPos": 158,
+          "endPos": 164
+        },
+        {
+          "entity": "state",
+          "startPos": 167,
+          "endPos": 171
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 81 weaver street,newport, new mexico 05855. on august 13 2020 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 164
+        },
+        {
+          "entity": "city",
+          "startPos": 140,
+          "endPos": 146
+        },
+        {
+          "entity": "state",
+          "startPos": 149,
+          "endPos": 158
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 81 weaver street,newport,vermont 05855. on august 13 2020 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 160
+        },
+        {
+          "entity": "city",
+          "startPos": 140,
+          "endPos": 146
+        },
+        {
+          "entity": "state",
+          "startPos": 148,
+          "endPos": 154
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 8105 ballantyne commons parkway,charlotte,north carolina 28277. on august 13 2001 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 184
+        },
+        {
+          "entity": "city",
+          "startPos": 155,
+          "endPos": 163
+        },
+        {
+          "entity": "state",
+          "startPos": 165,
+          "endPos": 178
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at 8261 summa avenuesuite h,baton rouge,louisiana 70809. on 13 of june 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 174
+        },
+        {
+          "entity": "city",
+          "startPos": 148,
+          "endPos": 158
+        },
+        {
+          "entity": "state",
+          "startPos": 160,
+          "endPos": 168
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. the immigration judge ordered removal on your case at avenida ashford, san juan puerto rico 00919-9089. on august 13 2018 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press, 4 for filing information press .",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 91,
+          "endPos": 105
+        },
+        {
+          "entity": "location",
+          "startPos": 123,
+          "endPos": 170
+        },
+        {
+          "entity": "city",
+          "startPos": 140,
+          "endPos": 147
+        },
+        {
+          "entity": "state",
+          "startPos": 149,
+          "endPos": 159
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next individual hearing date is december, 13th 2021 at 1pm before judge johnson at 14450 beechcraft rd.,robstown, wa 97864. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "judge",
+          "startPos": 146,
+          "endPos": 152
+        },
+        {
+          "entity": "location",
+          "startPos": 157,
+          "endPos": 195
+        },
+        {
+          "entity": "city",
+          "startPos": 178,
+          "endPos": 185
+        },
+        {
+          "entity": "state",
+          "startPos": 188,
+          "endPos": 189
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next individual hearing date is december, 13th 2021 at one pm before judge nina m. carbon at 100, montgomery st suite. eight hundred san francisco ca 94105. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "judge",
+          "startPos": 149,
+          "endPos": 162
+        },
+        {
+          "entity": "location",
+          "startPos": 167,
+          "endPos": 228
+        },
+        {
+          "entity": "city",
+          "startPos": 207,
+          "endPos": 219
+        },
+        {
+          "entity": "state",
+          "startPos": 221,
+          "endPos": 222
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next individual hearing date is february, 14 2018. at one pm before judge jeremiah johnson at 100 ms redmond way, redmond wa. 98052. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. or filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "location",
+          "startPos": 168,
+          "endPos": 204
+        },
+        {
+          "entity": "city",
+          "startPos": 188,
+          "endPos": 194
+        },
+        {
+          "entity": "state",
+          "startPos": 196,
+          "endPos": 197
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next individual hearing date is may 13th 2021 at 2pm olga attia at 1215 gazin street, houston,texas.77020.for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "judge",
+          "startPos": 127,
+          "endPos": 136
+        },
+        {
+          "entity": "location",
+          "startPos": 141,
+          "endPos": 178
+        },
+        {
+          "entity": "city",
+          "startPos": 160,
+          "endPos": 166
+        },
+        {
+          "entity": "state",
+          "startPos": 168,
+          "endPos": 172
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next individual hearing date is may 13th 2021 at one pm before judge clemente at 000 granbury street, cleburne,texas.76033.for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "judge",
+          "startPos": 143,
+          "endPos": 150
+        },
+        {
+          "entity": "location",
+          "startPos": 155,
+          "endPos": 195
+        },
+        {
+          "entity": "city",
+          "startPos": 176,
+          "endPos": 183
+        },
+        {
+          "entity": "state",
+          "startPos": 185,
+          "endPos": 189
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next individual hearing date is may 13th 2011 at one pm carlos maury at 33n. santa cruz, los gatos,california.95030.for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "judge",
+          "startPos": 130,
+          "endPos": 141
+        },
+        {
+          "entity": "location",
+          "startPos": 146,
+          "endPos": 188
+        },
+        {
+          "entity": "city",
+          "startPos": 163,
+          "endPos": 171
+        },
+        {
+          "entity": "state",
+          "startPos": 173,
+          "endPos": 182
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next individual hearing date is may 13th 2011 at one pm judge jame devitto at 0000 beechcraft rd., robstown,texas 78380.for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 79,
+          "endPos": 88
+        },
+        {
+          "entity": "judge",
+          "startPos": 136,
+          "endPos": 147
+        },
+        {
+          "entity": "location",
+          "startPos": 152,
+          "endPos": 192
+        },
+        {
+          "entity": "city",
+          "startPos": 173,
+          "endPos": 180
+        },
+        {
+          "entity": "state",
+          "startPos": 182,
+          "endPos": 186
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next master hearing date is december, 13th 2006 at one pm before jeremiah johnson at 100, montgomery st suite. eight hundred san francisco ca 9410. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "judge",
+          "startPos": 139,
+          "endPos": 154
+        },
+        {
+          "entity": "location",
+          "startPos": 159,
+          "endPos": 219
+        },
+        {
+          "entity": "city",
+          "startPos": 199,
+          "endPos": 211
+        },
+        {
+          "entity": "state",
+          "startPos": 213,
+          "endPos": 214
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next master hearing date is december, 13th 2005 at one pm before williams at 100, montgomery st suite. eight hundred san francisco ca 9410. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "judge",
+          "startPos": 139,
+          "endPos": 146
+        },
+        {
+          "entity": "location",
+          "startPos": 151,
+          "endPos": 211
+        },
+        {
+          "entity": "city",
+          "startPos": 191,
+          "endPos": 203
+        },
+        {
+          "entity": "state",
+          "startPos": 205,
+          "endPos": 206
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system for your next. your next master hearing date is december, 13th 2040 at one pm before judge johnson at 100, montgomery st suite eight hundred san francisco ca 104 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "judge",
+          "startPos": 145,
+          "endPos": 151
+        },
+        {
+          "entity": "location",
+          "startPos": 156,
+          "endPos": 214
+        },
+        {
+          "entity": "city",
+          "startPos": 195,
+          "endPos": 207
+        },
+        {
+          "entity": "state",
+          "startPos": 209,
+          "endPos": 210
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system will you next the immigration judge affirmed the decision on your case at on july 20th 2018 for your next hearing date press one for case. information press 2. poor decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options press zero. please try again.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 90,
+          "endPos": 110
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system will you next the immigration judge closed proceedings on your case at 8915 montana ave el paso, tx 79925 on? may 30th 2018 for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options press zero.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 90,
+          "endPos": 107
+        },
+        {
+          "entity": "location",
+          "startPos": 125,
+          "endPos": 158
+        },
+        {
+          "entity": "state",
+          "startPos": 151,
+          "endPos": 152
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system will your next the immigration judge issued an administrative decision on your case at on august 1st, 2017 for your next hearing date press one. for case processing information press 2. poor decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options press zero. please.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "administrativeOrder",
+          "startPos": 101,
+          "endPos": 123
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 101,
+          "endPos": 123
+        }
+      ]
+    },
+    {
+      "text": "the alien registration number. you entered the system will your next. the immigration judge closed proceedings on your case at 8915 montana ave el paso, tx 79925 on july. 2018 for your next hearing date press one for case processing information press 2. poor decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options press zero.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 92,
+          "endPos": 109
+        },
+        {
+          "entity": "location",
+          "startPos": 127,
+          "endPos": 160
+        },
+        {
+          "entity": "state",
+          "startPos": 153,
+          "endPos": 154
+        }
+      ]
+    },
+    {
+      "text": "the alien registration up you entered the system for your neck your next individual hearing date is december 13th, 2021 at 1 p.m. judge jeremiah johnson at 100 montgomery street, suite 800, san francisco, california 94104 for your next hearing date, press one. for case processing information, press 2. for decision information, press 3. for case appeal information, press 4. for filing information, press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 73,
+          "endPos": 82
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 73,
+          "endPos": 82
+        },
+        {
+          "entity": "judge",
+          "startPos": 136,
+          "endPos": 151
+        },
+        {
+          "entity": "location",
+          "startPos": 156,
+          "endPos": 220
+        },
+        {
+          "entity": "city",
+          "startPos": 190,
+          "endPos": 202
+        },
+        {
+          "entity": "state",
+          "startPos": 205,
+          "endPos": 214
+        }
+      ]
+    },
+    {
+      "text": "the alien registration. you entered the system for your neck. your next individual hearing date is december, 13th 2007. at one pm before judge jeremiah johnson at 100, montgomery st suite. eight hundred san francisco ca 9. 04. for your next hearing date press one. for case processing information press 2. for desicion information press 3. for case appeal information press 4. or filing information press, 5 to.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 72,
+          "endPos": 81
+        },
+        {
+          "entity": "caseType",
+          "startPos": 72,
+          "endPos": 81
+        },
+        {
+          "entity": "judge",
+          "startPos": 143,
+          "endPos": 158
+        },
+        {
+          "entity": "location",
+          "startPos": 163,
+          "endPos": 224
+        },
+        {
+          "entity": "city",
+          "startPos": 203,
+          "endPos": 215
+        },
+        {
+          "entity": "state",
+          "startPos": 217,
+          "endPos": 218
+        }
+      ]
+    },
+    {
+      "text": "the alien registration. you entered the system for your next your next master hearing date is may 22nd 2015 at 8 am before judge david koelsch at 31, hopkins plz room four four zero baltimore md? 21201 for your next hearing date press one for case processing information press 2. for decission information press 3. for case appeal information press 4. for filing information press.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 71,
+          "endPos": 76
+        },
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 71,
+          "endPos": 76
+        },
+        {
+          "entity": "judge",
+          "startPos": 129,
+          "endPos": 141
+        },
+        {
+          "entity": "location",
+          "startPos": 146,
+          "endPos": 200
+        },
+        {
+          "entity": "city",
+          "startPos": 182,
+          "endPos": 190
+        },
+        {
+          "entity": "state",
+          "startPos": 192,
+          "endPos": 193
+        }
+      ]
+    },
+    {
+      "text": "the alien registration. you entered the system for your next. your next individual hearing date is december, 13th 2002 at one pm before judge jeremiah johnson at 100, montgomery st suite eight hundred san francisco ca 104 for your next hearing date press one for case processing information press 2 4 decision information press 3. for case appeal information press 4. for filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 72,
+          "endPos": 81
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 72,
+          "endPos": 81
+        },
+        {
+          "entity": "judge",
+          "startPos": 142,
+          "endPos": 157
+        },
+        {
+          "entity": "location",
+          "startPos": 162,
+          "endPos": 220
+        },
+        {
+          "entity": "city",
+          "startPos": 201,
+          "endPos": 213
+        },
+        {
+          "entity": "state",
+          "startPos": 215,
+          "endPos": 216
+        }
+      ]
+    },
+    {
+      "text": "the alien registration. you entered the system will you next the immigration judge affirmed the decision on your case at on july 20th 2018 for your next hearing date press one. for case processing information press 2. poor decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options press zero. please try again.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 83,
+          "endPos": 103
+        }
+      ]
+    },
+    {
+      "text": "the alien registration. you entered the system will you next the immigration judge granted belief on your case at 970 broad st room twelve hundred newark nj 07? 02. on january 19th 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3 for case appeal information press 4. or filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "grantedRelief",
+          "startPos": 83,
+          "endPos": 96
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 83,
+          "endPos": 96
+        },
+        {
+          "entity": "location",
+          "startPos": 114,
+          "endPos": 163
+        },
+        {
+          "entity": "city",
+          "startPos": 147,
+          "endPos": 152
+        },
+        {
+          "entity": "state",
+          "startPos": 154,
+          "endPos": 155
+        }
+      ]
+    },
+    {
+      "text": "the alien registration. you entered the system will you next the immigration judge granted relief on your case at 970 broad st room twelve hundred newark nj 07? 02. on january 19th 2016 for your next hearing date press one. for case processing information press 2. 4 decision information press 3 for case appeal information press 4. or filing information press 5.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "grantedRelief",
+          "startPos": 83,
+          "endPos": 96
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 83,
+          "endPos": 96
+        },
+        {
+          "entity": "location",
+          "startPos": 114,
+          "endPos": 163
+        },
+        {
+          "entity": "city",
+          "startPos": 147,
+          "endPos": 152
+        },
+        {
+          "entity": "state",
+          "startPos": 154,
+          "endPos": 155
+        }
+      ]
+    },
+    {
+      "text": "the alien registration. you entered the system will you next the system does not contain any information regarding a future hearing date on your case? for your next hearing date press one. for case processing information press 2. poor decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options press zero. please try again for your next hearing date press one. for case.",
+      "intent": "CourtHearingNameEntity",
+      "entities": []
+    },
+    {
+      "text": "the immigration judge ordered removal on your case at 13345 village square drive, woodinville, washington 98072 on 16 of may 2016",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "removalOrder",
+          "startPos": 22,
+          "endPos": 36
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 22,
+          "endPos": 36
+        },
+        {
+          "entity": "location",
+          "startPos": 54,
+          "endPos": 110
+        },
+        {
+          "entity": "city",
+          "startPos": 82,
+          "endPos": 92
+        },
+        {
+          "entity": "state",
+          "startPos": 95,
+          "endPos": 104
+        }
+      ]
+    },
+    {
+      "text": "the l in registration number. you entered the system for your next. your next master hearing date is july, 2nd 2019 at 9 am before judge snow at 333333 south bell street suite 200 arlington, virginia. 202. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 78,
+          "endPos": 83
+        },
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 78,
+          "endPos": 83
+        },
+        {
+          "entity": "judge",
+          "startPos": 137,
+          "endPos": 140
+        },
+        {
+          "entity": "location",
+          "startPos": 145,
+          "endPos": 203
+        },
+        {
+          "entity": "city",
+          "startPos": 180,
+          "endPos": 188
+        },
+        {
+          "entity": "state",
+          "startPos": 191,
+          "endPos": 198
+        }
+      ]
+    },
+    {
+      "text": "the l in registration. you entered the system for your next the system does not contain any information regarding a future hearing date on your case for your next hearing date press one for case processing information press 2 4 decision information press 3 for case appeal information press 4 for filing information press, 5 to repeat these options press zero",
+      "intent": "CourtHearingNameEntity",
+      "entities": []
+    },
+    {
+      "text": "the only word space. you entered the system will you next the immigration judge issued an administrative decision on your case at on august 1st 2017 for your next hearing date press one. for case processing information press 2. 4 decision information press 3 for case appeal information press 4. for filing information press, 5 to repeat these options press zero. please.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "administrativeOrder",
+          "startPos": 90,
+          "endPos": 112
+        },
+        {
+          "entity": "caseDecision",
+          "startPos": 90,
+          "endPos": 112
+        }
+      ]
+    },
+    {
+      "text": "tickets for nine inch nails in copenhagen",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "trapper ' s sushi puyallup to trapper ' s sushi tacoma please",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "uani street",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "we are in registration number also known as the a number begins with the letter, a and is followed by an. you entered the system for your next. your next master hearing date is february 12, 2020 at 8 am before judge. williams at 31 hopkins plz room four four zero baltimore, md 21201. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to re.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 154,
+          "endPos": 159
+        },
+        {
+          "entity": "caseType",
+          "startPos": 154,
+          "endPos": 159
+        },
+        {
+          "entity": "judge",
+          "startPos": 217,
+          "endPos": 224
+        },
+        {
+          "entity": "location",
+          "startPos": 229,
+          "endPos": 282
+        },
+        {
+          "entity": "city",
+          "startPos": 264,
+          "endPos": 272
+        },
+        {
+          "entity": "state",
+          "startPos": 275,
+          "endPos": 276
+        }
+      ]
+    },
+    {
+      "text": "we are in registration number. you entered the system will you next? your next master hearing date is july, 2nd 2019 at 9 am before judge. snow at 1901 south bell street suite 200 arlington, virginia 22202. for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "caseType",
+          "startPos": 79,
+          "endPos": 84
+        },
+        {
+          "entity": "judge",
+          "startPos": 139,
+          "endPos": 142
+        },
+        {
+          "entity": "location",
+          "startPos": 147,
+          "endPos": 204
+        },
+        {
+          "entity": "city",
+          "startPos": 180,
+          "endPos": 188
+        },
+        {
+          "entity": "state",
+          "startPos": 191,
+          "endPos": 198
+        }
+      ]
+    },
+    {
+      "text": "we are in registration number. you entered the system will your next. the immigration judge affirmed the decision on your case at 8915 montana ave el paso, tx 79925 on july. 2018 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options press zero.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 92,
+          "endPos": 112
+        },
+        {
+          "entity": "location",
+          "startPos": 130,
+          "endPos": 163
+        },
+        {
+          "entity": "state",
+          "startPos": 156,
+          "endPos": 157
+        }
+      ]
+    },
+    {
+      "text": "we are in registration number. you entered the systems for your next. the immigration judge affirmed the decision on your case at 8915 montana ave el paso, tx 79925 on july. 2018 for your next hearing date press one for case processing information press 2. 4 decision information press 3. for case appeal information press 4. or filing information press, 5 to repeat these options press zero.",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 92,
+          "endPos": 112
+        },
+        {
+          "entity": "location",
+          "startPos": 130,
+          "endPos": 163
+        },
+        {
+          "entity": "state",
+          "startPos": 156,
+          "endPos": 157
+        }
+      ]
+    },
+    {
+      "text": "welcome to the automated case information the alien registration number also known as the a number begins with the letter a for your next your appeal was received on 4th of december, 2019, was accepted. no alien brief due date exists at this time. no ins brief due date exists at this time for your next hearing date press one for case processing information press 2 4 decision information press 3 for case appeal information press 4",
+      "intent": "CaseAppealNameEntity",
+      "entities": [
+        {
+          "entity": "caseAppealStatus",
+          "startPos": 193,
+          "endPos": 200
+        }
+      ]
+    },
+    {
+      "text": "welcome to the automated case information. the alien registration number also known as the a number begins with the letter, a you entered to the system shows your name is for your next your fuel was received on march 4th, 2019 it is currently pending. no alien brief due date exists at this time. no ins brief due date exists at this time. for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4. f",
+      "intent": "CaseAppealNameEntity",
+      "entities": [
+        {
+          "entity": "caseAppealStatus",
+          "startPos": 233,
+          "endPos": 249
+        }
+      ]
+    },
+    {
+      "text": "welcome to the automated case information. the alien registration number also known as the a number begins with the letter, a? you entered to the system shows for your next your appeal was received on march 4th, 2019 declined. no alien brief due date exists at this time. no ins brief due date exists at this time. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4.",
+      "intent": "CaseAppealNameEntity",
+      "entities": [
+        {
+          "entity": "caseAppealStatus",
+          "startPos": 217,
+          "endPos": 224
+        }
+      ]
+    },
+    {
+      "text": "welcome to the automated case information. the alien registration number also known as the a number begins with the letter, a? you entered to the system. well, your next your appeal was received on march 4th, 2019, it is currently pending. no alien brief due date exists at this time. no ins brief due date exists at this time. for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4. or filing informatio",
+      "intent": "CaseAppealNameEntity",
+      "entities": [
+        {
+          "entity": "caseAppealStatus",
+          "startPos": 221,
+          "endPos": 237
+        }
+      ]
+    },
+    {
+      "text": "welcome to the automated case information. the alien registration number also known as the a number begins with the letter, a? you entered too. the system will your next. but immigration judge closed proceedings. on your case at. 8915 montana ave el paso, tx. 79925 on july 30th 2018. for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4. or filing information press 5. to repeat these options press ze",
+      "intent": "CaseDecisionNameEntity",
+      "entities": [
+        {
+          "entity": "caseDecision",
+          "startPos": 193,
+          "endPos": 210
+        },
+        {
+          "entity": "location",
+          "startPos": 228,
+          "endPos": 264
+        },
+        {
+          "entity": "state",
+          "startPos": 256,
+          "endPos": 257
+        }
+      ]
+    },
+    {
+      "text": "welcome to the automated case information. the alien registration number also known as the a number begins with the letter, you entered to the system shows for your next your appeal was received on march 4th, 2019, it is currently pending no alien brief due date exists at this time no ins brief due date exists at this time for your next hearing date press one for case processing information press 2 4 decision information press 3 for case appeal information press 4",
+      "intent": "CaseAppealNameEntity",
+      "entities": [
+        {
+          "entity": "caseAppealStatus",
+          "startPos": 221,
+          "endPos": 237
+        }
+      ]
+    },
+    {
+      "text": "welcome to the automated case the alien registration number also known as the a number begins with the letter, a? you entered do the system for your next your next master hearing date is july, 25th, 2019 at one pm before judge shadee star at 100, montgomery st suite, eight hundred san francisco ca 94104 for your next hearing date press one for case processing information press 2 4 decision information press 3 for case appeal information press 4 or filing information press 5",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 164,
+          "endPos": 169
+        },
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 164,
+          "endPos": 169
+        },
+        {
+          "entity": "judge",
+          "startPos": 227,
+          "endPos": 237
+        },
+        {
+          "entity": "location",
+          "startPos": 242,
+          "endPos": 303
+        },
+        {
+          "entity": "city",
+          "startPos": 282,
+          "endPos": 294
+        },
+        {
+          "entity": "state",
+          "startPos": 296,
+          "endPos": 297
+        }
+      ]
+    },
+    {
+      "text": "what is the bus schedule today in dawsonville",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "will be conducting system maintenance may 5, 2017. you entered",
+      "intent": "AddedGovernmentMessageAtStart",
+      "entities": [
+        {
+          "entity": "systemMaintenance",
+          "startPos": 19,
+          "endPos": 36
+        }
+      ]
+    },
+    {
+      "text": "you entered the system for your next. your next individual hearing date is 13 of november 2011. at 10 pm. sandra santos garcia at 5838 battle creek rd se, salem,oregon 97306.for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "judge",
+          "startPos": 106,
+          "endPos": 125
+        },
+        {
+          "entity": "location",
+          "startPos": 130,
+          "endPos": 172
+        },
+        {
+          "entity": "city",
+          "startPos": 155,
+          "endPos": 159
+        },
+        {
+          "entity": "state",
+          "startPos": 161,
+          "endPos": 166
+        }
+      ]
+    },
+    {
+      "text": "you entered the system for your next. your next individual hearing date is 13 of september 2011 at 10 pm jaime jasso at 1028 washington street, raleigh,north carolina 27605for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "judge",
+          "startPos": 105,
+          "endPos": 115
+        },
+        {
+          "entity": "location",
+          "startPos": 120,
+          "endPos": 174
+        },
+        {
+          "entity": "city",
+          "startPos": 144,
+          "endPos": 150
+        },
+        {
+          "entity": "state",
+          "startPos": 152,
+          "endPos": 165
+        }
+      ]
+    },
+    {
+      "text": "you entered the system for your next. your next individual hearing date is 14 of may 2012 at 10 am kevin riley at dispute resolution center 000 n first ave.,yakima, washington 93705 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. for filing information press, 5 to repeat these options.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "judge",
+          "startPos": 99,
+          "endPos": 109
+        },
+        {
+          "entity": "location",
+          "startPos": 114,
+          "endPos": 180
+        },
+        {
+          "entity": "city",
+          "startPos": 157,
+          "endPos": 162
+        },
+        {
+          "entity": "state",
+          "startPos": 165,
+          "endPos": 174
+        }
+      ]
+    },
+    {
+      "text": "you entered the system for your next. your next individual hearing date is august, 13th 2021 at one pm judge caley at 11918 bissel lane,austin, texas 97864 for your next hearing date press one for case processing information press 2 4 decision information press 3 for case appeal information press 4 for filing information press, 5",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "judge",
+          "startPos": 109,
+          "endPos": 113
+        },
+        {
+          "entity": "location",
+          "startPos": 118,
+          "endPos": 154
+        },
+        {
+          "entity": "city",
+          "startPos": 136,
+          "endPos": 141
+        },
+        {
+          "entity": "state",
+          "startPos": 144,
+          "endPos": 148
+        }
+      ]
+    },
+    {
+      "text": "you entered the system for your next. your next individual hearing date is jun 14 2015. at five pm. julian castaneda at 101010 e. hanna road, suite 366 eloy, az 85131.for your next hearing",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 48,
+          "endPos": 57
+        },
+        {
+          "entity": "judge",
+          "startPos": 100,
+          "endPos": 115
+        },
+        {
+          "entity": "location",
+          "startPos": 120,
+          "endPos": 165
+        },
+        {
+          "entity": "city",
+          "startPos": 152,
+          "endPos": 155
+        },
+        {
+          "entity": "state",
+          "startPos": 158,
+          "endPos": 159
+        }
+      ]
+    },
+    {
+      "text": "you entered to the system. next your appeal was received on 4 of december, 2019 is currently pending. for your next hearing date press one. for case processing information press 2. for decission information press 3. for case appeal information press 4. or filing informatio",
+      "intent": "CaseAppealNameEntity",
+      "entities": [
+        {
+          "entity": "caseAppealStatus",
+          "startPos": 83,
+          "endPos": 99
+        }
+      ]
+    },
+    {
+      "text": "your appeal was received on march 4th, 2019 and it is processed. no alien brief due date exists at this time",
+      "intent": "CaseAppealNameEntity",
+      "entities": [
+        {
+          "entity": "caseAppealStatus",
+          "startPos": 54,
+          "endPos": 62
+        }
+      ]
+    },
+    {
+      "text": "your next individual hearing date is 10 of september 2022 one pm before judge habich at 751 west drahner rd. oxford michigan 48371. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. or filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 10,
+          "endPos": 19
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 10,
+          "endPos": 19
+        },
+        {
+          "entity": "judge",
+          "startPos": 78,
+          "endPos": 83
+        },
+        {
+          "entity": "location",
+          "startPos": 88,
+          "endPos": 129
+        },
+        {
+          "entity": "city",
+          "startPos": 109,
+          "endPos": 114
+        },
+        {
+          "entity": "state",
+          "startPos": 116,
+          "endPos": 123
+        }
+      ]
+    },
+    {
+      "text": "your next individual hearing date is 13 of november 2024 3 pm before judge gabriel at 300 e. hall st., newark, nj 64721. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. or filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 10,
+          "endPos": 19
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 10,
+          "endPos": 19
+        },
+        {
+          "entity": "judge",
+          "startPos": 75,
+          "endPos": 81
+        },
+        {
+          "entity": "location",
+          "startPos": 86,
+          "endPos": 118
+        },
+        {
+          "entity": "city",
+          "startPos": 103,
+          "endPos": 108
+        },
+        {
+          "entity": "state",
+          "startPos": 111,
+          "endPos": 112
+        }
+      ]
+    },
+    {
+      "text": "your next individual hearing date is april 4th, 2032 at 8:30 am before judge guzman. the only word space. you entered the",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 10,
+          "endPos": 19
+        },
+        {
+          "entity": "individualCourtHearing",
+          "startPos": 10,
+          "endPos": 19
+        }
+      ]
+    },
+    {
+      "text": "your next master hearing date is 13 of december 2024 10 pm before judge wilson at 0000 grand river dr ne, ada, mi 49301 for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. or filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 10,
+          "endPos": 15
+        },
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 10,
+          "endPos": 15
+        },
+        {
+          "entity": "judge",
+          "startPos": 72,
+          "endPos": 77
+        },
+        {
+          "entity": "location",
+          "startPos": 82,
+          "endPos": 118
+        },
+        {
+          "entity": "city",
+          "startPos": 106,
+          "endPos": 108
+        },
+        {
+          "entity": "state",
+          "startPos": 111,
+          "endPos": 112
+        }
+      ]
+    },
+    {
+      "text": "your next master hearing date is 13 of november 2025 10 pm before judge alexander at 8988 highway, bothell, washington 49301. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 10,
+          "endPos": 15
+        },
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 10,
+          "endPos": 15
+        },
+        {
+          "entity": "judge",
+          "startPos": 72,
+          "endPos": 80
+        },
+        {
+          "entity": "location",
+          "startPos": 85,
+          "endPos": 123
+        },
+        {
+          "entity": "city",
+          "startPos": 99,
+          "endPos": 105
+        },
+        {
+          "entity": "state",
+          "startPos": 108,
+          "endPos": 117
+        }
+      ]
+    },
+    {
+      "text": "your next master hearing date is 13 of november 2025 10 pm before judge melanie corrin at redmond, wa 98072. for your next hearing date press one. for case processing information press 2. 4 decision information press 3. for case appeal information press 4. or filing information press 5.",
+      "intent": "CourtHearingNameEntity",
+      "entities": [
+        {
+          "entity": "caseType",
+          "startPos": 10,
+          "endPos": 15
+        },
+        {
+          "entity": "masterCourtHearing",
+          "startPos": 10,
+          "endPos": 15
+        },
+        {
+          "entity": "judge",
+          "startPos": 72,
+          "endPos": 85
+        },
+        {
+          "entity": "city",
+          "startPos": 90,
+          "endPos": 96
+        },
+        {
+          "entity": "location",
+          "startPos": 90,
+          "endPos": 106
+        },
+        {
+          "entity": "state",
+          "startPos": 99,
+          "endPos": 100
+        }
+      ]
+    }
+  ],
+  "settings": []
+}

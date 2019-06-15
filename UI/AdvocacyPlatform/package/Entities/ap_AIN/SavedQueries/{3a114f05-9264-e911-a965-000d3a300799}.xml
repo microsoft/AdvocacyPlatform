@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{3a114f05-9264-e911-a965-000d3a300799}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_ain" select="1" icon="1" preview="1">
+        <row name="result" id="ap_ain">
+          <cell name="ap_ain" width="80" />
+          <cell name="ap_person_ain_lkp" width="100" />
+          <cell name="ap_courthearing_info_available" width="161" />
+          <cell name="ap_casedecision_info_available" width="158" />
+          <cell name="ap_caseappeal_info_available" width="144" />
+          <cell name="ap_courthearing_datetime" width="151" />
+          <cell name="ap_courthearing_state" width="137" />
+          <cell name="ap_courthearing_city" width="129" />
+          <cell name="ap_courthearing_zipcode" width="173" />
+          <cell name="ap_courthearing_location_composite" width="256" />
+          <cell name="ap_courthearing_location" width="300" />
+          <cell name="ap_courthearing_recording_url" width="211" />
+          <cell name="ap_courthearing_transcription_raw" width="300" />
+          <cell name="ap_courthearing_transcription_changed_on" width="249" />
+          <cell name="ap_casedecision_case_decision" width="100" />
+          <cell name="ap_casedecision_issued_date" width="181" />
+          <cell name="ap_casedecision_call_recording_url" width="300" />
+          <cell name="ap_casedecision_transcription_raw" width="300" />
+          <cell name="ap_casedecision_transcription_changed_on" width="258" />
+          <cell name="ap_caseappeal_submitted_date" width="194" />
+          <cell name="ap_caseappeal_call_recording_url" width="207" />
+          <cell name="ap_caseappeal_transcription_raw" width="199" />
+          <cell name="ap_caseappeal_status_info" width="212" />
+          <cell name="ap_caseappeal_transcription_changed_on" width="230" />
+          <cell name="ap_ain_last_call_date" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="ap_ain">
+          <attribute name="ap_ain" />
+          <attribute name="ap_ainid" />
+          <attribute name="ap_person_ain_lkp" />
+          <attribute name="ap_courthearing_info_available" />
+          <attribute name="ap_casedecision_info_available" />
+          <attribute name="ap_caseappeal_info_available" />
+          <attribute name="ap_courthearing_datetime" />
+          <attribute name="ap_courthearing_state" />
+          <attribute name="ap_courthearing_city" />
+          <attribute name="ap_courthearing_zipcode" />
+          <attribute name="ap_courthearing_location_composite" />
+          <attribute name="ap_courthearing_location" />
+          <attribute name="ap_courthearing_recording_url" />
+          <attribute name="ap_courthearing_transcription_raw" />
+          <attribute name="ap_courthearing_transcription_changed_on" />
+          <attribute name="ap_casedecision_case_decision" />
+          <attribute name="ap_casedecision_issued_date" />
+          <attribute name="ap_casedecision_call_recording_url" />
+          <attribute name="ap_casedecision_transcription_raw" />
+          <attribute name="ap_casedecision_transcription_changed_on" />
+          <attribute name="ap_caseappeal_submitted_date" />
+          <attribute name="ap_caseappeal_transcription_raw" />
+          <attribute name="ap_caseappeal_call_recording_url" />
+          <attribute name="ap_caseappeal_transcription_changed_on" />
+          <attribute name="ap_ain_last_call_date" />
+          <attribute name="ap_caseappeal_status_info" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Cases - Export All View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

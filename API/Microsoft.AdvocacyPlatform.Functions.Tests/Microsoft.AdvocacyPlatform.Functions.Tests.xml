@@ -1,0 +1,1916 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AdvocacyPlatform.Functions.Tests</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests">
+            <summary>
+            Tests for CheckCallProgress.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CallResponseTemplatePath">
+            <summary>
+            Path to call response template file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.TwilioAccountSidSecretNameAppSettingName">
+            <summary>
+            Application setting name with Twilio account SID secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.TwilioAuthTokenSecretNameAppSettingName">
+            <summary>
+            Application setting name with Twilio auth token secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.AuthorityAppSettingName">
+            <summary>
+            Application setting name with authorizing authority.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.FailedStatuses">
+            <summary>
+            Gets the list of failed call statuses.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InProgressStatuses">
+            <summary>
+            Gets the list of in-progress call statuses.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InitializeServiceProvider(System.Collections.Generic.IEnumerable{Microsoft.AdvocacyPlatform.Contracts.Module})">
+            <summary>
+            Builds the dependency injection container.
+            </summary>
+            <param name="modules">A list of modules to add to the container.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InitializeWithNoTwilioMock">
+            <summary>
+            Initializes test with no TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InitializeWithTwilioMock">
+            <summary>
+            Initializes test with TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InitializeSecrets">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InitializeSecretsExceptions">
+            <summary>
+            Initializes expected secret store exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.InitializeTwilioExceptions(System.Collections.Generic.Dictionary{System.String,System.Exception})">
+            <summary>
+            Initializes expected Twilio exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunCompleted">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunNoDuration">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation runs correctly with no call duration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunFailedStatuses">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles call failure statuses correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunInProgressStatuses">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles call in-progress statuses correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunBadRequest">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles bad requests correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunMissingCallSid">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles requests with missing callSid correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunSecretStoreException">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles secret store exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunTwilioAuthenticationException">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles Twilio authentication exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunTwilioApiConnectionException">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles Twilio API connection exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunTwilioApiRequestException">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles Twilio API request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunTwilioRestRequestException">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles Twilio REST request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.CheckCallProgressTests.CheckCallProgressHttpTriggerRunTwilioGenericException">
+            <summary>
+            Ensure CheckCallProgressHttpTrigger.Run() implementation handles Twilio generic exceptions correctly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.RegexDataExtractorTests">
+            <summary>
+            Tests for RegexDataExtractor.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.RegexDataExtractorTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.RegexDataExtractorTests.Container">
+            <summary>
+            Gets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.RegexDataExtractorTests.ExtractDateTimeSuccess">
+            <summary>
+            Tests success for ExtractDateTime.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.RegexDataExtractorTests.ExtractDateTimeRealSuccess">
+            <summary>
+            Tests success for ExtractDateTime with example transcripts.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests">
+            <summary>
+            Tests for TwilioCallWrapper.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.TwiMLBaseUrl">
+            <summary>
+            The base URL for making calls with the Twilio Markup Language.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.TestAccountSid">
+            <summary>
+            The test account SID to use.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.TwilioLocalNumberSecretNameAppSettingName">
+            <summary>
+            The name of the secret containing the Twilio local number to use to make calls.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.TwilioAccountSidSecretNameAppSettingName">
+            <summary>
+            The name of the secret containing the Twilio account SID.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.TwilioAuthTokenSecretNameAppSettingName">
+            <summary>
+            The name of the secret containing the Twilio auth token.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.AuthorityAppSettingName">
+            <summary>
+            The name of the application setting specifying the authorization authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.TwiMLTemplateAppSettingName">
+            <summary>
+            The name of the application setting specifying the Twilio ML template.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.CallResponseTemplatePath">
+            <summary>
+            Path to the template file for call responses.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.RecordingCompositeTemplatePath">
+            <summary>
+            Path to the template file for a composite recording response.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.RecordingCompositesKey">
+            <summary>
+            Key to replace in template with a composite recording response.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.RecordingResponseTemplatePath">
+            <summary>
+            Path to the template file for a recording response.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.Container">
+            <summary>
+            Gets the dependency injection container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.RegisterExpectedUriResponse(System.String,System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Registers an expected response message for a URI.
+            </summary>
+            <param name="requestUri">The expected URI.</param>
+            <param name="response">The expected response.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.InitializeSecrets">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.GetTwilioUriSuccess">
+            <summary>
+            Tests a successful GetTwilioUri() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.PlaceAndRecordCallAsyncSuccess">
+            <summary>
+            Tests a successful PlaceAndRecordCallAsync() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.FetchCallAsyncSuccess">
+            <summary>
+            Tests a successful FetchCallAsync() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.FetchStatusAsyncSuccess">
+            <summary>
+            Tests a successful FetchStatusAsync() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.HangupCallAsyncCompleted">
+            <summary>
+            Tests a successful HangupCallAsync() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.HangupCallAsyncInProgress">
+            <summary>
+            Tests a successful HangupCallAsync() call for a call in-progress.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.HangupCallAsyncQueued">
+            <summary>
+            Tests a successful HangupCallAsync() call for queued call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.FetchRecordingsAsyncSuccess">
+            <summary>
+            Tests a successful FetchRecordingsAsync() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.DeleteCallAsyncSuccess">
+            <summary>
+            Tests a successful DeleteCallAsync() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.DeleteRecordingsAsyncSuccess">
+            <summary>
+            Tests a successful DeleteRecordingsAsync() call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TwilioCallWrapperTests.GetFullRecordingUriSuccess">
+            <summary>
+            Tests a successful GetFullRecordingUri() call.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests">
+            <summary>
+            Test for DeleteAccountRecordings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.TwilioAccountSidSecretNameAppSettingName">
+            <summary>
+            Application setting name for Twilio account SID secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.TwilioAuthTokenSecretNameAppSettingName">
+            <summary>
+            Application setting name for Twilio auth token secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.AuthorityAppSettingName">
+            <summary>
+            Application setting name for authorization authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.TestAccountSid">
+            <summary>
+            Test Twilio account SID.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.RecordingCompositeTemplatePath">
+            <summary>
+            Path to Twilio composite recording response template file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.RecordingCompositesKey">
+            <summary>
+            Key in template for placing composite recording response.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.RecordingResponseTemplatePath">
+            <summary>
+            Path to Twilio recording response template file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.Log">
+            <summary>
+            Gets the mock trace logger instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.InitializeServiceProvider(System.Collections.Generic.IEnumerable{Microsoft.AdvocacyPlatform.Contracts.Module})">
+            <summary>
+            Builds the dependency injection container.
+            </summary>
+            <param name="modules">A list of modules to add to the container.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.InitializeWithNoTwilioMock">
+            <summary>
+            Initializes test with no TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.InitializeWithTwilioMock">
+            <summary>
+            Initializes test with TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.InitializeSecrets">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.InitializeSecretsExceptions">
+            <summary>
+            Initializes expected secret store exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.InitializeTwilioExceptions(System.Collections.Generic.Dictionary{System.String,System.Exception})">
+            <summary>
+            Initializes expected Twilio exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerFullSuccess">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerPartialSuccess">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles partial success correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerNoRecordings">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles no Twilio call recordings correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerMissingConfirmation">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles no confirmDelete in request body correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerInvalidConfirmation">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles invalid value for confirmDelete in request body correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerRunSecretStoreException">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles secret store exceptions successfully.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerRunTwilioAuthenticationException">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles Twilio authentication exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerRunTwilioApiConnectionException">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles Twilio API connection exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerRunTwilioApiRequestException">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles Twilio API request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerRunTwilioRestRequestException">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles Twilio REST request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteAccountRecordingsTests.DeleteAccountRecordingsHttpTriggerRunTwilioGenericException">
+            <summary>
+            Ensure DeleteAccountRecordingsHttpTrigger.Run() implementation handles Twilio generic exceptions correctly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests">
+            <summary>
+            Tests for DeleteRecordings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.TwilioAccountSidSecretNameAppSettingName">
+            <summary>
+            Application setting name for the Twilio account SID secret.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.TwilioAuthTokenSecretNameAppSettingName">
+            <summary>
+            Application setting name for the Twilio auth token secret.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.AuthorityAppSettingName">
+            <summary>
+            Application setting name for the authorization authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.TestAccountSid">
+            <summary>
+            Test Twilio account SID.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.RecordingCompositeTemplatePath">
+            <summary>
+            Path to the Twilio composite recordings response template file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.RecordingCompositesKey">
+            <summary>
+            Key for injecting composite recordings response.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.RecordingResponseTemplatePath">
+            <summary>
+            Path to the Twilio recording response template file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.InitializeServiceProvider(System.Collections.Generic.IEnumerable{Microsoft.AdvocacyPlatform.Contracts.Module})">
+            <summary>
+            Builds the dependency injection container.
+            </summary>
+            <param name="modules">A list of modules to add to the container.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.InitializeWithNoTwilioMock">
+            <summary>
+            Initializes test with no TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.InitializeWithTwilioMock">
+            <summary>
+            Initializes test with TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.InitializeSecrets">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.InitializeSecretsExceptions">
+            <summary>
+            Initializes expected secret store exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.InitializeTwilioExceptions(System.Collections.Generic.Dictionary{System.String,System.Exception})">
+            <summary>
+            Initializes expected Twilio exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerFullSuccess">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerPartialSuccess">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles partial success correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerNoRecordings">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles no Twilio call recordings correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerMissingCallSid">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles a missing callSid in the request body correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerRunSecretStoreException">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles secret store exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerRunTwilioAuthenticationException">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles Twilio authentication exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerRunTwilioApiConnectionException">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles Twilio API connection exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerRunTwilioApiRequestException">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles Twilio API request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerRunTwilioRestRequestException">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles Twilio REST request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.DeleteRecordingsTests.DeleteRecordingsHttpTriggerRunTwilioGenericException">
+            <summary>
+            Ensure DeleteRecordingsHttpTrigger.Run() implementation handles Twilio generic exceptions correctly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests">
+            <summary>
+            Tests for ExtractInfo.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisEndpointAppSettingName">
+            <summary>
+            Application setting name for the LUIS endpoint.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisSubscriptionKeySecretNameAppSettingName">
+            <summary>
+            Application setting name for the LUIS subscription key secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExpectedLuisSubscriptionKey">
+            <summary>
+            The expected LUIS subscription key.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisConfigurationAppSettingName">
+            <summary>
+            Application setting name for the LUIS configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisDateTimeWithCompositeResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with DateTime entity.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisNoTopScoringIntentResponseTemplatePath">
+            <summary>
+            Path to  LUIS response template with no top scoring entity.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisNoEntitiesResponseTemplatePath">
+            <summary>
+            Path to LUIS response template with no entities.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisNullEntitiesResponseTemplatePath">
+            <summary>
+            Path to LUIS response template with a null entity.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisNoDateTimeWithCompositeResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with no DateTime entity.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisDateTimeNoLocationWithCompositeResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with DateTime but no location entity.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisNoCompositeResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisNullCompositeResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with null composite entities.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisNoPersonResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with no person entity.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisDateTimeWithAdditionalEntityResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with additional entities.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisDateTimeLocationWithAdditionalEntityResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with DateTime, location, and additional entities.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisDateTimeLocationWithDuplicateAdditionalEntityResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with DateTime, location, and duplicate additional entities.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisDateTimeLocationWithTriplicateAdditionalEntityResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with DateTime, location, and triplicate additional entities.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.LuisDateTimeLocationWithAdditionalEntityFullCompositeResponseTemplatePath">
+            <summary>
+            Path to composite LUIS response template with DateTime, location, composite, and additional entities.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.RequestUri">
+            <summary>
+            Gets the expected request URI.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.InitializeServiceProvider(System.Collections.Generic.IEnumerable{Microsoft.AdvocacyPlatform.Contracts.Module})">
+            <summary>
+            Builds the dependency injection container.
+            </summary>
+            <param name="modules">A list of modules to add to the container.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.InitializeWithNoDataExtractorMock">
+            <summary>
+            Initializes test with no DataExtractor mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.InitializeSecrets">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.InitializeSecretsExceptions">
+            <summary>
+            Initializes expected secret store exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.InitializeDataExtractorExceptions">
+            <summary>
+            Initializes expected DataExtractor exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerTrimEndNoTrimSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with no trim data transformation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerTrimEndTrimmedSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with TrimEnd data transformation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerResponseMissingTopScoringIntentSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with missing top scoring intent runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerResponseNoEntitiesSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with no entities runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerResponseNullEntitiesSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with null entities runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerDateTimeOnlyDateSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with date-only entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerDateTimeOnlyDateBelowThresholdDateRejectedSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with date-only entity below min DateTime value threshold runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerDateTimeOnlyTimeSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with time-only entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerNoDateTime">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with no datetime entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerNoLocationEntitySuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with no location entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerNoCompositeEntitiesSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with no composite entities runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerNullCompositeEntitiesSuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with null composite entities runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerNoPersonEntitySuccess">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with no person entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerMissingCallSid">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with missing callSid in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerMissingText">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with missing text in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerAdministrativeOrder">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with administrative order entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerGrantedRelief">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with granted relief entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerDuplicateExtraEntity">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with duplicate entities runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerTriplicateExtraEntity">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with triplicate entities runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerRemovalOrder">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation with removal order entity runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerSecretStoreException">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation handles secret store exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ExtractInfoTests.ExtractInfoHttpTriggerDataExtractorException">
+            <summary>
+            Ensure ExtractInfoHttpTrigger.Run() implementation handles data extractor exceptions correctly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.TestHelper">
+            <summary>
+            Helper class for unit tests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TestHelper.GetConfiguration">
+            <summary>
+            Gets configuration information.
+            </summary>
+            <returns>Configuration information.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TestHelper.CreateSecureString(System.String)">
+            <summary>
+            Creates a SecureString.
+            </summary>
+            <param name="value">The value to create the SecureString with.</param>
+            <returns>The secured string.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TestHelper.CreateHttpResponseMessage(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Creates an HTTP response message.
+            </summary>
+            <param name="statusCode">The HTTP status code of the response.</param>
+            <param name="content">Content in the response body.</param>
+            <returns>The HTTP response.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.UtilsTests">
+            <summary>
+            Tests for Utils.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.UtilsTests.HourWithMinuteToTimeSuccess">
+            <summary>
+            Tests successful HourWithMinuteToTime() calls.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.UtilsTests.OrdinalsToOrdinalsSuccess">
+            <summary>
+            Tests successful OrdinalsToOrdinals() calls.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.UtilsTests.ReplaceHomonymsSuccess">
+            <summary>
+            Tests successful ReplaceHomonyms() calls.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.UtilsTests.WordnumsToNums">
+            <summary>
+            Tests a successful WordnumsToNums() calls.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.UtilsTests.YearsToDigits">
+            <summary>
+            Tests a successful YearsToDigits() calls.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.ValueValidatorTests">
+            <summary>
+            Tests implemented ValueValidators.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ValueValidatorTests.AINValueValidatorSuccess">
+            <summary>
+            Tests a call to the AINValueValidator() for a valid AIN.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ValueValidatorTests.AINValueValidatorFailTooManyDigits">
+            <summary>
+            Tests a call to the AINValueValidator() for an invalid AIN (too many digits).
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ValueValidatorTests.AINValueValidatorFailAlphanumeric">
+            <summary>
+            Tests a call to the AINValueValidator() for an invalid AIN (alphanumeric).
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ValueValidatorTests.AINValueValidatorDashSuccess">
+            <summary>
+            Tests a call to the AINValueValidator() for a valid AIN with dashes in the value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ValueValidatorTests.AINValueValidatorDashFailTooManyDigits">
+            <summary>
+            Tests a call to the AINValueValidator() for an invalid AIN with dashes in the value (too many digits).
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.ValueValidatorTests.AINValueValidatorDashFailAlphanumeric">
+            <summary>
+            Tests a call to the AINValueValidator() for an invalid AIN with dashes in the value (alphanumeric).
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests">
+            <summary>
+            Tests for InitiateCall.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.TwilioLocalNumberSecretNameAppSettingName">
+            <summary>
+            Application setting name for Twilio local number secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.TwilioAccountSidSecretNameAppSettingName">
+            <summary>
+            Application setting name for Twilio account SID secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.TwilioAuthTokenSecretNameAppSettingName">
+            <summary>
+            Application setting name for Twilio auth token secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.AuthorityAppSettingName">
+            <summary>
+            Application setting name for authorizing authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.CallResponseTemplatePath">
+            <summary>
+            Path to Twilio call response template file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.ExpectedNumberToCallAppSetting">
+            <summary>
+            Application setting name with the expected number to call.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitializeServiceProvider(System.Collections.Generic.IEnumerable{Microsoft.AdvocacyPlatform.Contracts.Module})">
+            <summary>
+            Builds the dependency injection container.
+            </summary>
+            <param name="modules">A list of modules to add to the container.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitializeWithNoTwilioMock">
+            <summary>
+            Initializes test with no TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitializeWithTwilioMock">
+            <summary>
+            Initializes test with TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitializeSecrets(System.Boolean)">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+            <param name="excludeTwilioAccountSecret">Flag indicating whether the Twilio account SID secret should not be added.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitializeSecretsExceptions">
+            <summary>
+            Initializes expected secret store exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitializeTwilioExceptions(System.Collections.Generic.Dictionary{System.String,System.Exception})">
+            <summary>
+            Initializes expected Twilio exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerSuccessNoDtmf">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation with no dtmf in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerSuccessAINWithDash">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation with inputId with dashes in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerSuccessWithDtmf">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation with dtmf in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerSuccessWithPartialDtmf">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation with partial dtmf configuration in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerMissingInputId">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation with no inputId in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerRunSecretStoreException">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation handles secret store exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerRunTwilioAuthenticationException">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation handles Twilio authentication exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerRunTwilioApiConnectionException">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation handles Twilio API connection exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerRunTwilioApiRequestException">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation handles Twilio API request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerRunTwilioRestRequestException">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation handles Twilio REST request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.InitiateCallTests.InitiateCallHttpTriggerRunTwilioGenericException">
+            <summary>
+            Ensure InitiateCallHttpTrigger.Run() implementation handles Twilio generic exceptions correctly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock">
+            <summary>
+            Mock for AzureBlobStorageClient.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.AzureStorageEndpoint">
+            <summary>
+            Azure storage endpoint.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.WriteStreamAsync(System.IO.Stream,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,System.Boolean)">
+            <summary>
+            Simulates writing to a blob stream.
+            </summary>
+            <param name="fileStream">The input stream.</param>
+            <param name="connectionString">The connection string.</param>
+            <param name="containerName">The name of the container.</param>
+            <param name="destinationPath">The destination path.</param>
+            <param name="createContainerIfNotExists">Flag indicating whether the container should be created if it doesn't exist.</param>
+            <returns>Information regarding the blob written.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.RegisterExpectedRequestMessage(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Registers an expected HTTP request message.
+            </summary>
+            <param name="pathOrPathPrefix">The path or prefix the request is for.</param>
+            <param name="connectionString">The connection string used in the request.</param>
+            <param name="containerName">The name of the target container.</param>
+            <param name="createContainerIfNotExists">Flag indicating whether the request states the container should be created if it does not exist.</param>
+            <returns>True if request was registered successfully, false if it failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.RegisterExpectedResponseMessage(System.String,System.Int64)">
+            <summary>
+            Registers an expected HTTP response message.
+            </summary>
+            <param name="destinationPathPrefix">The path or prefix the response is for.</param>
+            <param name="sizeInBytes">The blob length to return.</param>
+            <returns>True if response was registered successfully, false if it failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.RegisterExpectedException(System.String,Microsoft.AdvocacyPlatform.Contracts.StorageClientException)">
+            <summary>
+            Registers an expected exception to be thrown.
+            </summary>
+            <param name="secretName">The name of the secret the exception is associated with.</param>
+            <param name="ex">The exception to throw.</param>
+            <returns>True if expected exception was registered successfully, false if it failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.ClearExpectedRequestMessages">
+            <summary>
+            Clears the cache of expected HTTP request messages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.ClearExpectedResponseMessages">
+            <summary>
+            Clears the cache of expected HTTP response messages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureBlobStorageClientMock.ReadToStreamAsync(System.IO.Stream,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String)">
+            <summary>
+            Simulates reading to a stream.
+            </summary>
+            <param name="outputStream">The stream to read to.</param>
+            <param name="connectionString">The connection string used.</param>
+            <param name="containerName">The name of the container.</param>
+            <param name="sourcePath">The expected blob path.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureKeyVaultSecretStoreMock">
+            <summary>
+            Mocks the AzureKeyVaultSecretStore.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureKeyVaultSecretStoreMock.GetSecretAsync(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Simulates getting a secret.
+            </summary>
+            <param name="secretIdentifier">The unique identifier for the secret.</param>
+            <param name="authority">The authorizing authority.</param>
+            <param name="expireInCacheSeconds">The expected cache expiration in seconds.</param>
+            <param name="associatedUserName">The expected associated user name.</param>
+            <returns>The requested secret.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureKeyVaultSecretStoreMock.RegisterExpectedSecret(Microsoft.AdvocacyPlatform.Contracts.Secret)">
+            <summary>
+            Registers an expected secret with the mock secret store.
+            </summary>
+            <param name="secret">The secret to register.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureKeyVaultSecretStoreMock.RegisterExpectedException(System.String,Microsoft.AdvocacyPlatform.Contracts.SecretStoreException)">
+            <summary>
+            Registers an expected exception to be thrown.
+            </summary>
+            <param name="secretName">The name of the secret associated with the exception.</param>
+            <param name="ex">The exception to throw.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureKeyVaultSecretStoreMock.ClearExpectedSecrets">
+            <summary>
+            Clears the expected secrets cache.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureKeyVaultSecretStoreMock.ClearExpectedExceptions">
+            <summary>
+            Clears the expected exceptions cache.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock">
+            <summary>
+            Mocks the AzureTranscriber.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock.RegisterExpectedRequestMessage(System.String,System.String,System.String)">
+            <summary>
+            Registers an expected request.
+            </summary>
+            <param name="audioFilePath">The expected path in the request.</param>
+            <param name="apiKey">The expected API key used in the request.</param>
+            <param name="region">The expected region in the request.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock.RegisterExpectedResponseMessage(System.String,System.String)">
+            <summary>
+            Registers an expected response.
+            </summary>
+            <param name="audioFilePath">The expected path in the response.</param>
+            <param name="transcript">The expected transcript in the response.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock.RegisterExpectedException(System.String,Microsoft.AdvocacyPlatform.Contracts.TranscriberException)">
+            <summary>
+            Registers an expected exception.
+            </summary>
+            <param name="secretName">The secret to associate with the exception.</param>
+            <param name="ex">The exception to throw.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock.TranscribeAudioFilePathAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates transcribing and audio file from a specified path.
+            </summary>
+            <param name="apiKey">The expected API key used in the request.</param>
+            <param name="region">The expected region specified in the request.</param>
+            <param name="audioFilePath">The expected path to the audio file.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The transcribed audio content.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock.TranscribeAudioFileUriAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates transcribing an audio file from a URI.
+            </summary>
+            <param name="apiKey">The expected API key used in the request.</param>
+            <param name="region">The expected region specified in the request.</param>
+            <param name="audioFilePath">The expected audio file path.</param>
+            <param name="httpClient">The IHttpClientWrapper instance to use.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The transcribed audio content.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.AzureTranscriberMock.TranscribeAudioFileUriAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.AdvocacyPlatform.Contracts.IStorageClient,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates transcribing an audio file from a URI.
+            </summary>
+            <param name="apiKey">The expected API key used in the request.</param>
+            <param name="region">The expected region specified in the request.</param>
+            <param name="audioFileUri">The expected URI to the audio file.</param>
+            <param name="storageClient">The IStorageClient instance to use.</param>
+            <param name="storageAccessKey">The expected storage access key used for connecting to the data store.</param>
+            <param name="storageContainerName">The expected container name.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The transcribed audio content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.DataExtractorMock">
+            <summary>
+            Mocks a DataExtractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.DataExtractorMock.Configure(System.Collections.Generic.Dictionary{System.String,System.Object},Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper)">
+            <summary>
+            Configures the data extractor.
+            </summary>
+            <param name="parameters">Parameters used to control the behavior of the data extractor.</param>
+            <param name="httpClient">The IHttpClientWrapper instance to use.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.DataExtractorMock.ExtractAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Performs data extraction.
+            </summary>
+            <param name="transcript">The transcript to extract data from.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The extracted data.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock">
+            <summary>
+            Mocks an IHttpClientWrapper.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.MessageHandler">
+            <summary>
+            Gets the mock HTTP message handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.GetHttpClient">
+            <summary>
+            Gets the HttpClient instance.
+            </summary>
+            <returns>The HttpClient instance.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.InitTwilioClient(Microsoft.AdvocacyPlatform.Contracts.Secret,Microsoft.AdvocacyPlatform.Contracts.Secret)">
+            <summary>
+            Initializes the Twilio client.
+            </summary>
+            <param name="accountSid">The SID of the account to connect as.</param>
+            <param name="authToken">The auth token for the account to connect as.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.RegisterExpectedRequestMessage(System.String,System.String)">
+            <summary>
+            Registers an expected request.
+            </summary>
+            <param name="requestUri">The URI for the expected request.</param>
+            <param name="content">The expected content in the request.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.RegisterExpectedRequestException(System.String,System.Net.Http.HttpRequestException)">
+            <summary>
+            Registers an expected exception.
+            </summary>
+            <param name="requestUri">The URI associated with the exception.</param>
+            <param name="ex">The exception to throw.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.RegisterExpectedResponseMessage(System.String,System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Registers an expected response.
+            </summary>
+            <param name="requestUri">The expected request URI for the response.</param>
+            <param name="message">The expected HTTP response.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.ClearExpectedResponseMessages">
+            <summary>
+            Clears the cache of expected response messages.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.GetAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates an HTTP GET request.
+            </summary>
+            <param name="requestUri">The expected request URI.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>An HTTP response.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.PostAsync(System.String,System.Net.Http.HttpContent,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates an HTTP POST request.
+            </summary>
+            <param name="requestUri">The expected request URI.</param>
+            <param name="content">The expected request content.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>An HTTP response.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpClientMock.GetStreamAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates an HTTP GET request.
+            </summary>
+            <param name="requestUri">The expected request URI.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The HTTP response stream.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock">
+            <summary>
+            Mocks an HttpMessageHandler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.GetCallSid(System.String,System.Boolean)">
+            <summary>
+            Gets a Twilio call SID from a request URL.
+            </summary>
+            <param name="url">The request URL.</param>
+            <param name="isQueryParams">Flag indicating whether the URL has query parameters.</param>
+            <returns>The call SID.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.GetAccountSid(System.String)">
+            <summary>
+            Gets a Twilio account SID from a request URL.
+            </summary>
+            <param name="url">The request URL.</param>
+            <returns>The account SID.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.GetRecordingSid(System.String,System.Boolean)">
+            <summary>
+            Gets a Twilio recording SID from a request URL.
+            </summary>
+            <param name="url">The request URL.</param>
+            <param name="isQueryParams">Flag indicating whether the URL has query parameters.</param>
+            <returns>The recording SID.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.RegisterExpectedCallResponse(System.String,System.String,System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Registers an expected Twilio call response.
+            </summary>
+            <param name="identifier">The unique identifier for the expected response.</param>
+            <param name="action">The action type for the response.</param>
+            <param name="response">The HTTP response message.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.ClearExpectedCallResponses">
+            <summary>
+            Clears the cache for expected Twilio call responses.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.RegisterExpectedRecordingResponse(System.String,System.String,System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Registers an expected Twilio recording response.
+            </summary>
+            <param name="callSid">The expected call SID.</param>
+            <param name="action">The action type.</param>
+            <param name="response">The HTTP response message.</param>
+            <returns>True if registered successfully, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.ClearExpectedRecordingResposes">
+            <summary>
+            Clears the cache of expected Twilio recording responses.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.ProcessRequestAsync(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Processes an HTTP request message.
+            </summary>
+            <param name="request">The HTTP request message.</param>
+            <returns>An HTTP response message.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.HttpMessageHandlerMock.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Simulates sending an HTTP message.
+            </summary>
+            <param name="request">The HTTP request message.</param>
+            <param name="cancellationToken">A cancellation token.</param>
+            <returns>An HTTP response message.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock">
+            <summary>
+            Wrapper for making Twilio calls.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.#ctor(Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper,Microsoft.AdvocacyPlatform.Contracts.ISecretStore)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock"/> class.
+            </summary>
+            <param name="httpClient">The IHttpClientWrapper implementation to use for making REST calls.</param>
+            <param name="secretStore">The ISecretStore implementation for obtaining secrets.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.RegisterExpectedRequestException(System.String,System.Exception)">
+            <summary>
+            Registers an expected exception.
+            </summary>
+            <param name="key">Unique key for the expected request.</param>
+            <param name="ex">The exception to throw.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.InitializeAsync(System.String,System.String,System.String)">
+            <summary>
+            Simulates initializing the Twilio client.
+            </summary>
+            <param name="twilioAccountSidSecretName">The name of the secret with the Twilio account SID value.</param>
+            <param name="twilioAuthTokenSecretName">The name of the secret with the Twilio auth token value.</param>
+            <param name="authority">The authorizing authority.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.DeleteCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates deleting a Twilio call resource.
+            </summary>
+            <param name="callSid">The expected call SID.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>True if successful, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.DeleteRecordingsAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates delete multiple Twilio call recordings.
+            </summary>
+            <param name="callSid">The expected call SID.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>True if successful, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.DeleteAccountRecordingsAsync(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates deleting all Twilio account recordings.
+            </summary>
+            <param name="log">Trace logger instance.</param>
+            <returns>True if successful, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.FetchCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates fetching a Twilio call resource.
+            </summary>
+            <param name="callSid">The expected call SID.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The expected call resource.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.FetchRecordingsAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates fetching Twilio call recordings.
+            </summary>
+            <param name="callSid">The expected call SID.</param>
+            <param name="log">Trace logger instances.</param>
+            <returns>The expected call recordings.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.FetchAccountRecordingsAsync(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates fetching all call recordings in a Twilio account.
+            </summary>
+            <param name="log">Trace logger instance.</param>
+            <returns>The expected recordings.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.FetchStatusAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates fetching the status of a Twilio call.
+            </summary>
+            <param name="callSid">The expected call SID.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The expected call status.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.HangupCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates hanging up a Twilio call.
+            </summary>
+            <param name="callSid">The expected call SID.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>True if successful, false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.PlaceAndRecordCallAsync(System.Uri,System.String,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Simulates placing and recording a Twilio call.
+            </summary>
+            <param name="twiMLUrl">The expected TwiML.</param>
+            <param name="numberToCall">The expected number to call.</param>
+            <param name="twilioLocalNumber">The expected local number to use to place the call.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The initial response.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Client.TwilioCallWrapperMock.GetFullRecordingUri(Twilio.Rest.Api.V2010.Account.RecordingResource,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Gets the full recording URI.
+            </summary>
+            <param name="recording">The recording resource.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The full recording URI.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.MockLogger">
+            <summary>
+            Mock trace logger.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.MockLogger.BeginScope``1(``0)">
+            <summary>
+            Not implemented.
+            </summary>
+            <typeparam name="TState">The state type.</typeparam>
+            <param name="state">The current state.</param>
+            <returns>An object implementing IDisposable.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.MockLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            Not implemented.
+            </summary>
+            <param name="logLevel">The log level to query.</param>
+            <returns>True if the log level is enabled, false if it is not.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.MockLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            Logs output.
+            </summary>
+            <typeparam name="TState">The type of the state object.</typeparam>
+            <param name="logLevel">The log level.</param>
+            <param name="eventId">An id for the event.</param>
+            <param name="state">The state to log.</param>
+            <param name="exception">The exception to log.</param>
+            <param name="formatter">Delegate for formatting.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.AzureBlobStorageMockModule">
+            <summary>
+            Module for AzureBlobStorageMock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.AzureBlobStorageMockModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads a service collection.
+            </summary>
+            <param name="services">The collection of services.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.AzureKeyVaultSecretStoreMockModule">
+            <summary>
+            Module for AzureKeyVaultSecretStoreMock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.AzureKeyVaultSecretStoreMockModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads a collection of services.
+            </summary>
+            <param name="services">The collection of services.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.AzureTranscriberMockModule">
+            <summary>
+            Module for AzureTranscriberMock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.AzureTranscriberMockModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads a collection of services.
+            </summary>
+            <param name="services">The collection of services.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.DataExtractorMockModule">
+            <summary>
+            Module for DataExtractorMock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.DataExtractorMockModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads a collection of services.
+            </summary>
+            <param name="services">The collection of services.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.HttpClientMockModule">
+            <summary>
+            Module for HttpClientMock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.HttpClientMockModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads a collection of services.
+            </summary>
+            <param name="services">The collection of services.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.TwilioMockModule">
+            <summary>
+            Module for TwilioMock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.Mocks.Module.TwilioMockModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads a collection of services.
+            </summary>
+            <param name="services">The collection of services.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests">
+            <summary>
+            Tests for PullRecordings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.TwilioAccountSidSecretNameAppSettingName">
+            <summary>
+            Application setting name for the Twilio account SID secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.TwilioAuthTokenSecretNameAppSettingName">
+            <summary>
+            Application setting name for the Twilio auth token secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.StorageAccessKeySecretNameAppSettingName">
+            <summary>
+            Application setting name for the Azure Storage access key secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.StorageReadAccessKeySecretNameAppSettingName">
+            <summary>
+            Application setting name for the Azure Storage read-only access key secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.ExpectedStorageContainerNameAppSettingName">
+            <summary>
+            Application setting name with the expected blob container name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.AuthorityAppSettingName">
+            <summary>
+            Application setting name with the authorizing authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.RecordingCompositeTemplatePath">
+            <summary>
+            Path to the Twilio composite recordings response template file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.RecordingCompositesKey">
+            <summary>
+            Key to inject the Twilio composite recordings responses.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.RecordingResponseTemplatePath">
+            <summary>
+            Path to the Twilio recording response template file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.TwilioBaseUrl">
+            <summary>
+            The base Twilio API URL.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeServiceProvider(System.Collections.Generic.IEnumerable{Microsoft.AdvocacyPlatform.Contracts.Module})">
+            <summary>
+            Builds the dependency injection container.
+            </summary>
+            <param name="modules">A list of modules to add to the container.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeWithNoTwilioMock">
+            <summary>
+            Initializes test with no TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeWithTwilioMock">
+            <summary>
+            Initializes test with TwilioClient mock.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeSecrets(System.Boolean)">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+            <param name="excludeTwilioAccountSecret">Flag indicating whether to not add the Twilio account SID secret.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeSecretsExceptions">
+            <summary>
+            Initializes expected secret store exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeTwilioExceptions(System.Collections.Generic.Dictionary{System.String,System.Exception})">
+            <summary>
+            Initializes expected Twilio exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.InitializeStorageClientExceptions(System.Collections.Generic.Dictionary{System.String,Microsoft.AdvocacyPlatform.Contracts.StorageClientException})">
+            <summary>
+            Initializes expected storage client exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerSuccess">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerMissingCallSid">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation with missing callSid in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerMissingInputId">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation with missing inputId in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerNoRecording">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation with no Twilio call recordings runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerRunSecretStoreException">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation handles secret store exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerRunTwilioAuthenticationException">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation handles Twilio authentication exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerRunTwilioApiConnectionException">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation handles Twilio API connection exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerRunTwilioApiRequestException">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation handles Twilio API request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerRunTwilioRestRequestException">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation handles Twilio REST request exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerRunTwilioGenericException">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation handles Twilio generic exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.PullRecordingTests.PullRecordingHttpTriggerRunStorageClientException">
+            <summary>
+            Ensure PullRecordingHttpTrigger.Run() implementation handles storage client exceptions correctly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.TemplateManager">
+            <summary>
+            Helper class for managing test templates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TemplateManager.Load(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Loads a template from file.
+            </summary>
+            <param name="templatePath">Path to the template file.</param>
+            <param name="parameters">Placeholders and values to replace in the template.</param>
+            <returns>The resolved template content.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TemplateManager.LoadWithComposites(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.String}})">
+            <summary>
+            Loads a template from file with composite items.
+            </summary>
+            <param name="templatePath">Path to the template file.</param>
+            <param name="compositeKey">Placeholder in template for composite content.</param>
+            <param name="compositeTemplatePath">Path to the composite item template file.</param>
+            <param name="parameters">Placeholders and values to replace in the template.</param>
+            <param name="compositeParametersList">Placeholders and values to replace in the composite item template.</param>
+            <returns>The resolved template content.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests">
+            <summary>
+            Tests for TranscribeCall.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.ApiKeySecretNameAppSettingName">
+            <summary>
+            Application setting name for Azure Speech Cognitive Services API key secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.StorageAccessKeySecretNameAppSettingName">
+            <summary>
+            Application setting name for Azure Storage access key secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.StorageAccessConnectionStringAppSettingName">
+            <summary>
+            Application setting name for Azure Storage read-access key secret name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.ExpectedStorageContainerNameAppSettingName">
+            <summary>
+            Application setting name for the expected blob container name.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.AuthorityAppSettingName">
+            <summary>
+            Application setting name for the authorizing authority.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.ExpectedApiRegionAppSettingName">
+            <summary>
+            Application setting name with the expected Azure Speech Cognitive Services API region.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.ExpectedApiKey">
+            <summary>
+            The expected Azure Speech Cognitive Services API key.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.Log">
+            <summary>
+            Gets the mock logger instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.InitializeServiceProvider(System.Collections.Generic.IEnumerable{Microsoft.AdvocacyPlatform.Contracts.Module})">
+            <summary>
+            Builds the dependency injection container.
+            </summary>
+            <param name="modules">A list of modules to add to the container.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.InitializeTests">
+            <summary>
+            Initializes test.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.InitializeSecrets">
+            <summary>
+            Initializes mock secret store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.InitializeSecretsExceptions">
+            <summary>
+            Initializes expected secret store exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.InitializeStorageClientExceptions(System.Collections.Generic.Dictionary{System.String,Microsoft.AdvocacyPlatform.Contracts.StorageClientException})">
+            <summary>
+            Initializes expected storage client exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.InitializeTranscriberExceptions(System.Collections.Generic.Dictionary{System.String,Microsoft.AdvocacyPlatform.Contracts.TranscriberException})">
+            <summary>
+            Initializes expected transcriber exceptions.
+            </summary>
+            <param name="exceptions">Dictionary of expected exceptions.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.TranscribeCallHttpTriggerSuccess">
+            <summary>
+            Ensure TranscribeCallHttpTrigger.Run() implementation runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.TranscribeCallHttpTriggerMissingCallSid">
+            <summary>
+            Ensure TranscribeCallHttpTrigger.Run() implementation with missing callSid in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.TranscribeCallHttpTriggerMissingRecordingUri">
+            <summary>
+            Ensure TranscribeCallHttpTrigger.Run() implementation with missing recordingUri in request body runs correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.TranscribeCallHttpTriggerRunException">
+            <summary>
+            Ensure TranscribeCallHttpTrigger.Run() implementation handles exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.TranscribeCallHttpTriggerRunSecretStoreException">
+            <summary>
+            Ensure TranscribeCallHttpTrigger.Run() implementation handles secret store exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.TranscribeCallHttpTriggerRunStorageClientException">
+            <summary>
+            Ensure TranscribeCallHttpTrigger.Run() implementation handles storage client exceptions correctly.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Functions.Tests.TranscribeCallTests.TranscribeCallHttpTriggerRunTranscriberException">
+            <summary>
+            Ensure TranscribeCallHttpTrigger.Run() implementation handles transcriber exceptions correctly.
+            </summary>
+        </member>
+    </members>
+</doc>

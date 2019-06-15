@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B8D1BC4F-AD23-4F65-A335-60C78686733B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AdvocacyPlatformInstaller.Contracts</RootNamespace>
+    <AssemblyName>AdvocacyPlatformInstaller.Contracts</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>bin\Debug\AdvocacyPlatformInstaller.Contracts.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>..\..\APStyleCopRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\..\APStyleCopRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interface\IAzureClient.cs" />
+    <Compile Include="Interface\IDynamicsCrmClient.cs" />
+    <Compile Include="Interface\IHttpClient.cs" />
+    <Compile Include="Interface\ILoggedClient.cs" />
+    <Compile Include="Interface\ILogger.cs" />
+    <Compile Include="Interface\IPowerAppsClient.cs" />
+    <Compile Include="Interface\ITokenProvider.cs" />
+    <Compile Include="Model\Azure\AccessPolicy.cs" />
+    <Compile Include="Model\Azure\ApiConnectionApi.cs" />
+    <Compile Include="Model\Azure\ApiConnectionConsentLink.cs" />
+    <Compile Include="Model\Azure\ApiConnectionResource.cs" />
+    <Compile Include="Model\Azure\ApiConnectionResourceProperties.cs" />
+    <Compile Include="Model\Azure\ApiConnectionStatus.cs" />
+    <Compile Include="Model\Azure\AppServiceAppSettings.cs" />
+    <Compile Include="Model\Azure\AppServiceAuthSettings.cs" />
+    <Compile Include="Model\Azure\AzureApplication.cs" />
+    <Compile Include="Model\Azure\AzureApplicationPasswordCredential.cs" />
+    <Compile Include="Model\Azure\AzureApplicationRequestBase.cs" />
+    <Compile Include="Model\Azure\AzureApplicationRequiredResourceAccess.cs" />
+    <Compile Include="Model\Azure\AzureIdentity.cs" />
+    <Compile Include="Model\Azure\AzureKeyVaultSecret.cs" />
+    <Compile Include="Model\Azure\AzureIdentityResourceBase.cs" />
+    <Compile Include="Model\Azure\AzureResourceBase.cs" />
+    <Compile Include="Model\Azure\AzureResponseBase.cs" />
+    <Compile Include="Model\Azure\AzureValueCollectionResponse.cs" />
+    <Compile Include="Model\Azure\CreateKeyVaultAccessPolicyRequest.cs" />
+    <Compile Include="Model\Azure\CreateKeyVaultAccessPolicyRequestProperties.cs" />
+    <Compile Include="Model\Azure\CreateKeyVaultAccessPolicyResponse.cs" />
+    <Compile Include="Model\Azure\Key.cs" />
+    <Compile Include="Model\Azure\KeyVaultAccessPolicy.cs" />
+    <Compile Include="Model\Azure\KeyVaultAccessPolicyPermissions.cs" />
+    <Compile Include="Model\Azure\ListConsentLinksActionParameters.cs" />
+    <Compile Include="Model\Azure\ListConsentLinksActionRequest.cs" />
+    <Compile Include="Model\Azure\ListKeysResponse.cs" />
+    <Compile Include="Model\Azure\LuisApplication.cs" />
+    <Compile Include="Model\Azure\LuisApplicationEndpoint.cs" />
+    <Compile Include="Model\Azure\LuisAssociatedAzureResourceRequest.cs" />
+    <Compile Include="Model\Azure\LuisGeneralResponse.cs" />
+    <Compile Include="Model\Azure\LuisModelTrainingStatus.cs" />
+    <Compile Include="Model\Azure\LuisModelTrainingStatusDetails.cs" />
+    <Compile Include="Model\Azure\LuisPublishResponse.cs" />
+    <Compile Include="Model\Azure\LuisTrainModelResponse.cs" />
+    <Compile Include="Model\Azure\PublishData.cs" />
+    <Compile Include="Model\Azure\PublishProfile.cs" />
+    <Compile Include="Model\Azure\ResourceAccess.cs" />
+    <Compile Include="Model\Azure\ResourceGroup.cs" />
+    <Compile Include="Model\Azure\ResourceGroupDeploymentRequest.cs" />
+    <Compile Include="Model\Azure\ResourceGroupDeploymentRequestProperties.cs" />
+    <Compile Include="Model\Azure\ResourceGroupDeploymentStatus.cs" />
+    <Compile Include="Model\Azure\ResourceGroupListResult.cs" />
+    <Compile Include="Model\Azure\ResourceLock.cs" />
+    <Compile Include="Model\Azure\ResourceLockProperties.cs" />
+    <Compile Include="Model\Azure\ServicePrincipal.cs" />
+    <Compile Include="Model\Azure\SignedIdentifier.cs" />
+    <Compile Include="Model\Azure\SignedIdentifiers.cs" />
+    <Compile Include="Model\Azure\StorageAccountResource.cs" />
+    <Compile Include="Model\Azure\Subscription.cs" />
+    <Compile Include="Model\Azure\SubscriptionListResult.cs" />
+    <Compile Include="Model\Azure\Tenant.cs" />
+    <Compile Include="Model\Azure\TenantListResult.cs" />
+    <Compile Include="Model\DynamicsCrm\DynamicsCrmSolution.cs" />
+    <Compile Include="Model\DynamicsCrm\DynamicsCrmValueResponse.cs" />
+    <Compile Include="Model\DynamicsCrm\Entity.cs" />
+    <Compile Include="Model\DynamicsCrm\EntityData.cs" />
+    <Compile Include="Model\DynamicsCrm\EntityMap.cs" />
+    <Compile Include="Model\DynamicsCrm\EntityMapEntity.cs" />
+    <Compile Include="Model\DynamicsCrm\EntityMapEntityField.cs" />
+    <Compile Include="Model\DynamicsCrm\EntityRecord.cs" />
+    <Compile Include="Model\DynamicsCrm\EntityRecordField.cs" />
+    <Compile Include="Model\DynamicsCrm\ExportSolutionResponse.cs" />
+    <Compile Include="Model\PowerApps\CreatePowerAppsCdsDatabaseRequest.cs" />
+    <Compile Include="Model\PowerApps\CreatePowerAppsEnvironmentRequest.cs" />
+    <Compile Include="Model\PowerApps\CreatePowerAppsEnvironmentResponse.cs" />
+    <Compile Include="Model\PowerApps\GetPowerAppsCurrenciesResponse.cs" />
+    <Compile Include="Model\PowerApps\GetPowerAppsEnvironmentLocationsResponse.cs" />
+    <Compile Include="Model\PowerApps\GetPowerAppsEnvironmentsResponse.cs" />
+    <Compile Include="Model\PowerApps\GetPowerAppsLanguagesResponse.cs" />
+    <Compile Include="Model\PowerApps\NewPowerAppsEnvironmentProperties.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsCdsDatabaseCurrencyMinimal.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsCurrency.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsCurrencyProperties.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsEnvironment.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsEnvironmentLinkedEnvironmentMetadata.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsEnvironmentLocation.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsEnvironmentLocationProperties.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsEnvironmentProperties.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsLanguage.cs" />
+    <Compile Include="Model\PowerApps\PowerAppsLanguageProperties.cs" />
+    <Compile Include="Model\RequestException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

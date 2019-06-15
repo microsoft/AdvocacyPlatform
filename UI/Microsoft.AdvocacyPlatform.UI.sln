@@ -1,0 +1,104 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AdvocacyPlatform", "AdvocacyPlatform\", "{E48317F0-DFFD-4AB0-A326-6921CB02451F}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_64518"
+		Debug.AspNetCompiler.PhysicalPath = "AdvocacyPlatform\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_64518\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_64518"
+		Release.AspNetCompiler.PhysicalPath = "AdvocacyPlatform\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_64518\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "64518"
+		SlnRelativePath = "AdvocacyPlatform\"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AdvocacyPlatformWebResources", "AdvocacyPlatformWebResources\", "{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52120"
+		Debug.AspNetCompiler.PhysicalPath = "AdvocacyPlatformWebResources\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52120\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52120"
+		Release.AspNetCompiler.PhysicalPath = "AdvocacyPlatformWebResources\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52120\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52120"
+		SlnRelativePath = "AdvocacyPlatformWebResources\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvocacyPlatformDeployment", "AdvocacyPlatformDeployment\AdvocacyPlatformDeployment.csproj", "{170C0103-3F94-4896-9062-6314167F596A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "License", "License", "{EDBA5E66-4684-4CE7-A167-59D7047CD744}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SparkleXml", "SparkleXml", "{99230A96-F16A-431B-98A3-7BE8871A613B}"
+	ProjectSection(SolutionItems) = preProject
+		License\SparkleXrm\MIT-License.txt = License\SparkleXrm\MIT-License.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automation", "Automation", "{9DD5D74F-AE27-4400-A258-97C7A92E7461}"
+	ProjectSection(SolutionItems) = preProject
+		Update-LocalDynamicsSolution.ps1 = Update-LocalDynamicsSolution.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Debug|x64.Build.0 = Debug|Any CPU
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Release|x64.ActiveCfg = Debug|Any CPU
+		{E48317F0-DFFD-4AB0-A326-6921CB02451F}.Release|x64.Build.0 = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Debug|x64.Build.0 = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Release|x64.ActiveCfg = Debug|Any CPU
+		{2CEDDB5D-DE7B-4923-BD8C-FB7B97A00FEB}.Release|x64.Build.0 = Debug|Any CPU
+		{170C0103-3F94-4896-9062-6314167F596A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{170C0103-3F94-4896-9062-6314167F596A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{170C0103-3F94-4896-9062-6314167F596A}.Debug|x64.ActiveCfg = Debug|x64
+		{170C0103-3F94-4896-9062-6314167F596A}.Debug|x64.Build.0 = Debug|x64
+		{170C0103-3F94-4896-9062-6314167F596A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{170C0103-3F94-4896-9062-6314167F596A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{170C0103-3F94-4896-9062-6314167F596A}.Release|x64.ActiveCfg = Release|x64
+		{170C0103-3F94-4896-9062-6314167F596A}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99230A96-F16A-431B-98A3-7BE8871A613B} = {EDBA5E66-4684-4CE7-A167-59D7047CD744}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F3D3F65-F728-4873-8C49-EAC3060D980A}
+	EndGlobalSection
+EndGlobal

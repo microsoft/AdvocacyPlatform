@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{91787eba-006e-4ab4-85c5-2c1f740e81c6}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_person_record_identifier" select="1" icon="1" preview="1">
+        <row name="ap_person" id="ap_personid">
+          <cell name="ap_person_given_name" width="180" />
+          <cell name="ap_person_record_identifier" width="150" />
+          <cell name="ap_person_phone_number" width="100" />
+          <cell name="ap_person_city" width="100" />
+          <cell name="ap_person_state_province" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>2</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ap_person">
+          <attribute name="ap_personid" />
+          <attribute name="ap_person_record_identifier" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <order attribute="ap_person_record_identifier" descending="true" />
+          <attribute name="ap_person_given_name" />
+          <attribute name="ap_person_phone_number" />
+          <attribute name="ap_person_city" />
+          <attribute name="ap_person_state_province" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Person Associated View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

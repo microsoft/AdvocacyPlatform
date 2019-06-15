@@ -1,0 +1,752 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "commondataservice_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "dynamicscrm_environment_name": {
+      "type": "string",
+      "metadata": {
+        "description": "Environment id"
+      },
+      "defaultValue": ""
+    },
+    "servicebus_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "servicebus_1_connectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure Service Bus Connection String"
+      }
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2"
+      ],
+      "defaultValue": ""
+    },
+    "getRetryRecords_logicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "subscription_id": "[subscription().subscriptionId]",
+    "tenant_id": "[subscription().tenantId]"
+  },
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Condition_have_records_to_retry": {
+              "type": "If",
+              "expression": {
+                "greater": [
+                  "@length(body('List_records_for_retry')?['value'])",
+                  0
+                ]
+              },
+              "actions": {
+                "Apply_to_each": {
+                  "type": "Foreach",
+                  "foreach": "@body('List_records_for_retry')?['value']",
+                  "actions": {
+                    "Compose_Current_AIN_Call_Retries_Count": {
+                      "type": "Compose",
+                      "inputs": "@int(if(equals(items('Apply_to_each')?['ap_total_call_retries'],null),0,items('Apply_to_each')?['ap_total_call_retries']))",
+                      "runAfter": {}
+                    },
+                    "Condition_Max_Retries_Exceeded": {
+                      "type": "If",
+                      "expression": {
+                        "greaterOrEquals": [
+                          "@outputs('Compose_Current_AIN_Call_Retries_Count')",
+                          "@int(body('Get_Max_Retries_Allowed_Config')?['value'][0]['ap_configuration_value'])"
+                        ]
+                      },
+                      "actions": {
+                        "Condition_Get_Case_Appeal_Exceeded_Retry": {
+                          "type": "If",
+                          "expression": {
+                            "and": [
+                              {
+                                "equals": [
+                                  "@items('Apply_to_each')?['ap_caseappeal_transcription_status']",
+                                  683710002
+                                ]
+                              }
+                            ]
+                          },
+                          "actions": {
+                            "Update_Case_Appeal_Transcription_Status_To_Error": {
+                              "runAfter": {},
+                              "type": "ApiConnection",
+                              "inputs": {
+                                "body": {
+                                  "_ownerid_type": "",
+                                  "ap_caseappeal_transcription_errors": "Exceeded max number of call retries. To retry again, manually set transciption status to Retry",
+                                  "ap_caseappeal_transcription_status": 683710003,
+                                  "ap_total_call_retries": 0
+                                },
+                                "host": {
+                                  "connection": {
+                                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                  }
+                                },
+                                "method": "patch",
+                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(items('Apply_to_each')?['ap_ainid']))}"
+                              }
+                            }
+                          },
+                          "runAfter": {
+                            "Condition_Get_Case_Decision_Exceeded_Retry": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "Condition_Get_Case_Decision_Exceeded_Retry": {
+                          "type": "If",
+                          "expression": {
+                            "equals": [
+                              "@items('Apply_to_each')?['ap_casedecision_transcription_status']",
+                              683710002
+                            ]
+                          },
+                          "actions": {
+                            "Update_Case_Decision_Transcription_Status_To_Error": {
+                              "runAfter": {},
+                              "type": "ApiConnection",
+                              "inputs": {
+                                "body": {
+                                  "_ownerid_type": "",
+                                  "ap_casedecision_transcription_errors": "Exceeded max number of call retries. To retry again, manually set transciption status to Retry",
+                                  "ap_casedecision_transcription_status": 683710003,
+                                  "ap_total_call_retries": 0
+                                },
+                                "host": {
+                                  "connection": {
+                                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                  }
+                                },
+                                "method": "patch",
+                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(items('Apply_to_each')?['ap_ainid']))}"
+                              }
+                            }
+                          },
+                          "runAfter": {
+                            "Condition_Get_Court_Info_Exceeded_Retry": [
+                              "Succeeded"
+                            ]
+                          }
+                        },
+                        "Condition_Get_Court_Info_Exceeded_Retry": {
+                          "type": "If",
+                          "expression": {
+                            "equals": [
+                              "@items('Apply_to_each')?['ap_courthearing_transcription_status']",
+                              683710002
+                            ]
+                          },
+                          "actions": {
+                            "Update_Court_Hearing_Information_Transcription_Status_To_Error": {
+                              "runAfter": {},
+                              "type": "ApiConnection",
+                              "inputs": {
+                                "body": {
+                                  "_ownerid_type": "",
+                                  "ap_courthearing_transcription_errors": "Exceeded max number of call retries. To retry again, manually set transciption status to Retry",
+                                  "ap_courthearing_transcription_status": 683710003,
+                                  "ap_total_call_retries": 0
+                                },
+                                "host": {
+                                  "connection": {
+                                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                  }
+                                },
+                                "method": "patch",
+                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(items('Apply_to_each')?['ap_ainid']))}"
+                              }
+                            }
+                          },
+                          "runAfter": {}
+                        }
+                      },
+                      "runAfter": {
+                        "Get_Max_Retries_Allowed_Config": [
+                          "Succeeded"
+                        ]
+                      },
+                      "else": {
+                        "actions": {
+                          "Condition_Time_Between_Retry_Elapsed": {
+                            "type": "If",
+                            "expression": {
+                              "greaterOrEquals": [
+                                "@sub(dayOfYear(utcNow()),dayOfYear(items('Apply_to_each')?['ap_ain_last_call_date']))",
+                                "@int(body('Get_Time_Between_Retries_Config')?['value'][0]['ap_configuration_value'])"
+                              ]
+                            },
+                            "actions": {
+                              "Call_Final_Pause_Config": {
+                                "runAfter": {
+                                  "Call_Initial_Pause_Config": [
+                                    "Succeeded"
+                                  ]
+                                },
+                                "type": "ApiConnection",
+                                "inputs": {
+                                  "host": {
+                                    "connection": {
+                                      "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                    }
+                                  },
+                                  "method": "get",
+                                  "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                                  "queries": {
+                                    "$filter": "ap_configuration_type eq 683710005",
+                                    "$top": 1
+                                  }
+                                }
+                              },
+                              "Call_Initial_Pause_Config": {
+                                "runAfter": {},
+                                "type": "ApiConnection",
+                                "inputs": {
+                                  "host": {
+                                    "connection": {
+                                      "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                    }
+                                  },
+                                  "method": "get",
+                                  "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                                  "queries": {
+                                    "$filter": "ap_configuration_type eq 683710004",
+                                    "$top": 1
+                                  }
+                                }
+                              },
+                              "Condition_Is_Get_Case_Appeal_On_Retry": {
+                                "type": "If",
+                                "expression": {
+                                  "equals": [
+                                    "@items('Apply_to_each')?['ap_caseappeal_transcription_status']",
+                                    683710002
+                                  ]
+                                },
+                                "actions": {
+                                  "Compose_Case_Appeal_DTMF_Configuration_Filter": {
+                                    "type": "Compose",
+                                    "inputs": "@if(equals(items('Apply_to_each')?['ap_call_retry_use_longmessage_dtmf'],false),'ap_configuration_type eq 683710010','ap_configuration_type eq 683710011')",
+                                    "runAfter": {}
+                                  },
+                                  "Compose_Get_Case_Appeal_Info_Request_Message": {
+                                    "type": "Compose",
+                                    "inputs": {
+                                      "dtmf": {
+                                        "dtmf": "@replace(body('Get_Case_Appeal_DTMF')?['value'][0]['ap_configuration_value'],'{inputIdPlaceHolder}',items('Apply_to_each')?['ap_ain'])",
+                                        "finalPause": "@int(body('Call_Final_Pause_Config')?['value'][0]['ap_configuration_value'])",
+                                        "initPause": "@int(body('Call_Initial_Pause_Config')?['value'][0]['ap_configuration_value'])"
+                                      },
+                                      "inputId": "@items('Apply_to_each')?['ap_ain']",
+                                      "recordId": "@items('Apply_to_each')?['ap_ainid']",
+                                      "requestType": "CaseAppealInfo"
+                                    },
+                                    "runAfter": {
+                                      "Get_Case_Appeal_DTMF": [
+                                        "Succeeded"
+                                      ]
+                                    }
+                                  },
+                                  "Get_Case_Appeal_DTMF": {
+                                    "runAfter": {
+                                      "Compose_Case_Appeal_DTMF_Configuration_Filter": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "get",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                                      "queries": {
+                                        "$filter": "@{outputs('Compose_Case_Appeal_DTMF_Configuration_Filter')}",
+                                        "$top": 1
+                                      }
+                                    }
+                                  },
+                                  "Send_Get_Case_Appeal_Message_To_Request_Queue": {
+                                    "runAfter": {
+                                      "Compose_Get_Case_Appeal_Info_Request_Message": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "body": {
+                                        "ContentData": "@{base64(outputs('Compose_Get_Case_Appeal_Info_Request_Message'))}",
+                                        "ContentType": "application/json",
+                                        "SessionId": "0"
+                                      },
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "post",
+                                      "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages",
+                                      "queries": {
+                                        "systemProperties": "None"
+                                      }
+                                    }
+                                  },
+                                  "Update_Case_Appeal_Retry_Transcription_Status": {
+                                    "runAfter": {
+                                      "Send_Get_Case_Appeal_Message_To_Request_Queue": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "body": {
+                                        "_ownerid_type": "",
+                                        "ap_caseappeal_transcription_errors": "@{null}",
+                                        "ap_caseappeal_transcription_status": 683710001,
+                                        "ap_total_call_retries": "@add(outputs('Compose_Current_AIN_Call_Retries_Count'),1)"
+                                      },
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "patch",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(items('Apply_to_each')?['ap_ainid']))}"
+                                    }
+                                  }
+                                },
+                                "runAfter": {
+                                  "Condition_Is_Get_Case_Decision_On_Retry": [
+                                    "Succeeded"
+                                  ]
+                                }
+                              },
+                              "Condition_Is_Get_Case_Decision_On_Retry": {
+                                "type": "If",
+                                "expression": {
+                                  "equals": [
+                                    "@items('Apply_to_each')?['ap_casedecision_transcription_status']",
+                                    683710002
+                                  ]
+                                },
+                                "actions": {
+                                  "Compose_Case_Decision_DTMF_Configuration_Filter": {
+                                    "type": "Compose",
+                                    "inputs": "@if(equals(items('Apply_to_each')?['ap_call_retry_use_longmessage_dtmf'],false),'ap_configuration_type eq 683710006','ap_configuration_type eq 683710009')",
+                                    "runAfter": {}
+                                  },
+                                  "Compose_Get_Case_Decision_Info_Request_Message": {
+                                    "type": "Compose",
+                                    "inputs": {
+                                      "dtmf": {
+                                        "dtmf": "@replace(body('Get_Case_Decision_DTMF')?['value'][0]['ap_configuration_value'],'{inputIdPlaceHolder}',items('Apply_to_each')?['ap_ain'])",
+                                        "finalPause": "@int(body('Call_Final_Pause_Config')?['value'][0]['ap_configuration_value'])",
+                                        "initPause": "@int(body('Call_Initial_Pause_Config')?['value'][0]['ap_configuration_value'])"
+                                      },
+                                      "inputId": "@items('Apply_to_each')?['ap_ain']",
+                                      "recordId": "@items('Apply_to_each')?['ap_ainid']",
+                                      "requestType": "CaseDecisionInfo"
+                                    },
+                                    "runAfter": {
+                                      "Get_Case_Decision_DTMF": [
+                                        "Succeeded"
+                                      ]
+                                    }
+                                  },
+                                  "Get_Case_Decision_DTMF": {
+                                    "runAfter": {
+                                      "Compose_Case_Decision_DTMF_Configuration_Filter": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "get",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                                      "queries": {
+                                        "$filter": "@{outputs('Compose_Case_Decision_DTMF_Configuration_Filter')}",
+                                        "$top": 1
+                                      }
+                                    }
+                                  },
+                                  "Send_Get_Case_Decision_Message_To_Request_Queue": {
+                                    "runAfter": {
+                                      "Compose_Get_Case_Decision_Info_Request_Message": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "body": {
+                                        "ContentData": "@{base64(outputs('Compose_Get_Case_Decision_Info_Request_Message'))}",
+                                        "ContentType": "application/json",
+                                        "SessionId": "0"
+                                      },
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "post",
+                                      "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages",
+                                      "queries": {
+                                        "systemProperties": "None"
+                                      }
+                                    }
+                                  },
+                                  "Update_Case_Decision_Retry_Transcription_Status": {
+                                    "runAfter": {
+                                      "Send_Get_Case_Decision_Message_To_Request_Queue": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "body": {
+                                        "_ownerid_type": "",
+                                        "ap_casedecision_transcription_errors": "@{null}",
+                                        "ap_casedecision_transcription_status": 683710001,
+                                        "ap_total_call_retries": "@add(outputs('Compose_Current_AIN_Call_Retries_Count'),1)"
+                                      },
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "patch",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(items('Apply_to_each')?['ap_ainid']))}"
+                                    }
+                                  }
+                                },
+                                "runAfter": {
+                                  "Condition_Is_Get_Court_Info_On_retry": [
+                                    "Succeeded"
+                                  ]
+                                }
+                              },
+                              "Condition_Is_Get_Court_Info_On_retry": {
+                                "type": "If",
+                                "expression": {
+                                  "equals": [
+                                    "@items('Apply_to_each')?['ap_courthearing_transcription_status']",
+                                    683710002
+                                  ]
+                                },
+                                "actions": {
+                                  "Compose_Court_DTMF_Configuration_Filter": {
+                                    "type": "Compose",
+                                    "inputs": "@if(equals(items('Apply_to_each')?['ap_call_retry_use_longmessage_dtmf'],false),'ap_configuration_type eq 683710007','ap_configuration_type eq 683710008')",
+                                    "runAfter": {}
+                                  },
+                                  "Compose_Get_Court_Info_Request_Message": {
+                                    "type": "Compose",
+                                    "inputs": {
+                                      "dtmf": {
+                                        "dtmf": "@replace(body('Get_Court_Info_DTMF')?['value'][0]['ap_configuration_value'],'{inputIdPlaceHolder}',items('Apply_to_each')?['ap_ain'])",
+                                        "finalPause": "@int(body('Call_Final_Pause_Config')?['value'][0]['ap_configuration_value'])",
+                                        "initPause": "@int(body('Call_Initial_Pause_Config')?['value'][0]['ap_configuration_value'])"
+                                      },
+                                      "inputId": "@items('Apply_to_each')?['ap_ain']",
+                                      "recordId": "@items('Apply_to_each')?['ap_ainid']",
+                                      "requestType": "CourtHearingInfo"
+                                    },
+                                    "runAfter": {
+                                      "Get_Court_Info_DTMF": [
+                                        "Succeeded"
+                                      ]
+                                    }
+                                  },
+                                  "Get_Court_Info_DTMF": {
+                                    "runAfter": {
+                                      "Compose_Court_DTMF_Configuration_Filter": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "get",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                                      "queries": {
+                                        "$filter": "@{outputs('Compose_Court_DTMF_Configuration_Filter')}",
+                                        "$top": 1
+                                      }
+                                    }
+                                  },
+                                  "Send__Get_Court_Info_Message_To_Request_Queue": {
+                                    "runAfter": {
+                                      "Compose_Get_Court_Info_Request_Message": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "body": {
+                                        "ContentData": "@{base64(outputs('Compose_Get_Court_Info_Request_Message'))}",
+                                        "ContentType": "application/json",
+                                        "SessionId": "0"
+                                      },
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "post",
+                                      "path": "/@{encodeURIComponent(encodeURIComponent('request-queue'))}/messages",
+                                      "queries": {
+                                        "systemProperties": "None"
+                                      }
+                                    }
+                                  },
+                                  "Update_Court_Hearing_Information_Retry_Transcription_Status": {
+                                    "runAfter": {
+                                      "Send__Get_Court_Info_Message_To_Request_Queue": [
+                                        "Succeeded"
+                                      ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                      "body": {
+                                        "_ownerid_type": "",
+                                        "ap_courthearing_transcription_errors": "@{null}",
+                                        "ap_courthearing_transcription_status": 683710001,
+                                        "ap_total_call_retries": "@add(outputs('Compose_Current_AIN_Call_Retries_Count'),1)"
+                                      },
+                                      "host": {
+                                        "connection": {
+                                          "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                        }
+                                      },
+                                      "method": "patch",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(items('Apply_to_each')?['ap_ainid']))}"
+                                    }
+                                  }
+                                },
+                                "runAfter": {
+                                  "Call_Final_Pause_Config": [
+                                    "Succeeded"
+                                  ]
+                                }
+                              }
+                            },
+                            "runAfter": {
+                              "Get_Time_Between_Retries_Config": [
+                                "Succeeded"
+                              ]
+                            }
+                          },
+                          "Get_Time_Between_Retries_Config": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                              "host": {
+                                "connection": {
+                                  "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                                }
+                              },
+                              "method": "get",
+                              "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                              "queries": {
+                                "$filter": "ap_configuration_type eq 683710003",
+                                "$top": 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "Get_Max_Retries_Allowed_Config": {
+                      "runAfter": {
+                        "Compose_Current_AIN_Call_Retries_Count": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                          }
+                        },
+                        "method": "get",
+                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_configurations'))}/items",
+                        "queries": {
+                          "$filter": "ap_configuration_type eq 683710001",
+                          "$top": 1
+                        }
+                      }
+                    }
+                  },
+                  "runAfter": {}
+                }
+              },
+              "runAfter": {
+                "List_records_for_retry": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "List_records_for_retry": {
+              "runAfter": {},
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items",
+                "queries": {
+                  "$filter": "ap_courthearing_transcription_status eq 683710002 or ap_casedecision_transcription_status eq 683710002 or ap_caseappeal_transcription_status eq 683710002"
+                }
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            },
+            "$crmOrgName": {
+              "defaultValue": "[concat(parameters('dynamicscrm_environment_name'),'.crm')]",
+              "type": "String"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "Recurrence",
+              "recurrence": {
+                "frequency": "Day",
+                "interval": 1,
+                "schedule": {
+                  "hours": [
+                    "0"
+                  ],
+                  "minutes": [
+                    30
+                  ]
+                }
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('commondataservice_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]"
+              },
+              "[parameters('servicebus_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'servicebus')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('getRetryRecords_logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "apiVersion": "2016-06-01",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('commondataservice_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]"
+        },
+        "displayName": "[parameters('commondataservice_Connection_Name')]",
+        "nonSecretParameterValues": {
+          "environment": "[parameters('dynamicscrm_environment_name')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('servicebus_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'servicebus')]"
+        },
+        "displayName": "[parameters('servicebus_Connection_Name')]",
+        "parameterValues": {
+          "connectionString": "[parameters('servicebus_1_connectionString')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

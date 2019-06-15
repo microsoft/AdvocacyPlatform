@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{16b9c7cd-89f2-49f9-a84a-2d9f14ee5c68}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_configuration_identifier" select="1" icon="1" preview="1">
+        <row name="result" id="ap_configurationid">
+          <cell name="ap_configuration_identifier" width="80" />
+          <cell name="ap_configuration_type" width="230" />
+          <cell name="ap_configuration_value" width="300" />
+          <cell name="createdon" width="125" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="ap_configuration">
+          <attribute name="ap_configurationid" />
+          <attribute name="ap_configuration_identifier" />
+          <attribute name="createdon" />
+          <order attribute="ap_configuration_identifier" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="1" />
+          </filter>
+          <attribute name="ap_configuration_type" />
+          <attribute name="ap_configuration_value" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Inactive Configurations" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

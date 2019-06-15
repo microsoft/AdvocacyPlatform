@@ -1,0 +1,817 @@
+﻿{
+    "Azure":  {
+                  "Subscriptions":  [
+                                    ]
+              },
+    "PowerApps":  {
+                      "Environments":  [
+                                       ],
+                      "Locations":  [
+                                        "unitedstates",
+                                        "europe",
+                                        "asia",
+                                        "australia",
+                                        "india",
+                                        "japan",
+                                        "canada",
+                                        "unitedkingdom",
+                                        "unitedstatesfirstrelease",
+                                        "southamerica"
+                                    ],
+                      "Languages":  [
+                                        {
+                                            "LanguageName":  "1033",
+                                            "LanguageDisplayName":  "English"
+                                        },
+                                        {
+                                            "LanguageName":  "1025",
+                                            "LanguageDisplayName":  "Arabic"
+                                        },
+                                        {
+                                            "LanguageName":  "1069",
+                                            "LanguageDisplayName":  "euskara (euskara)"
+                                        },
+                                        {
+                                            "LanguageName":  "1026",
+                                            "LanguageDisplayName":  "български (България)"
+                                        },
+                                        {
+                                            "LanguageName":  "1027",
+                                            "LanguageDisplayName":  "Català (Català)"
+                                        },
+                                        {
+                                            "LanguageName":  "3076",
+                                            "LanguageDisplayName":  "Chinese (Hong Kong S.A.R.)"
+                                        },
+                                        {
+                                            "LanguageName":  "2052",
+                                            "LanguageDisplayName":  "Chinese (PRC)"
+                                        },
+                                        {
+                                            "LanguageName":  "1028",
+                                            "LanguageDisplayName":  "Chinese (Taiwan)"
+                                        },
+                                        {
+                                            "LanguageName":  "1050",
+                                            "LanguageDisplayName":  "hrvatski (Hrvatska)"
+                                        },
+                                        {
+                                            "LanguageName":  "1029",
+                                            "LanguageDisplayName":  "Czech"
+                                        },
+                                        {
+                                            "LanguageName":  "1030",
+                                            "LanguageDisplayName":  "Danish"
+                                        },
+                                        {
+                                            "LanguageName":  "1043",
+                                            "LanguageDisplayName":  "Dutch"
+                                        },
+                                        {
+                                            "LanguageName":  "1061",
+                                            "LanguageDisplayName":  "eesti (Eesti)"
+                                        },
+                                        {
+                                            "LanguageName":  "1035",
+                                            "LanguageDisplayName":  "Finnish"
+                                        },
+                                        {
+                                            "LanguageName":  "1036",
+                                            "LanguageDisplayName":  "French"
+                                        },
+                                        {
+                                            "LanguageName":  "1110",
+                                            "LanguageDisplayName":  "galego (galego)"
+                                        },
+                                        {
+                                            "LanguageName":  "1031",
+                                            "LanguageDisplayName":  "German"
+                                        },
+                                        {
+                                            "LanguageName":  "1032",
+                                            "LanguageDisplayName":  "Greek"
+                                        },
+                                        {
+                                            "LanguageName":  "1037",
+                                            "LanguageDisplayName":  "Hebrew"
+                                        },
+                                        {
+                                            "LanguageName":  "1081",
+                                            "LanguageDisplayName":  "हिंदी (भारत)"
+                                        },
+                                        {
+                                            "LanguageName":  "1038",
+                                            "LanguageDisplayName":  "Hungarian"
+                                        },
+                                        {
+                                            "LanguageName":  "1040",
+                                            "LanguageDisplayName":  "Italian"
+                                        },
+                                        {
+                                            "LanguageName":  "1041",
+                                            "LanguageDisplayName":  "Japanese"
+                                        },
+                                        {
+                                            "LanguageName":  "1087",
+                                            "LanguageDisplayName":  "Қазақ (Қазақстан)"
+                                        },
+                                        {
+                                            "LanguageName":  "1042",
+                                            "LanguageDisplayName":  "Korean"
+                                        },
+                                        {
+                                            "LanguageName":  "1062",
+                                            "LanguageDisplayName":  "latviešu (Latvija)"
+                                        },
+                                        {
+                                            "LanguageName":  "1063",
+                                            "LanguageDisplayName":  "lietuvių (Lietuva)"
+                                        },
+                                        {
+                                            "LanguageName":  "1044",
+                                            "LanguageDisplayName":  "Norwegian (Bokmål)"
+                                        },
+                                        {
+                                            "LanguageName":  "1045",
+                                            "LanguageDisplayName":  "Polish"
+                                        },
+                                        {
+                                            "LanguageName":  "1046",
+                                            "LanguageDisplayName":  "Portuguese (Brazil)"
+                                        },
+                                        {
+                                            "LanguageName":  "2070",
+                                            "LanguageDisplayName":  "Portuguese (Portugal)"
+                                        },
+                                        {
+                                            "LanguageName":  "1048",
+                                            "LanguageDisplayName":  "română (România)"
+                                        },
+                                        {
+                                            "LanguageName":  "1049",
+                                            "LanguageDisplayName":  "Russian"
+                                        },
+                                        {
+                                            "LanguageName":  "2074",
+                                            "LanguageDisplayName":  "srpski (Srbija i Crna Gora (Bivša))"
+                                        },
+                                        {
+                                            "LanguageName":  "1051",
+                                            "LanguageDisplayName":  "slovenčina (Slovenská republika)"
+                                        },
+                                        {
+                                            "LanguageName":  "1060",
+                                            "LanguageDisplayName":  "slovenščina (Slovenija)"
+                                        },
+                                        {
+                                            "LanguageName":  "3082",
+                                            "LanguageDisplayName":  "Spanish"
+                                        },
+                                        {
+                                            "LanguageName":  "1053",
+                                            "LanguageDisplayName":  "Swedish"
+                                        },
+                                        {
+                                            "LanguageName":  "1054",
+                                            "LanguageDisplayName":  "Thai"
+                                        },
+                                        {
+                                            "LanguageName":  "1055",
+                                            "LanguageDisplayName":  "Turkish"
+                                        },
+                                        {
+                                            "LanguageName":  "1058",
+                                            "LanguageDisplayName":  "українська (Україна)"
+                                        },
+                                        {
+                                            "LanguageName":  "1066",
+                                            "LanguageDisplayName":  "Vietnamese"
+                                        },
+                                        {
+                                            "LanguageName":  "3098",
+                                            "LanguageDisplayName":  "Serbian (Cyrillic)"
+                                        },
+                                        {
+                                            "LanguageName":  "1086",
+                                            "LanguageDisplayName":  "Malay"
+                                        }
+                                    ],
+                      "Currencies":  [
+                                         {
+                                             "CurrencyCode":  "XCD",
+                                             "CurrencySymbol":  "EC$",
+                                             "CurrencyName":  "XCD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "USD",
+                                             "CurrencySymbol":  "US$",
+                                             "CurrencyName":  "USD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "AED",
+                                             "CurrencySymbol":  "د.إ.‏",
+                                             "CurrencyName":  "AED"
+                                         },
+                                         {
+                                             "CurrencyCode":  "AFN",
+                                             "CurrencySymbol":  "؋",
+                                             "CurrencyName":  "AFN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ALL",
+                                             "CurrencySymbol":  "Lek",
+                                             "CurrencyName":  "ALL"
+                                         },
+                                         {
+                                             "CurrencyCode":  "AMD",
+                                             "CurrencySymbol":  "֏",
+                                             "CurrencyName":  "AMD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ARS",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "ARS"
+                                         },
+                                         {
+                                             "CurrencyCode":  "EUR",
+                                             "CurrencySymbol":  "€",
+                                             "CurrencyName":  "EUR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "AUD",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "AUD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "AZN",
+                                             "CurrencySymbol":  "₼",
+                                             "CurrencyName":  "AZN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BAM",
+                                             "CurrencySymbol":  "KM",
+                                             "CurrencyName":  "BAM"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BAM",
+                                             "CurrencySymbol":  "КМ",
+                                             "CurrencyName":  "BAM"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BDT",
+                                             "CurrencySymbol":  "৳",
+                                             "CurrencyName":  "BDT"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BGN",
+                                             "CurrencySymbol":  "лв.",
+                                             "CurrencyName":  "BGN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BHD",
+                                             "CurrencySymbol":  "د.ب.‏",
+                                             "CurrencyName":  "BHD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BND",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "BND"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BOB",
+                                             "CurrencySymbol":  "Bs.",
+                                             "CurrencyName":  "BOB"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BRL",
+                                             "CurrencySymbol":  "R$",
+                                             "CurrencyName":  "BRL"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BWP",
+                                             "CurrencySymbol":  "P",
+                                             "CurrencyName":  "BWP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BYN",
+                                             "CurrencySymbol":  "Br",
+                                             "CurrencyName":  "BYN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "BZD",
+                                             "CurrencySymbol":  "BZ$",
+                                             "CurrencyName":  "BZD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CAD",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "CAD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CDF",
+                                             "CurrencySymbol":  "FC",
+                                             "CurrencyName":  "CDF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CHF",
+                                             "CurrencySymbol":  "fr.",
+                                             "CurrencyName":  "CHF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CHF",
+                                             "CurrencySymbol":  "Fr.",
+                                             "CurrencyName":  "CHF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "XOF",
+                                             "CurrencySymbol":  "CFA",
+                                             "CurrencyName":  "XOF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CLP",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "CLP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "XAF",
+                                             "CurrencySymbol":  "FCFA",
+                                             "CurrencyName":  "XAF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CNY",
+                                             "CurrencySymbol":  "¥",
+                                             "CurrencyName":  "CNY"
+                                         },
+                                         {
+                                             "CurrencyCode":  "COP",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "COP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CRC",
+                                             "CurrencySymbol":  "₡",
+                                             "CurrencyName":  "CRC"
+                                         },
+                                         {
+                                             "CurrencyCode":  "RSD",
+                                             "CurrencySymbol":  "din.",
+                                             "CurrencyName":  "RSD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "RSD",
+                                             "CurrencySymbol":  "дин.",
+                                             "CurrencyName":  "RSD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CZK",
+                                             "CurrencySymbol":  "Kč",
+                                             "CurrencyName":  "CZK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "DKK",
+                                             "CurrencySymbol":  "kr.",
+                                             "CurrencyName":  "DKK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "DOP",
+                                             "CurrencySymbol":  "RD$",
+                                             "CurrencyName":  "DOP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "DZD",
+                                             "CurrencySymbol":  "DA",
+                                             "CurrencyName":  "DZD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "DZD",
+                                             "CurrencySymbol":  "د.ج.‏",
+                                             "CurrencyName":  "DZD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "USD",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "USD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "EGP",
+                                             "CurrencySymbol":  "ج.م.‏",
+                                             "CurrencyName":  "EGP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ERN",
+                                             "CurrencySymbol":  "ERN",
+                                             "CurrencyName":  "ERN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ETB",
+                                             "CurrencySymbol":  "ETB",
+                                             "CurrencyName":  "ETB"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ETB",
+                                             "CurrencySymbol":  "Br",
+                                             "CurrencyName":  "ETB"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ETB",
+                                             "CurrencySymbol":  "ብር",
+                                             "CurrencyName":  "ETB"
+                                         },
+                                         {
+                                             "CurrencyCode":  "GBP",
+                                             "CurrencySymbol":  "£",
+                                             "CurrencyName":  "GBP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "GEL",
+                                             "CurrencySymbol":  "₾",
+                                             "CurrencyName":  "GEL"
+                                         },
+                                         {
+                                             "CurrencyCode":  "GTQ",
+                                             "CurrencySymbol":  "Q",
+                                             "CurrencyName":  "GTQ"
+                                         },
+                                         {
+                                             "CurrencyCode":  "HKD",
+                                             "CurrencySymbol":  "HK$",
+                                             "CurrencyName":  "HKD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "HKD",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "HKD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "HNL",
+                                             "CurrencySymbol":  "L.",
+                                             "CurrencyName":  "HNL"
+                                         },
+                                         {
+                                             "CurrencyCode":  "HRK",
+                                             "CurrencySymbol":  "kn",
+                                             "CurrencyName":  "HRK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "HTG",
+                                             "CurrencySymbol":  "G",
+                                             "CurrencyName":  "HTG"
+                                         },
+                                         {
+                                             "CurrencyCode":  "HUF",
+                                             "CurrencySymbol":  "Ft",
+                                             "CurrencyName":  "HUF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "IDR",
+                                             "CurrencySymbol":  "Rp",
+                                             "CurrencyName":  "IDR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ILS",
+                                             "CurrencySymbol":  "₪",
+                                             "CurrencyName":  "ILS"
+                                         },
+                                         {
+                                             "CurrencyCode":  "INR",
+                                             "CurrencySymbol":  "₹",
+                                             "CurrencyName":  "INR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "IQD",
+                                             "CurrencySymbol":  "د.ع.‏",
+                                             "CurrencyName":  "IQD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "IRR",
+                                             "CurrencySymbol":  "ريال",
+                                             "CurrencyName":  "IRR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ISK",
+                                             "CurrencySymbol":  "kr.",
+                                             "CurrencyName":  "ISK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "JMD",
+                                             "CurrencySymbol":  "J$",
+                                             "CurrencyName":  "JMD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "JOD",
+                                             "CurrencySymbol":  "د.ا.‏",
+                                             "CurrencyName":  "JOD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "JPY",
+                                             "CurrencySymbol":  "¥",
+                                             "CurrencyName":  "JPY"
+                                         },
+                                         {
+                                             "CurrencyCode":  "KES",
+                                             "CurrencySymbol":  "KSh",
+                                             "CurrencyName":  "KES"
+                                         },
+                                         {
+                                             "CurrencyCode":  "KGS",
+                                             "CurrencySymbol":  "сом",
+                                             "CurrencyName":  "KGS"
+                                         },
+                                         {
+                                             "CurrencyCode":  "KHR",
+                                             "CurrencySymbol":  "៛",
+                                             "CurrencyName":  "KHR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "KRW",
+                                             "CurrencySymbol":  "₩",
+                                             "CurrencyName":  "KRW"
+                                         },
+                                         {
+                                             "CurrencyCode":  "KWD",
+                                             "CurrencySymbol":  "د.ك.‏",
+                                             "CurrencyName":  "KWD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "KZT",
+                                             "CurrencySymbol":  "₸",
+                                             "CurrencyName":  "KZT"
+                                         },
+                                         {
+                                             "CurrencyCode":  "LAK",
+                                             "CurrencySymbol":  "₭",
+                                             "CurrencyName":  "LAK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "LBP",
+                                             "CurrencySymbol":  "ل.ل.‏‏",
+                                             "CurrencyName":  "LBP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "CHF",
+                                             "CurrencySymbol":  "CHF",
+                                             "CurrencyName":  "CHF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "LKR",
+                                             "CurrencySymbol":  "රු.",
+                                             "CurrencyName":  "LKR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "LKR",
+                                             "CurrencySymbol":  "Rs",
+                                             "CurrencyName":  "LKR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "LYD",
+                                             "CurrencySymbol":  "د.ل.‏‏",
+                                             "CurrencyName":  "LYD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MAD",
+                                             "CurrencySymbol":  "ⴷⵔ",
+                                             "CurrencyName":  "MAD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MAD",
+                                             "CurrencySymbol":  "د.م.‏‏",
+                                             "CurrencyName":  "MAD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MAD",
+                                             "CurrencySymbol":  "DH",
+                                             "CurrencyName":  "MAD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MDL",
+                                             "CurrencySymbol":  "L",
+                                             "CurrencyName":  "MDL"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MKD",
+                                             "CurrencySymbol":  "ден.",
+                                             "CurrencyName":  "MKD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MMK",
+                                             "CurrencySymbol":  "K",
+                                             "CurrencyName":  "MMK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MNT",
+                                             "CurrencySymbol":  "₮",
+                                             "CurrencyName":  "MNT"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MOP",
+                                             "CurrencySymbol":  "MOP",
+                                             "CurrencyName":  "MOP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MVR",
+                                             "CurrencySymbol":  "ރ.",
+                                             "CurrencyName":  "MVR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MXN",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "MXN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "MYR",
+                                             "CurrencySymbol":  "RM",
+                                             "CurrencyName":  "MYR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "NGN",
+                                             "CurrencySymbol":  "₦",
+                                             "CurrencyName":  "NGN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "NIO",
+                                             "CurrencySymbol":  "C$",
+                                             "CurrencyName":  "NIO"
+                                         },
+                                         {
+                                             "CurrencyCode":  "NOK",
+                                             "CurrencySymbol":  "kr",
+                                             "CurrencyName":  "NOK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "NPR",
+                                             "CurrencySymbol":  "रु",
+                                             "CurrencyName":  "NPR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "NZD",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "NZD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "OMR",
+                                             "CurrencySymbol":  "ر.ع.‏‏",
+                                             "CurrencyName":  "OMR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "PAB",
+                                             "CurrencySymbol":  "B/.",
+                                             "CurrencyName":  "PAB"
+                                         },
+                                         {
+                                             "CurrencyCode":  "PEN",
+                                             "CurrencySymbol":  "S/",
+                                             "CurrencyName":  "PEN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "PHP",
+                                             "CurrencySymbol":  "₱",
+                                             "CurrencyName":  "PHP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "PKR",
+                                             "CurrencySymbol":  "Rs",
+                                             "CurrencyName":  "PKR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "PLN",
+                                             "CurrencySymbol":  "zł",
+                                             "CurrencyName":  "PLN"
+                                         },
+                                         {
+                                             "CurrencyCode":  "PYG",
+                                             "CurrencySymbol":  "₲",
+                                             "CurrencyName":  "PYG"
+                                         },
+                                         {
+                                             "CurrencyCode":  "QAR",
+                                             "CurrencySymbol":  "ر.ق.‏‏",
+                                             "CurrencyName":  "QAR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "RON",
+                                             "CurrencySymbol":  "lei",
+                                             "CurrencyName":  "RON"
+                                         },
+                                         {
+                                             "CurrencyCode":  "RUB",
+                                             "CurrencySymbol":  "₽",
+                                             "CurrencyName":  "RUB"
+                                         },
+                                         {
+                                             "CurrencyCode":  "RWF",
+                                             "CurrencySymbol":  "RWF",
+                                             "CurrencyName":  "RWF"
+                                         },
+                                         {
+                                             "CurrencyCode":  "SAR",
+                                             "CurrencySymbol":  "ر.س.‏",
+                                             "CurrencyName":  "SAR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "SEK",
+                                             "CurrencySymbol":  "kr",
+                                             "CurrencyName":  "SEK"
+                                         },
+                                         {
+                                             "CurrencyCode":  "SGD",
+                                             "CurrencySymbol":  "$",
+                                             "CurrencyName":  "SGD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "EUR",
+                                             "CurrencySymbol":  "EUR",
+                                             "CurrencyName":  "EUR"
+                                         },
+                                         {
+                                             "CurrencyCode":  "SOS",
+                                             "CurrencySymbol":  "S",
+                                             "CurrencyName":  "SOS"
+                                         },
+                                         {
+                                             "CurrencyCode":  "SYP",
+                                             "CurrencySymbol":  "ܠ.ܣ.‏",
+                                             "CurrencyName":  "SYP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "SYP",
+                                             "CurrencySymbol":  "ل.س.‏‏",
+                                             "CurrencyName":  "SYP"
+                                         },
+                                         {
+                                             "CurrencyCode":  "THB",
+                                             "CurrencySymbol":  "฿",
+                                             "CurrencyName":  "THB"
+                                         },
+                                         {
+                                             "CurrencyCode":  "TJS",
+                                             "CurrencySymbol":  "смн",
+                                             "CurrencyName":  "TJS"
+                                         },
+                                         {
+                                             "CurrencyCode":  "TMT",
+                                             "CurrencySymbol":  "m.",
+                                             "CurrencyName":  "TMT"
+                                         },
+                                         {
+                                             "CurrencyCode":  "TND",
+                                             "CurrencySymbol":  "د.ت.‏‏",
+                                             "CurrencyName":  "TND"
+                                         },
+                                         {
+                                             "CurrencyCode":  "TRY",
+                                             "CurrencySymbol":  "₺",
+                                             "CurrencyName":  "TRY"
+                                         },
+                                         {
+                                             "CurrencyCode":  "TTD",
+                                             "CurrencySymbol":  "TT$",
+                                             "CurrencyName":  "TTD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "TWD",
+                                             "CurrencySymbol":  "NT$",
+                                             "CurrencyName":  "TWD"
+                                         },
+                                         {
+                                             "CurrencyCode":  "UAH",
+                                             "CurrencySymbol":  "₴",
+                                             "CurrencyName":  "UAH"
+                                         },
+                                         {
+                                             "CurrencyCode":  "UYU",
+                                             "CurrencySymbol":  "$U",
+                                             "CurrencyName":  "UYU"
+                                         },
+                                         {
+                                             "CurrencyCode":  "UZS",
+                                             "CurrencySymbol":  "so\u0027m",
+                                             "CurrencyName":  "UZS"
+                                         },
+                                         {
+                                             "CurrencyCode":  "UZS",
+                                             "CurrencySymbol":  "сўм",
+                                             "CurrencyName":  "UZS"
+                                         },
+                                         {
+                                             "CurrencyCode":  "VES",
+                                             "CurrencySymbol":  "Bs.S",
+                                             "CurrencyName":  "VES"
+                                         },
+                                         {
+                                             "CurrencyCode":  "VND",
+                                             "CurrencySymbol":  "₫",
+                                             "CurrencyName":  "VND"
+                                         },
+                                         {
+                                             "CurrencyCode":  "YER",
+                                             "CurrencySymbol":  "ر.ي.‏‏",
+                                             "CurrencyName":  "YER"
+                                         },
+                                         {
+                                             "CurrencyCode":  "ZAR",
+                                             "CurrencySymbol":  "R",
+                                             "CurrencyName":  "ZAR"
+                                         }
+                                     ]
+                  }
+}

@@ -1,0 +1,204 @@
+﻿{
+  "addVariables": {
+    "tenant_id": "[subscription().tenantId]",
+    "subscription_id": "[subscription().subscriptionId]"
+  },
+  "dictionary": {
+    "ap-new-case-put-on-queue.json": {
+      "regex": [
+        {
+          "pattern": "LogicAppName",
+          "value": "newCase_logicAppName"
+        }
+      ]
+    },
+    "ap-address-updated-update-case.json": {
+      "regex": [
+        {
+          "pattern": "LogicAppName",
+          "value": "addressUpdateCase_logicAppName"
+        }
+      ]
+    },
+    "ap-process-logicapp-wu.json": {
+      "addParameters": {
+        "sites_ap_wu_func_name": {
+          "defaultValue": "",
+          "type": "string"
+        },
+        "vaults_ap_wu_keyvault_name": {
+          "defaultValue": "",
+          "type": "string"
+        },
+        "aadaudience_variable": {
+          "defaultValue": "",
+          "type": "string"
+        },
+        "aadclientid_variable": {
+          "defaultValue": "",
+          "type": "string"
+        }
+      },
+      "regex": [
+        {
+          "pattern": "LogicAppName",
+          "value": "workflows_ap_process_wu_logicapp_name"
+        }
+      ]
+    },
+    "ap-records-for-retry.json": {
+      "regex": [
+        {
+          "pattern": "LogicAppName",
+          "value": "getRetryRecords_logicAppName"
+        }
+      ]
+    },
+    "ap-request-logicapp-wu.json": {
+      "addParameters": {
+        "sites_ap_wu_func_name": {
+          "defaultValue": "",
+          "type": "string"
+        },
+        "vaults_ap_wu_keyvault_name": {
+          "defaultValue": "",
+          "type": "string"
+        },
+        "aadaudience_variable": {
+          "defaultValue": "",
+          "type": "string"
+        },
+        "aadclientid_variable": {
+          "defaultValue": "",
+          "type": "string"
+        }
+      },
+      "regex": [
+        {
+          "pattern": "LogicAppName",
+          "value": "workflows_ap_request_wu_logicapp_name"
+        }
+      ]
+    },
+    "ap-results-available-update-case.json": {
+      "regex": [
+        {
+          "pattern": "LogicAppName",
+          "value": "resultsUpdateCase_logicAppName"
+        }
+      ]
+    }
+  },
+  "regex": [
+    {
+      "pattern": "(@parameters\\('\\$connections'\\)\\['ap-)(.)*(-bingMaps'\\]\\['connectionId'\\])",
+      "value": "[concat('@parameters(''$connections'')[''', parameters('bingmaps_Connection_Name'), '''][''connectionId'']')]"
+    },
+    {
+      "pattern": "(@parameters\\('\\$connections'\\)\\['ap-)(.)*(-servicebus'\\]\\['connectionId'\\])",
+      "value": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+    },
+    {
+      "pattern": "(@parameters\\('\\$connections'\\)\\['ap-)(.)*(-cds'\\]\\['connectionId'\\])",
+      "value": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+    },
+    {
+      "pattern": "(\"ap-)(.)*(-bingMaps\")",
+      "value": "\"[parameters('bingmaps_Connection_Name')]\""
+    },
+    {
+      "pattern": "(\"ap-)(.)*(-cds\")",
+      "value": "\"[parameters('commondataservice_Connection_Name')]\""
+    },
+    {
+      "pattern": "(\"ap-)(.)*(-servicebus\")",
+      "value": "\"[parameters('servicebus_Connection_Name')]\""
+    },
+    {
+      "pattern": "(\\/datasets\\/@{encodeURIComponent\\(encodeURIComponent\\(')(.)*(\\.crm'\\)\\)}\\/tables\\/@{encodeURIComponent\\(encodeURIComponent\\('ap_ains'\\)\\)}\\/onupdateditemswebhook)",
+      "value": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('dynamicscrm_environment_name'), '.crm''))}/tables/@{encodeURIComponent(encodeURIComponent(''ap_ains''))}/onupdateditemswebhook')]"
+    },
+    {
+      "pattern": "(\\/datasets\\/@{encodeURIComponent\\(encodeURIComponent\\(')(.)*(\\.crm'\\)\\)}\\/tables\\/@{encodeURIComponent\\(encodeURIComponent\\('ap_ains'\\)\\)}\\/onnewitemswebhook)",
+      "value": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('dynamicscrm_environment_name'), '.crm''))}/tables/@{encodeURIComponent(encodeURIComponent(''ap_ains''))}/onnewitemswebhook')]"
+    },
+    {
+      "pattern": "(\\\"defaultValue\\\":)(.)*(\\\")(.)*(\\.crm\\\")",
+      "value": "\"defaultValue\": \"[concat(parameters('dynamicscrm_environment_name'),'.crm')]\""
+    },
+    {
+      "pattern": "(\/subscriptions\/)(.)*(\/resourceGroups\/)(.)*(\/providers\/Microsoft.Web\/sites\/ap-)(.)*(-func-wu\/functions\/DeleteRecordings)",
+      "value": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/DeleteRecordings')]"
+    },
+    {
+      "pattern": "(\/subscriptions\/)(.)*(\/resourceGroups\/)(.)*(\/providers\/Microsoft.Web\/sites\/ap-)(.)*(-func-wu\/functions\/ExtractInfo)",
+      "value": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/ExtractInfo')]"
+    },
+    {
+      "pattern": "(\/subscriptions\/)(.)*(\/resourceGroups\/)(.)*(\/providers\/Microsoft.Web\/sites\/ap-)(.)*(-func-wu\/functions\/PullRecording)",
+      "value": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/PullRecording')]"
+    },
+    {
+      "pattern": "(\/subscriptions\/)(.)*(\/resourceGroups\/)(.)*(\/providers\/Microsoft.Web\/sites\/ap-)(.)*(-func-wu\/functions\/TranscribeCall)",
+      "value": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/TranscribeCall')]"
+    },
+    {
+      "pattern": "(\/subscriptions\/)(.)*(\/resourceGroups\/)(.)*(\/providers\/Microsoft.Web\/sites\/ap-)(.)*(-func-wu\/functions\/CheckCallProgress)",
+      "value": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/CheckCallProgress')]"
+    },
+    {
+      "pattern": "(\/subscriptions\/)(.)*(\/resourceGroups\/)(.)*(\/providers\/Microsoft.Web\/sites\/ap-)(.)*(-func-wu\/functions\/InitiateCall)",
+      "value": "[concat(resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name')), '/functions/InitiateCall')]"
+    },
+    {
+      "pattern": "(https:\\/\\/@{variables\\('KeyVaultName'\\)}.vault.azure.net\\/secrets/ap-)(.)*(-func-aad-key)",
+      "value": "[concat('https://@{variables(''KeyVaultName'')}.vault.azure.net/secrets/', parameters('ap_func_aad_key_secret_name'))]"
+    },
+    {
+      "pattern": "(servicebus)(.)*(Connection_Name)",
+      "value": "servicebus_Connection_Name"
+    },
+    {
+      "pattern": "(servicebus)(.)*(Connection_DisplayName)",
+      "value": "servicebus_Connection_Name"
+    },
+    {
+      "pattern": "(commondataservice)(.)*(Connection_Name)",
+      "value": "commondataservice_Connection_Name"
+    },
+    {
+      "pattern": "(commondataservice)(.)*(Connection_DisplayName)",
+      "value": "commondataservice_Connection_Name"
+    },
+    {
+      "pattern": "(commondataservice)(.)*(environment)",
+      "value": "dynamicscrm_environment_name"
+    },
+    {
+      "pattern": "(bingmaps)(.)*(Connection_Name)",
+      "value": "bingmaps_Connection_Name"
+    },
+    {
+      "pattern": "(bingmaps)(.)*(Connection_DisplayName)",
+      "value": "bingmaps_Connection_Name"
+    }
+  ],
+  "parameters": [
+    {
+      "key": "$aadAudience",
+      "value": "[parameters('aadaudience_variable')]"
+    },
+    {
+      "key": "$aadClientId",
+      "value": "[parameters('aadclientid_variable')]"
+    },
+    {
+      "key": "$aadTenantId",
+      "value": "[variables('tenant_id')]"
+    },
+    {
+      "key": "$keyVaultName",
+      "value": "[parameters('vaults_ap_wu_keyvault_name')]"
+    }
+  ]
+}

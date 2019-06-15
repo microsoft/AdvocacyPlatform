@@ -1,0 +1,35 @@
+﻿{
+  "numberOfThreads": 3,
+  "testConfigurations": [
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": null,
+      "CallSid": "",
+      "CallStatus": "",
+      "RecordingUri": "",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    },
+    {
+      "InputId": "",
+      "InitSeconds": 0,
+      "FinalSeconds": 45,
+      "Dtmf": null,
+      "CallSid": "",
+      "CallStatus": "",
+      "RecordingUri": "",
+      "Transcript": "",
+      "ExpectedEntities": [
+      ],
+      "ExpectedAdditionalEntities": {
+      },
+      "CallbackUrl": ""
+    }
+  ]
+}

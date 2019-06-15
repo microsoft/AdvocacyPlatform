@@ -1,0 +1,4 @@
+﻿{
+  "@odata.context": "https://{crmDomainName}.crm.dynamics.com/api/data/v9.0/$metadata#solutions",
+  "value": []
+}

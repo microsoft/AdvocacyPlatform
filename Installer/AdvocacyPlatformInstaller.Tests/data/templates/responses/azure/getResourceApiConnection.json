@@ -1,0 +1,33 @@
+﻿{
+  "properties": {
+    "displayName": "{connectionName}",
+    "statuses": [
+      {
+        "status": "{status}",
+        "target": "token",
+        "error": {
+          
+        }
+      }
+    ],
+    "customParameterValues": {},
+    "nonSecretParameterValues": { "environment": "String" },
+    "createdTime": "2019-05-28T02:20:07.6149891Z",
+    "changedTime": "2019-05-28T02:20:07.6149891Z",
+    "api": {
+      "name": "{apiName}",
+      "displayName": "{apiDisplayName}",
+      "description": "{apiDescription}",
+      "iconUri": "{apiIconUri}",
+      "brandColor": "{apiBrandColor}",
+      "category": "Standard",
+      "id": "/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/westus2/managedApis/{apiName}",
+      "type": "Microsoft.Web/locations/managedApis"
+    },
+    "testLinks": []
+  },
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Web/connections/{connectionName}",
+  "name": "{connectionName}",
+  "type": "Microsoft.Web/connections",
+  "location": "westus2"
+}

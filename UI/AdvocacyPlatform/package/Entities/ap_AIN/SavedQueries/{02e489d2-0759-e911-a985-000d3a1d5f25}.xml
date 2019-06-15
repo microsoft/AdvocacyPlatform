@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{02e489d2-0759-e911-a985-000d3a1d5f25}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="ap_ain" select="1" icon="1" preview="1">
+        <row name="result" id="ap_ain">
+          <cell name="ap_ain" width="65" />
+          <cell name="a_0675780bda9149d98e1a2e63493556cf.ap_person_given_name" width="152" />
+          <cell name="ap_courthearing_type" width="121" />
+          <cell name="ap_courthearing_city" width="118" />
+          <cell name="ap_courthearing_state" width="122" />
+          <cell name="ap_courthearing_judge" width="132" />
+          <cell name="ap_courthearing_dateonly" width="120" />
+        </row>
+        <controlDescriptions>
+          <controlDescription>
+            <customControl id="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" formFactor="2">
+              <parameters />
+            </customControl>
+            <customControl name="MscrmControls.Calendar.CalendarControl" formFactor="0">
+              <parameters>
+                <data-set name="Calendar">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                  <StartDate>ap_courthearing_datetime</StartDate>
+                  <Description>ap_ain</Description>
+                </data-set>
+                <DisplayMode static="true" type="Enum">anchoredwithhoursofthedaytimeline</DisplayMode>
+                <MinimumDuration static="true" type="Whole.Duration">30</MinimumDuration>
+                <ColorFallbackBehavior static="true" type="Enum">colorfromentity</ColorFallbackBehavior>
+              </parameters>
+            </customControl>
+            <customControl name="MscrmControls.Calendar.CalendarControl" formFactor="1">
+              <parameters>
+                <data-set name="Calendar">
+                  <ViewId>00000000-0000-0000-0000-000000000000</ViewId>
+                  <StartDate>ap_courthearing_datetime</StartDate>
+                  <Description>ap_ain</Description>
+                </data-set>
+                <DisplayMode static="true" type="Enum">anchoredwithhoursofthedaytimeline</DisplayMode>
+                <MinimumDuration static="true" type="Whole.Duration">30</MinimumDuration>
+                <ColorFallbackBehavior static="true" type="Enum">colorfromentity</ColorFallbackBehavior>
+              </parameters>
+            </customControl>
+          </controlDescription>
+        </controlDescriptions>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" output-format="xml-platform" mapping="logical">
+        <entity name="ap_ain">
+          <attribute name="ap_ain" />
+          <attribute name="ap_courthearing_dateonly" />
+          <attribute name="ap_courthearing_state" />
+          <attribute name="ap_courthearing_city" />
+          <attribute name="ap_courthearing_judge" />
+          <filter type="and">
+            <condition attribute="ap_courthearing_info_available" operator="eq" value="1" />
+          </filter>
+          <link-entity alias="a_0675780bda9149d98e1a2e63493556cf" name="ap_person" to="ap_person_ain_lkp" from="ap_personid" link-type="outer" visible="false">
+            <attribute name="ap_person_given_name" />
+          </link-entity>
+          <attribute name="ap_courthearing_type" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0.0.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Cases - Court Hearings View" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

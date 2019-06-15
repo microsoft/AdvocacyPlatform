@@ -1,0 +1,95 @@
+﻿<local:WizardPageBase x:Class="AdvocacyPlatformInstaller.UninstallInstallationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AdvocacyPlatformInstaller"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:BoolToColorConverter x:Key="BoolToColorConvert" />
+        <local:BoolToRowHeightConverter x:Key="BoolToRowHeigthConverter" />
+        <local:InverseBoolConverter x:Key="InverseBoolConvert" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="WizardProgressGrid" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Steps" Background="LightGray" FontWeight="Bold" />
+            <local:WizardProgressControl x:Name="WizardProgress" Grid.Row="1" Grid.Column="0" PagesSource="{Binding Progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1" Margin="5 5 5 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="{Binding ShowDetails, Converter={StaticResource BoolToRowHeigthConverter}, ConverterParameter=90, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" MaxHeight="100" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="1" Margin="5 5 5 5" Content="Subscription" />
+            <ComboBox Grid.Row="0" Grid.Column="2" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding InstallationConfiguration.Azure.Subscriptions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding InstallationConfiguration.Azure.SelectedSubscription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button x:Name="RefreshAzureSubscriptionsButton" Grid.Row="0" Grid.Column="3" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="RefreshAzureSubscriptionsButton_Click" Background="Transparent">
+                <Image Source="pack://application:,,,/Media/refresh_icon.png" />
+            </Button>
+
+            <CheckBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding InstallationConfiguration.Azure.ShouldDelete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Grid.Row="1" Grid.Column="1" Margin="5 5 5 5" Content="Resource Group" />
+            <ComboBox Grid.Row="1" Grid.Column="2" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding InstallationConfiguration.Azure.ResourceGroups, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding InstallationConfiguration.Azure.SelectedResourceGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button x:Name="RefreshAzureResourceGroupsButton" Grid.Row="1" Grid.Column="3" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="RefreshAzureResourceGroupsButton_Click" Background="Transparent">
+                <Image Source="pack://application:,,,/Media/refresh_icon.png" />
+            </Button>
+
+            <CheckBox Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding InstallationConfiguration.PowerApps.ShouldDelete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Grid.Row="2" Grid.Column="1" Margin="5 5 5 5" Content="Environment Name" />
+            <ComboBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="1" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding InstallationConfiguration.PowerApps.Environments, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding InstallationConfiguration.PowerApps.SelectedEnvironment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button x:Name="GetEnvironmentsButton" Grid.Row="2" Grid.Column="3" Margin="5 5 5 5" IsEnabled="{Binding OperationInProgress, Converter={StaticResource InverseBoolConvert}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="GetEnvironmentsButton_Click" Background="Transparent">
+                <Image Source="pack://application:,,,/Media/refresh_icon.png" />
+            </Button>
+
+            <CheckBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5 0 0 0" IsChecked="{Binding InstallationConfiguration.PowerApps.ShouldOnlyDeleteSolution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Only delete Dynamics 365 CRM solution" />
+
+            <CheckBox Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding InstallationConfiguration.Azure.ShouldDeleteAppRegistration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Grid.Row="4" Grid.Column="1" Margin="5 5 5 5" Content="App Registration Name" />
+            <TextBox Grid.Row="4" Grid.Column="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.FunctionApp.ApplicationRegistrationName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <CheckBox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding InstallationConfiguration.Azure.Luis.ShouldDelete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Grid.Row="5" Grid.Column="1" Margin="5 5 5 5" Content="LUIS Application Name" />
+            <TextBox Grid.Row="5" Grid.Column="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="6" Grid.Column="1" Margin="5 5 5 5" Content="LUIS Authoring Region" />
+            <TextBox Grid.Row="6" Grid.Column="2" Margin="5 5 5 5" Text="{Binding InstallationConfiguration.Azure.Luis.AuthoringRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="7" Grid.Column="1" Margin="5 5 5 5" Content="Authoring Key" />
+            <PasswordBox x:Name="AuthoringKeyPasswordBox" Grid.Row="7" Grid.Column="2" Margin="5 5 5 5" PasswordChanged="AuthoringKeyPasswordBox_PasswordChanged" />
+            
+            <CheckBox Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5 0 0 0" IsChecked="{Binding ShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Show Details" />
+
+            <RichTextBox x:Name="DetailsRichTextBox" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" />
+        </Grid>
+    </Grid>
+</local:WizardPageBase>

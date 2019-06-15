@@ -1,0 +1,29 @@
+﻿[
+  {
+    "modelId": "{model1Id}",
+    "details": {
+      "statusId": {model1StatusId},
+      "status": "{model1Status}",
+      "exampleCount": 0,
+      "progressSubstatus": "{model1Substatus}"
+    }
+  },
+  {
+    "modelId": "{model2Id}",
+    "details": {
+      "statusId": {model2StatusId},
+      "status": "{model2Status}",
+      "exampleCount": 0,
+      "progressSubstatus": "{model2Substatus}"
+    }
+  },
+  {
+    "modelId": "{model3Id}",
+    "details": {
+      "statusId": {model3StatusId},
+      "status": "{model3Status}",
+      "exampleCount": 0,
+      "progressSubstatus": "{model3Substatus}"
+    }
+  }
+]

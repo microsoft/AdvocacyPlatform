@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <LocalizedNames>
+    <LocalizedName description="Advocacy Platform Overview" languagecode="1033" />
+  </LocalizedNames>
+  <FormId>{ca2f65e9-af58-e911-a985-000d3a1d5f25}</FormId>
+  <IsCustomizable>1</IsCustomizable>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="dashboard">
+      <form>
+        <tabs>
+          <tab showlabel="true" verticallayout="true" id="{d1682967-f3e3-4668-926b-d7b84a24a583}" expanded="true">
+            <labels>
+              <label description="Tab" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section showlabel="false" showbar="false" columns="1111" id="{6b020bd0-fbc2-4906-9b08-9c18a8823532}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell id="{34002847-2014-93b9-ee52-0aa72a8ec226}" showlabel="false" colspan="1" auto="false" rowspan="12">
+                          <labels>
+                            <label description="EOIR Case" languagecode="1033" />
+                          </labels>
+                          <control id="Component7125969" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true" uniqueid="{eac1b552-9159-b5b2-7403-de81025adbd3}">
+                            <parameters>
+                              <ViewId>{A595FCA0-0859-E911-A97B-000D3A1D51A5}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <RelationshipName />
+                              <TargetEntityType>ap_ain</TargetEntityType>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <ViewIds>{A595FCA0-0859-E911-A97B-000D3A1D51A5}</ViewIds>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <VisualizationId>{507F0ED3-F85C-E911-A96D-000D3A3005C3}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RecordsPerPage>12</RecordsPerPage>
+                              <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{3404b2ef-a4fe-4664-9b16-c55c6bb4e584}" auto="false">
+                          <labels>
+                            <label description="EOIR Case" languagecode="1033" />
+                          </labels>
+                          <control id="Componente0c0898" uniqueid="{e0153bbd-701a-a371-c726-4d433a32a661}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>ap_ain</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>12</RecordsPerPage>
+                              <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                              <ViewId>{02E489D2-0759-E911-A985-000D3A1D5F25}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{560383A1-F248-E911-A962-000D3A300799},{02E489D2-0759-E911-A985-000D3A1D5F25}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{11974599-E75C-E911-A96D-000D3A3005C3}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{18e2072e-04b7-4683-a41d-abd8758a2120}" auto="false">
+                          <labels>
+                            <label description="EOIR Case" languagecode="1033" />
+                          </labels>
+                          <control id="Component98fed9f" uniqueid="{73e7bc7a-99bc-a6ca-c431-8bcbe3a6ca95}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>ap_ain</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>12</RecordsPerPage>
+                              <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                              <ViewId>{02E489D2-0759-E911-A985-000D3A1D5F25}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{02E489D2-0759-E911-A985-000D3A1D5F25},{F15D9E9A-6757-E911-A975-000D3A300346}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{E80BEC51-6857-E911-A975-000D3A300346}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell colspan="1" rowspan="12" showlabel="false" id="{da359eda-1a25-449a-8ce7-3bc35ac9b41e}" auto="false">
+                          <labels>
+                            <label description="EOIR Case" languagecode="1033" />
+                          </labels>
+                          <control id="Componentf387f6e" uniqueid="{ba38ded4-0c4b-835b-8305-13c88c6a5516}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>ap_ain</TargetEntityType>
+                              <ChartGridMode>Chart</ChartGridMode>
+                              <EnableQuickFind>false</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>false</EnableJumpBar>
+                              <RecordsPerPage>12</RecordsPerPage>
+                              <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                              <ViewId>{02E489D2-0759-E911-A985-000D3A1D5F25}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{02E489D2-0759-E911-A985-000D3A1D5F25},{F15D9E9A-6757-E911-A975-000D3A300346},{C00BDAEB-6757-E911-A965-000D3A3005D4}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{1CEEE37A-8E59-E911-A985-000D3A1D5F25}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+          <tab showlabel="true" verticallayout="true" id="{c57a3cf9-bf93-458f-ab1f-a7aed39ba2bb}">
+            <labels>
+              <label description="Tab" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section showlabel="false" showbar="false" columns="1111" id="{889894fc-e662-4c99-ac36-d99f684f72a1}">
+                    <labels>
+                      <label description="Section" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell colspan="4" rowspan="12" showlabel="false" id="{a15d07c5-85f4-47c9-8f5a-69d78d576c88}" auto="false">
+                          <labels>
+                            <label description="EOIR Cases" languagecode="1033" />
+                          </labels>
+                          <control id="Componentbbbff21" uniqueid="{7ed6220b-4eaa-0982-b37c-d16d791b2583}" classid="{E7A81278-8635-4d9e-8D4D-59480B391C5B}" indicationOfSubgrid="true">
+                            <parameters>
+                              <TargetEntityType>ap_ain</TargetEntityType>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <EnableQuickFind>true</EnableQuickFind>
+                              <EnableViewPicker>false</EnableViewPicker>
+                              <EnableJumpBar>true</EnableJumpBar>
+                              <RecordsPerPage>8</RecordsPerPage>
+                              <HeaderColorCode>#F3F3F3</HeaderColorCode>
+                              <ViewId>{A539113E-B458-E911-A970-000D3A1D5264}</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ViewIds>{A539113E-B458-E911-A970-000D3A1D5264}</ViewIds>
+                              <AutoExpand>Fixed</AutoExpand>
+                              <VisualizationId>{11974599-E75C-E911-A96D-000D3A3005C3}</VisualizationId>
+                              <IsUserChart>false</IsUserChart>
+                              <EnableChartPicker>false</EnableChartPicker>
+                              <RelationshipName />
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+        <controlDescriptions />
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <IsTabletEnabled>1</IsTabletEnabled>
+</Dashboard>

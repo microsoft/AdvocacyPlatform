@@ -1,0 +1,63 @@
+{
+  "webresources": [
+    {
+      "profile": "default,debug",
+      "root": "",
+      "solution": "AdvocacyPlatformSolution",
+      "files": [
+        {
+          "uniquename": "ap_gear_icon",
+          "displayname": "Configuration Icon",
+          "file": "..\\package\\WebResources\\ap_gear_icon",
+          "description": "Configuration Icon"
+        },
+        {
+          "uniquename": "ap_person_icon",
+          "displayname": "Person Icon",
+          "file": "..\\package\\WebResources\\ap_person_icon",
+          "description": "Person Icon"
+        },
+        {
+          "uniquename": "ap_case_icon",
+          "displayname": "Case Icon",
+          "file": "..\\package\\WebResources\\ap_case_icon",
+          "description": "Case Icon"
+        },
+        {
+          "uniquename": "ap_volunteer_icon",
+          "displayname": "Volunteer Icon",
+          "file": "..\\package\\WebResources\\ap_volunteer_icon",
+          "description": "Volunteer Icon"
+        },
+        {
+          "uniquename": "ap_scale_of_justice_white",
+          "displayname": "Scales Of Justice White Icon",
+          "file": "..\\package\\WebResources\\ap_scale_of_justice_white",
+          "description": "Scales Of Justice White Icon"
+        }
+      ]
+    }
+  ],
+  "solutions": [
+    {
+      "profile": "default,debug",
+      "solution_uniquename": "AdvocacyPlatformSolution",
+      "packagepath": "package",
+      "solutionpath": "AdvocacyPlatformSolution_managed.zip",
+      "packagetype": "managed",
+      "increment_on_import": true,
+      "map": [
+        {
+          "map": "path",
+          "from": "WebResources\\*.*",
+          "to": ".\\WebResources\\**"
+        },
+        {
+          "map": "path",
+          "from": "WebResources\\**\\*.*",
+          "to": ".\\WebResources\\**"
+        }
+      ]
+    }
+  ]
+}

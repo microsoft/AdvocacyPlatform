@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{58537a48-9158-457b-a01c-b58a45440a90}</formid>
+    <IntroducedVersion>1.0.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{31117566-fbe0-492e-83d5-136aa2bb261e}" IsUserDefined="1" name="{31117566-fbe0-492e-83d5-136aa2bb261e}" expanded="true" locklevel="0" showlabel="true">
+          <labels>
+            <label description="Profile" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="50%">
+              <sections>
+                <section showlabel="true" showbar="true" IsUserDefined="0" id="{5e76f991-5d7b-48aa-94a1-0ed6847a7f9a}" name="{5e76f991-5d7b-48aa-94a1-0ed6847a7f9a}" columns="1" locklevel="0" labelwidth="130" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Contact Details" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{c7586000-b6da-836d-066e-5631b0d3c33a}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_record_identifier" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_person_record_identifier" disabled="true" uniqueid="{4027dd59-dd9a-7b34-739a-b220a59e5288}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{322b47b0-9e17-ab42-89b7-1d865616d9a6}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_given_name" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_person_given_name" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{5381456e-dee5-6b33-e283-54d14a42d5e4}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_birthdate" classid="{5B773807-9FB2-42db-97C3-7A91EFF8ADFF}" datafieldname="ap_person_birthdate" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{6a506d0a-cb95-db0a-c24c-6db513692377}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_gender" classid="{3EF39988-22BB-4f0b-BBBE-64B5A3748AEE}" datafieldname="ap_person_gender" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{e24c3ea5-a4cd-3707-c222-c9359db183c7}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_phone_number" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_person_phone_number" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{b56017d7-7dc9-9ebc-8e6a-3d1a6cac574b}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_email" classid="{ADA2203E-B4CD-49be-9DDF-234642B43B52}" datafieldname="ap_person_email" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{88cb0730-ac20-6cdb-288d-b4dad12e386a}" showlabel="true" locklevel="0" rowspan="2">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_address_composite" classid="{E0DECE4B-6FC8-4a8f-A065-082708572369}" datafieldname="ap_person_address_composite" disabled="false" uniqueid="{e920deb0-6ca3-a720-050e-7688c37a99dd}" />
+                      </cell>
+                    </row>
+                    <row></row>
+                    <row>
+                      <cell id="{b3a03a61-acd5-3835-74e9-27bc6c30d811}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_state_province" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_person_state_province" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{9812c94a-edc0-b593-be0c-76704d93c9ec}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_city" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_person_city" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{4d9031ca-1226-6994-6bed-28385468c062}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_country" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_person_country" disabled="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{09d2c049-901c-7d68-d4b9-b56682dc30b1}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_country_origin" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="ap_person_country_origin" disabled="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+            <column width="50%">
+              <sections>
+                <section name="{31117566-fbe0-492e-83d5-136aa2bb261e}_section_2" showlabel="true" showbar="true" locklevel="0" id="{c3e6a5d7-6e2d-e080-ab69-87d84643838d}" IsUserDefined="0" layout="varwidth" columns="1" labelwidth="115" celllabelalignment="Left" celllabelposition="Left">
+                  <labels>
+                    <label description="Contact Options" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{86e2b01a-cdb8-9dd2-5083-2c62734e643c}" showlabel="true" locklevel="0">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_isphonecontactallowed" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_person_isphonecontactallowed" disabled="false" uniqueid="{67bbc174-6441-9574-2528-0e98d73ccce8}" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{926531a1-8398-2223-7251-159910014d06}" showlabel="true" locklevel="0" visible="false">
+                        <labels>
+                          <label description="" languagecode="1033" />
+                        </labels>
+                        <control id="ap_person_isemailcontactallowed" classid="{F9A8A302-114E-466A-B582-6771B2AE0D92}" datafieldname="ap_person_isemailcontactallowed" disabled="false" uniqueid="{39316dea-bdc1-e66a-a227-93733dc0549e}" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab name="tab_2" id="{ae26820d-7796-5c0e-2a3e-97433ac2d383}" IsUserDefined="0" locklevel="0" showlabel="true" expanded="true">
+          <labels>
+            <label description="Notes" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" id="{898b870b-01e8-4ea8-b411-da091d7fe9f4}" IsUserDefined="0" height="auto">
+                  <labels>
+                    <label description="Notes" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell showlabel="false" rowspan="15" auto="false" id="{997a8c3e-e1ac-47c1-ae13-6ede3c769bb6}" locklevel="0">
+                        <labels>
+                          <label description="Note Text" languagecode="1033" />
+                        </labels>
+                        <control id="notescontrol" classid="{06375649-c143-495e-a496-c962e5b4488e}" uniqueid="{71215cb9-533c-b878-5c57-d4bdd935173d}" disabled="false">
+                          <parameters>
+                            <DefaultTabId>NotesTab</DefaultTabId>
+                            <UClientUniqueName>Timeline</UClientUniqueName>
+                            <UClientModules>Activities,Notes</UClientModules>
+                            <UClientDefaultModuleForCreateExperience>Notes</UClientDefaultModuleForCreateExperience>
+                            <UClientShowFilterPane>true</UClientShowFilterPane>
+                            <UClientExpandFilterPane>false</UClientExpandFilterPane>
+                            <UClientOrderBy>descending</UClientOrderBy>
+                            <UClientRecordPerPage>10</UClientRecordPerPage>
+                            <UClientActivities>appointment,task,ap_ain_case_activity</UClientActivities>
+                            <UClientSortActivitiesByValue>modifiedon</UClientSortActivitiesByValue>
+                            <UClientDisplayActivityHeaderUsing>defaultformat</UClientDisplayActivityHeaderUsing>
+                            <UClientCreateActivityUsing>quickcreateform</UClientCreateActivityUsing>
+                            <UClientDisplayActivityUsing>defaultfields</UClientDisplayActivityUsing>
+                            <OrderByActivityWall>descending</OrderByActivityWall>
+                            <SortActivityWall>modifiedon</SortActivityWall>
+                            <EmailConversationView>true</EmailConversationView>
+                            <ShowArticleTab>false</ShowArticleTab>
+                            <SelectDefaultLanguage>00000000-0000-0000-0000-000000000000</SelectDefaultLanguage>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row height="auto" />
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{931917c4-98a4-4724-824f-82773f63dda2}" columns="111">
+        <rows>
+          <row>
+            <cell id="{3cbea579-e96b-08c1-13c7-e2a71bc87343}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{d78d1b67-0b14-0908-857a-2367bd517e7a}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{16ae43e0-855c-624c-7d00-041645396a31}" showlabel="true" locklevel="0">
+              <labels>
+                <label description="Record Owner" languagecode="1033" />
+              </labels>
+              <control id="header_ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" disabled="false" uniqueid="{36a26c34-97aa-c0d2-7b75-484620b719c7}">
+                <parameters>
+                  <AutoResolve>true</AutoResolve>
+                  <DisableMru>false</DisableMru>
+                </parameters>
+              </control>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <Navigation>
+        <NavBar></NavBar>
+        <NavBarAreas>
+          <NavBarArea Id="Info">
+            <Titles>
+              <Title LCID="1033" Text="Common" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Sales">
+            <Titles>
+              <Title LCID="1033" Text="Sales" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Service">
+            <Titles>
+              <Title LCID="1033" Text="Service" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="Marketing">
+            <Titles>
+              <Title LCID="1033" Text="Marketing" />
+            </Titles>
+          </NavBarArea>
+          <NavBarArea Id="ProcessCenter">
+            <Titles>
+              <Title LCID="1033" Text="Process Sessions" />
+            </Titles>
+          </NavBarArea>
+        </NavBarAreas>
+      </Navigation>
+      <controlDescriptions>
+        <controlDescription forControl="{67bbc174-6441-9574-2528-0e98d73ccce8}">
+          <customControl id="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}">
+            <parameters>
+              <datafieldname>ap_person_isphonecontactallowed</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_person_isphonecontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_person_isphonecontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_person_isphonecontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+        </controlDescription>
+        <controlDescription forControl="{39316dea-bdc1-e66a-a227-93733dc0549e}">
+          <customControl id="{67FAC785-CD58-4f9f-ABB3-4B7DDC6ED5ED}">
+            <parameters>
+              <datafieldname>ap_person_isemailcontactallowed</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_person_isemailcontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_person_isemailcontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.FlipSwitch.FlipSwitchControl">
+            <parameters>
+              <value>ap_person_isemailcontactallowed</value>
+              <msinternal.isvisibleinmocaonly static="true">true</msinternal.isvisibleinmocaonly>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

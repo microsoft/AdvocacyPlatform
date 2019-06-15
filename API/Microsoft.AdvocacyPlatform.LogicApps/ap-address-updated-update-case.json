@@ -1,0 +1,398 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "commondataservice_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "dynamicscrm_environment_name": {
+      "type": "string",
+      "metadata": {
+        "description": "Environment id"
+      },
+      "defaultValue": ""
+    },
+    "bingmaps_Connection_Name": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "bingmaps_1_api_key": {
+      "type": "securestring",
+      "metadata": {
+        "description": "API Key"
+      }
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2"
+      ],
+      "defaultValue": ""
+    },
+    "addressUpdateCase_logicAppName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "subscription_id": "[subscription().subscriptionId]",
+    "tenant_id": "[subscription().tenantId]"
+  },
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Condition_Location_is_Empty": {
+              "type": "If",
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@equals(triggerBody()?['ap_courthearing_location'],null)",
+                      "@false"
+                    ]
+                  },
+                  {
+                    "equals": [
+                      "@equals(triggerBody()?['ap_courthearing_location'],'')",
+                      "@false"
+                    ]
+                  },
+                  {
+                    "equals": [
+                      "@empty(triggerBody()?['ap_courthearing_location'])",
+                      "@false"
+                    ]
+                  }
+                ]
+              },
+              "actions": {
+                "Condition_transcription_contains_state_and_city": {
+                  "type": "If",
+                  "expression": {
+                    "and": [
+                      {
+                        "equals": [
+                          "@contains(toLower(triggerBody()?['ap_courthearing_transcription_raw']),toLower(variables('City')))",
+                          "@true"
+                        ]
+                      }
+                    ]
+                  },
+                  "actions": {
+                    "Update_a_record": {
+                      "runAfter": {},
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "body": {
+                          "_ownerid_type": "",
+                          "ap_courthearing_city": "@{if(empty(variables('City')),triggerBody()?['ap_courthearing_state'],variables('City'))}",
+                          "ap_courthearing_location_composite": "@body('Get_location_by_address')?['address']?['formattedAddress']",
+                          "ap_courthearing_location_latitude": "@body('Get_location_by_address')?['point']?['coordinates']?['latitude']",
+                          "ap_courthearing_location_longitude": "@body('Get_location_by_address')?['point']?['coordinates']?['longitude']",
+                          "ap_courthearing_state": "@{if(empty(variables('State')),triggerBody()?['ap_courthearing_state'],variables('State'))}",
+                          "ap_courthearing_zipcode": "@body('Get_location_by_address')?['address']?['postalCode']"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                          }
+                        },
+                        "method": "patch",
+                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(parameters('$crmOrgName')))}/tables/@{encodeURIComponent(encodeURIComponent('ap_ains'))}/items/@{encodeURIComponent(encodeURIComponent(triggerBody()?['ap_ainid']))}"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Scope_Parse_Address": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Get_location_by_address": {
+                  "runAfter": {},
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connection": {
+                        "name": "[concat('@parameters(''$connections'')[''', parameters('bingmaps_Connection_Name'), '''][''connectionId'']')]"
+                      }
+                    },
+                    "method": "get",
+                    "path": "/REST/v1/Locations",
+                    "queries": {
+                      "addressLine": "@triggerBody()?['ap_courthearing_location']"
+                    }
+                  }
+                },
+                "Scope_Parse_Address": {
+                  "type": "Scope",
+                  "actions": {
+                    "Condition_Address_Contains_Delimeter": {
+                      "type": "If",
+                      "expression": {
+                        "equals": [
+                          "@contains(body('Get_location_by_address')?['address']?['formattedAddress'],',')",
+                          "@true"
+                        ]
+                      },
+                      "actions": {
+                        "Compose_Split_Address": {
+                          "type": "Compose",
+                          "inputs": "@split(replace(body('Get_location_by_address')?['address']?['formattedAddress'],', United States',''),',')",
+                          "runAfter": {}
+                        },
+                        "Condition_Address_Contains_All_Parts": {
+                          "type": "If",
+                          "expression": {
+                            "equals": [
+                              "@length(outputs('Compose_Split_Address'))",
+                              3
+                            ]
+                          },
+                          "actions": {
+                            "Compose_Address_Array_Length": {
+                              "type": "Compose",
+                              "inputs": "@int(length(outputs('Compose_Split_Address')))",
+                              "runAfter": {}
+                            },
+                            "Compose_Get_Address_Last_Part": {
+                              "type": "Compose",
+                              "inputs": "@outputs('Compose_Split_Address')[sub(outputs('Compose_Address_Array_Length'),1)]",
+                              "runAfter": {
+                                "Compose_Address_Array_Length": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Compose_Get_Address_Second_To_Last_Part": {
+                              "type": "Compose",
+                              "inputs": "@trim(outputs('Compose_Split_Address')[sub(outputs('Compose_Address_Array_Length'),2)])",
+                              "runAfter": {
+                                "Compose_Get_Address_Last_Part": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Compose_Get_State": {
+                              "type": "Compose",
+                              "inputs": "@trim(first(outputs('Compose_split_state_and_zipcode')))",
+                              "runAfter": {
+                                "Compose_split_state_and_zipcode": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Compose_split_state_and_zipcode": {
+                              "type": "Compose",
+                              "inputs": "@split(trim(outputs('Compose_Get_Address_Last_Part')),' ')",
+                              "runAfter": {
+                                "Compose_Get_Address_Second_To_Last_Part": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Set_City": {
+                              "type": "SetVariable",
+                              "inputs": {
+                                "name": "City",
+                                "value": "@{outputs('Compose_Get_Address_Second_To_Last_Part')}"
+                              },
+                              "runAfter": {
+                                "Set_State": [
+                                  "Succeeded"
+                                ]
+                              }
+                            },
+                            "Set_State": {
+                              "type": "SetVariable",
+                              "inputs": {
+                                "name": "State",
+                                "value": "@{outputs('Compose_Get_State')}"
+                              },
+                              "runAfter": {
+                                "Compose_Get_State": [
+                                  "Succeeded"
+                                ]
+                              }
+                            }
+                          },
+                          "runAfter": {
+                            "Compose_Split_Address": [
+                              "Succeeded"
+                            ]
+                          }
+                        }
+                      },
+                      "runAfter": {}
+                    }
+                  },
+                  "runAfter": {
+                    "Get_location_by_address": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "Initialize_City": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_City": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "City",
+                    "type": "String"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_State": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_State": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "State",
+                    "type": "String"
+                  }
+                ]
+              },
+              "runAfter": {}
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            },
+            "$crmOrgName": {
+              "defaultValue": "[concat(parameters('dynamicscrm_environment_name'),'.crm')]",
+              "type": "String"
+            }
+          },
+          "triggers": {
+            "When_a_record_is_updated": {
+              "type": "ApiConnectionWebhook",
+              "inputs": {
+                "body": {
+                  "AttributeFilters": [
+                    "ap_courthearing_location"
+                  ],
+                  "NotificationUrl": "@{listCallbackUrl()}"
+                },
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('commondataservice_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('dynamicscrm_environment_name'), '.crm''))}/tables/@{encodeURIComponent(encodeURIComponent(''ap_ains''))}/onupdateditemswebhook')]",
+                "queries": {
+                  "scope": "Organization"
+                }
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('commondataservice_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+                "connectionName": "[parameters('commondataservice_Connection_Name')]"
+              },
+              "[parameters('bingmaps_Connection_Name')]": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'bingmaps')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('bingmaps_Connection_Name'))]",
+                "connectionName": "[parameters('bingmaps_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "[parameters('addressUpdateCase_logicAppName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "apiVersion": "2016-06-01",
+      "tags": {
+        "displayName": "LogicApp"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('commondataservice_Connection_Name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('bingmaps_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('commondataservice_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'commondataservice')]"
+        },
+        "displayName": "[parameters('commondataservice_Connection_Name')]",
+        "nonSecretParameterValues": {
+          "environment": "[parameters('dynamicscrm_environment_name')]"
+        }
+      }
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('bingmaps_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'westus2', '/managedApis/', 'bingmaps')]"
+        },
+        "displayName": "[parameters('bingmaps_Connection_Name')]",
+        "parameterValues": {
+          "api_key": "[parameters('bingmaps_1_api_key')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

@@ -1,0 +1,8 @@
+﻿<publishData>
+  <publishProfile profileName="{appServiceName} - Web Deploy" publishMethod="MSDeploy" publishUrl="{appServiceName}.scm.azurewebsites.net:443" msdeploySite="{appServiceName}" userName="${appServiceName}" userPWD="{password}" destinationAppUrl="http://{appServiceName}.azurewebsites.net" SQLServerDBConnectionString="" mySQLDBConnectionString="" hostingProviderForumLink="" controlPanelLink="http://windows.azure.com" webSystem="WebSites">
+    <databases />
+  </publishProfile>
+  <publishProfile profileName="{appServiceName} - FTP" publishMethod="FTP" publishUrl="ftp://waws-prod-mwh-023.ftp.azurewebsites.windows.net/site/wwwroot" ftpPassiveMode="True" userName="{appServiceName}\${appServiceName}" userPWD="{password}" destinationAppUrl="http://{appServiceName}.azurewebsites.net" SQLServerDBConnectionString="" mySQLDBConnectionString="" hostingProviderForumLink="" controlPanelLink="http://windows.azure.com" webSystem="WebSites">
+    <databases />
+  </publishProfile>
+</publishData>

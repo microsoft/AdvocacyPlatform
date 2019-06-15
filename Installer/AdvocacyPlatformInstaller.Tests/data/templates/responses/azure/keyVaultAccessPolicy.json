@@ -1,0 +1,18 @@
+﻿{
+  "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.KeyVault/vaults/{keyVaultName}/accessPolicies/",
+  "type": "Microsoft.KeyVault/vaults/accessPolicies",
+  "properties": {
+    "accessPolicies": [
+      {
+        "tenantId": "{tenantId}",
+        "objectId": "{objectId}",
+        "permissions": {
+          "certificates": ["{certificatesPermArray}"],
+          "keys": [ "{keysPermArray}" ],
+          "secrets": [ "{secretsPermArray}" ],
+          "storage": [ "{storagePermArray}" ]
+        }
+      }
+    ]
+  }
+}

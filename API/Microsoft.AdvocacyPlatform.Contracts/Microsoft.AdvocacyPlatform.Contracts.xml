@@ -1,0 +1,1733 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AdvocacyPlatform.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.Module">
+             <summary>
+             As Azure Functions does not currently have an easy way to support dependency injection (DI), utilizing the method described at https://platform.deloitte.com.au/articles/dependency-injections-on-azure-functions-v2
+             to provide an DI container to functions.
+            
+             Base class for modules.
+             </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.Module.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Loads services.
+            </summary>
+            <param name="services">The collection of services to load.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DataExtractorException">
+            <summary>
+            Generic data extractor exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.DataExtractorException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DataExtractorException"/> class.
+            </summary>
+            <param name="message">Additional details regarding the exception.</param>
+            <param name="innerException">The original exception thrown.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.MalformedRequestBodyException`1">
+            <summary>
+            Exception thrown when request body is malformed.
+            </summary>
+            <typeparam name="T">The error code enum type the error code is a member of.</typeparam>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.MalformedRequestBodyException`1.#ctor(`0,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.MalformedRequestBodyException`1"/> class.
+            </summary>
+            <param name="errorCode">The error code to set.</param>
+            <param name="keyName">The name of the invalid key.</param>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.MalformedRequestBodyException`1.KeyName">
+            <summary>
+            Gets or sets the name of the invalid key.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.MalformedRequestBodyException`1.ErrorCode">
+            <summary>
+            Gets or sets the error code.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.MissingQueryParamException">
+            <summary>
+            Exception thrown when URI is missing a required query parameter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.MissingQueryParamException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.MissingQueryParamException"/> class.
+            </summary>
+            <param name="queryParamName">The name of the missing query parameter.</param>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.MissingQueryParamException.QueryParamName">
+            <summary>
+            Gets or sets the name of the missing query parameter.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.RecordingExistsException">
+            <summary>
+            Exception thrown when recording already exists.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.RecordingExistsException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.RecordingExistsException"/> class.
+            </summary>
+            <param name="message">A message sent with the exception.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.SecretStoreException">
+            <summary>
+            Generic secret store exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.SecretStoreException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.SecretStoreException"/> class.
+            </summary>
+            <param name="message">Additional message describing the exception.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.StorageClientException">
+            <summary>
+            Generic storage client exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.StorageClientException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.StorageClientException"/> class.
+            </summary>
+            <param name="message">Additional details describing the exception.</param>
+            <param name="innerException">The original exception thrown.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscriberCanceledException">
+            <summary>
+            Exception throw for canceled transcriptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TranscriberCanceledException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TranscriberCanceledException"/> class.
+            </summary>
+            <param name="message">A message to send with the exception.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscriberEmptyTranscriptException">
+            <summary>
+            Exception thrown for blank transcriptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TranscriberEmptyTranscriptException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TranscriberEmptyTranscriptException"/> class.
+            </summary>
+            <param name="message">A message to send with the exception.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscriberException">
+            <summary>
+            Generic transcriber exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TranscriberException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TranscriberException"/> class.
+            </summary>
+            <param name="message">Additional details describing the exception.</param>
+            <param name="innerException">The original exception thrown.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TwilioFailedCallException">
+            <summary>
+            Exception thrown when a Twilio call fails.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TwilioFailedCallException.#ctor(Twilio.Rest.Api.V2010.Account.CallResource.StatusEnum,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TwilioFailedCallException"/> class.
+            </summary>
+            <param name="status">The final call status.</param>
+            <param name="message">Additional message regarding failure.</param>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TwilioFailedCallException.Status">
+            <summary>
+            Gets or sets the final call status.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TwilioNoRecordingsException">
+            <summary>
+            Exception thrown when no recordings for a Twilio call could be found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TwilioNoRecordingsException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TwilioNoRecordingsException"/> class.
+            </summary>
+            <param name="message">Additional message describing the exception.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TwilioUnknownCallStatusException">
+            <summary>
+            Exception thrown when the returned call status is unknown.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TwilioUnknownCallStatusException.#ctor(Twilio.Rest.Api.V2010.Account.CallResource.StatusEnum,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TwilioUnknownCallStatusException"/> class.
+            </summary>
+            <param name="status">The final call status.</param>
+            <param name="message">Additional message describing the exception.</param>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TwilioUnknownCallStatusException.Status">
+            <summary>
+            Gets or sets the final call status.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ValueValidationException">
+            <summary>
+            Generic value validation exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ValueValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.ValueValidationException"/> class.
+            </summary>
+            <param name="message">Additional message describing the exception.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IContainerBuilder">
+            <summary>
+            Interface for interacting with a dependency injection container builder.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IContainerBuilder.RegisterModule(Microsoft.AdvocacyPlatform.Contracts.IModule)">
+            <summary>
+            Registers a module with the container.
+            </summary>
+            <param name="module">An implementation of IModule to register.</param>
+            <returns>The IContainerBuilder object.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IContainerBuilder.Build">
+            <summary>
+            Builds the service provider.
+            </summary>
+            <returns>The service provider.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IDataExtractor">
+            <summary>
+            Interface for interacting with an data extractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IDataExtractor.ExtractAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Extracts data from text.
+            </summary>
+            <param name="transcript">The text.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the extracted data.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IDataTransformation">
+            <summary>
+            Interface for interacting with a data transformation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IDataTransformation.Transform(System.Text.StringBuilder,System.Collections.Generic.Dictionary{System.String,System.String},Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Transforms the input text using the implemented strategy.
+            </summary>
+            <param name="input">Input text.</param>
+            <param name="parameters">Parameters to control the behavior of the data transformation function.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>The transformed text.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IDataTransformationFactory">
+            <summary>
+            Interface for interacting with factories creating trim strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IDataTransformationFactory.Create(System.String)">
+            <summary>
+            Creates a trim strategy.
+            </summary>
+            <param name="dataTransformationType">The name of the requested transformation.</param>
+            <returns>The implementation of the trim strategy requested.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper">
+            <summary>
+            Interface for interacting with an HttpClient wrapper.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper.InitTwilioClient(Microsoft.AdvocacyPlatform.Contracts.Secret,Microsoft.AdvocacyPlatform.Contracts.Secret)">
+            <summary>
+            Initializes the Twilio Client.
+            </summary>
+            <param name="accountSid">The account SID to connect with.</param>
+            <param name="authToken">The auth token to connect with.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper.GetHttpClient">
+            <summary>
+            Returns the wrapped HttpClient.
+            </summary>
+            <returns>The HttpClient instance used to make requests.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper.GetAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Performs a GET request.
+            </summary>
+            <param name="requestUri">The URI to GET.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A Task returning the response message.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper.GetStreamAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Performs a GET request.
+            </summary>
+            <param name="requestUri">The URI to GET.</param>
+            <param name="log">Trace logger instance.</param>
+            <returns>A Task returning the response as a stream.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper.PostAsync(System.String,System.Net.Http.HttpContent,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Performs a POST request.
+            </summary>
+            <param name="requestUri">The URI to POST to.</param>
+            <param name="content">The content of the request.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the response message.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IModule">
+             <summary>
+             Interface for creating registrable modules for the IContainerBuilder dependency injection container builder
+            
+             As Azure Functions does not currently have an easy way to support dependency injection (DI), utilizing the method described at https://platform.deloitte.com.au/articles/dependency-injections-on-azure-functions-v2
+             to provide an DI container to functions.
+             </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IModule.Load(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registers a service with the dependency injection container.
+            </summary>
+            <param name="services">Collection of services to load.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.INlpDataExtractor">
+            <summary>
+            Interface for interacting with IDataExtractor implementations using Natural Language Processing (NLP).
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.INlpDataExtractor.Initialize(Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration,Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper)">
+            <summary>
+            Initializes the data extractor.
+            </summary>
+            <param name="config">Configuration for the data extractor.</param>
+            <param name="httpClient">The IHttpClientWrapper implementation to use for making REST calls.</param>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ISecretStore">
+            <summary>
+            Interface for interacting with a secret store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ISecretStore.GetSecretAsync(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Gets a secret from the secret store.
+            </summary>
+            <param name="secretIdentifier">The identifier of the secret.</param>
+            <param name="authority">The token issuing authority.</param>
+            <param name="expireInCacheSeconds">The lifetime of the cached secret.</param>
+            <param name="associatedUserName">A username to associate with the secret.</param>
+            <returns>A <see cref="T:Microsoft.AdvocacyPlatform.Contracts.Secret"/> object containing the secret.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IStorageClient">
+            <summary>
+            Interface for interacting with a data store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IStorageClient.ReadToStreamAsync(System.IO.Stream,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String)">
+            <summary>
+            Reads data from the data store to a stream.
+            </summary>
+            <param name="outputStream">The stream to read data to.</param>
+            <param name="connectionString">The connection string for connecting to the data store.</param>
+            <param name="containerName">The name of the container containing the file to read.</param>
+            <param name="sourcePath">The relative path (from the container) of the file to read.</param>
+            <returns>A Task returning completion of reading to the stream.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IStorageClient.WriteStreamAsync(System.IO.Stream,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,System.Boolean)">
+            <summary>
+            Writes data from a stream to the data store.
+            </summary>
+            <param name="fileStream">The stream to read data from.</param>
+            <param name="connectionString">The connection string for connecting to the data store.</param>
+            <param name="containerName">The name of the container to write the file.</param>
+            <param name="destinationPath">The relative path (from the container) of the file to write.</param>
+            <param name="createContainerIfNotExists">Specifies if the container should be created if it does not exist.</param>
+            <returns>A Task returning information regarding the newly created file.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ITranscriber">
+            <summary>
+            Interface for interacting with a transcription (Speech-to-Text) service.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITranscriber.TranscribeAudioFileUriAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.AdvocacyPlatform.Contracts.IStorageClient,Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Transcribes a audio file at a specific non-public URI.
+            </summary>
+            <param name="apiKey">The API key to use to connect to the transcription service.</param>
+            <param name="region">The region the transcription service is in.</param>
+            <param name="audioFileUri">The URI of the audio file.</param>
+            <param name="storageClient">An IStorageClient implementation to use to read the audio file.</param>
+            <param name="storageConnectionString">The connection string to use when connecting to the source data store.</param>
+            <param name="storageContainerName">The container the audio file is in.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the transcription.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITranscriber.TranscribeAudioFileUriAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.AdvocacyPlatform.Contracts.IHttpClientWrapper,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Transcribes an audio file at a specific public URI.
+            </summary>
+            <param name="apiKey">The API key to use to connect to the transcription service.</param>
+            <param name="region">The region the transcription service is in.</param>
+            <param name="audioFileUri">The URI of the audio file.</param>
+            <param name="httpClient">The IHttpClientWrapper implementation to use when making REST calls.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the transcription.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITranscriber.TranscribeAudioFilePathAsync(Microsoft.AdvocacyPlatform.Contracts.Secret,System.String,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Transcribes an audio file at a local file path.
+            </summary>
+            <param name="apiKey">The API key to use to connect to the transcription service.</param>
+            <param name="region">The region the transcription service is in.</param>
+            <param name="audioFilePath">The path of the audio file.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the transcription.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ITrimStrategy">
+            <summary>
+            Interface for interacting with a trim strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITrimStrategy.Trim(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Trims the input text using the implemented strategy.
+            </summary>
+            <param name="input">Input text.</param>
+            <param name="maxLength">The maximum length to trim to.</param>
+            <returns>The trimmed text.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ITrimStrategyFactory">
+            <summary>
+            Interface for interacting with factories creating trim strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITrimStrategyFactory.Create(System.String)">
+            <summary>
+            Creates a trim strategy.
+            </summary>
+            <param name="trimStrategyValue">The name of the requested trim strategy.</param>
+            <returns>The implementation of the trim strategy requested.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper">
+            <summary>
+            Interface for interacting with a Twilio call wrapper.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.InitializeAsync(System.String,System.String,System.String)">
+            <summary>
+            Initialize TwilioClient.
+            </summary>
+            <param name="twilioAccountSidSecretName">Represents the name of the secret in the secret store with the Twilio account SID value.</param>
+            <param name="twilioAuthTokenSecretName">Represents the name of the secret in the secret store with the Twilio authentication token value.</param>
+            <param name="authority">The token-issuing authority.</param>
+            <returns>An asynchronous task.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.PlaceAndRecordCallAsync(System.Uri,System.String,System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Starts and records a new call.
+            </summary>
+            <param name="twiMLUrl">The TwiML URL to use when placing the call.</param>
+            <param name="numberToCall">The number to call.</param>
+            <param name="twilioLocalNumber">The local number to call from.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the call SID of the call resource.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.FetchCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Gets a call resource.
+            </summary>
+            <param name="callSid">The SID of the call resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the call resource.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.HangupCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Hangs up a call.
+            </summary>
+            <param name="callSid">The SID of the call resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.DeleteCallAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Deletes a call.
+            </summary>
+            <param name="callSid">The SID of the call resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.FetchStatusAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Gets the status of a call.
+            </summary>
+            <param name="callSid">The SID of the call resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning the status of the call.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.FetchRecordingsAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Gets recordings associated with a call.
+            </summary>
+            <param name="callSid">The SID of the call resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning a collection of recording resources for the call.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.FetchAccountRecordingsAsync(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Gets recordings associated with the current account.
+            </summary>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning a collection of recording resources for the current account.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.DeleteRecordingsAsync(System.String,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Deletes all recordings associated with a call.
+            </summary>
+            <param name="callSid">The SID of the call resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.DeleteAccountRecordingsAsync(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Deletes all recordings associated with the current account.
+            </summary>
+            <param name="log">Trace logging instance.</param>
+            <returns>A Task returning true if successful and false if failed.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ITwilioCallWrapper.GetFullRecordingUri(Twilio.Rest.Api.V2010.Account.RecordingResource,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Returns the full recording URI for a recording.
+            </summary>
+            <param name="recording">The recording resource.</param>
+            <param name="log">Trace logging instance.</param>
+            <returns>The full recording URI.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IValueValidator">
+            <summary>
+            Interface for interacting with a value validator.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IValueValidator.Validate(System.String,System.String@)">
+            <summary>
+            Validates the value.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="acceptedValue">The accepted value.</param>
+            <returns>True if valid and false if invalid.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.IValueValidatorFactory">
+            <summary>
+            Interface for interacting with a factory to create value validators.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.IValueValidatorFactory.Create(System.String)">
+            <summary>
+            Creates a value validator.
+            </summary>
+            <param name="valueTypeName">The name of the requested value validator.</param>
+            <returns>The implementation of the value validator requested.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DateInfo">
+            <summary>
+            Date and time information extracted from a transcription.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.DateInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DateInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.DateInfo.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DateInfo"/> class.
+            </summary>
+            <param name="year">The year to set.</param>
+            <param name="month">The month to set.</param>
+            <param name="day">The day to set.</param>
+            <param name="hour">The hour to set.</param>
+            <param name="minute">The minute to set.</param>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DateInfo.Year">
+            <summary>
+            Gets or sets the four digit year value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DateInfo.Month">
+            <summary>
+            Gets or sets the single or two digit month value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DateInfo.Day">
+            <summary>
+            Gets or sets the single or two digit day value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DateInfo.Hour">
+            <summary>
+            Gets or sets the single or two digit hour value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DateInfo.Minute">
+            <summary>
+            Gets or sets the single or two digit minute value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DateInfo.FullDate">
+            <summary>
+            Gets or sets the full datetime value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.DateInfo.ToString">
+            <summary>
+            Returns the full date as a string.
+            </summary>
+            <returns>The full date.</returns>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LocationInfo">
+            <summary>
+            Location information extracted from a transcription.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LocationInfo.Location">
+            <summary>
+            Gets or sets the full location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LocationInfo.State">
+            <summary>
+            Gets or sets the state.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LocationInfo.City">
+            <summary>
+            Gets or sets the city.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LocationInfo.Zipcode">
+            <summary>
+            Gets or sets the zipcode.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration">
+            <summary>
+            Configuration information for Natural Language Processing (NLP) services.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.NlpEndpoint">
+            <summary>
+            Gets or sets the  endpoint to use.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.NlpSubscriptionKey">
+            <summary>
+            Gets or sets the  subscription key used when connecting to the service.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.DateTimeEntityName">
+            <summary>
+            Gets or sets the  name of the datetime entity for extracting datetime information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.DateEntityName">
+            <summary>
+            Gets or sets the  name of the date entity for extracting datetime information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.TimeEntityName">
+            <summary>
+            Gets or sets the  name of the time entity for extracting datetime information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.PersonEntityName">
+            <summary>
+            Gets or sets the  name of the person entity for extracting person information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.LocationEntityName">
+            <summary>
+            Gets or sets the  name of the location entity for extracting location information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.CityEntityName">
+            <summary>
+            Gets or sets the  name of the city entity for extracting location information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.StateEntityName">
+            <summary>
+            Gets or sets the  name of the state entity for extracting location information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.ZipcodeEntityName">
+            <summary>
+            Gets or sets the  name of the zipcode entity for extracting location information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.NlpDataExtractorConfiguration.PersonIntentTypeMap">
+            <summary>
+            Gets or sets the maps intents to person types (e.g. CourtHearingIntent -> PersonType.Judge).
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.PersonInfo">
+            <summary>
+            Person information extracted from a transcription.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PersonInfo.Name">
+            <summary>
+            Gets or sets the full name of the person.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PersonInfo.Type">
+            <summary>
+            Gets or sets the type of person (e.g. Judge).
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DataTransformation">
+            <summary>
+            Model representing a requested data transformation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.DataTransformation.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.DataTransformation"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DataTransformation.Name">
+            <summary>
+            Gets or sets the name of the transformation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DataTransformation.Parameters">
+            <summary>
+            Gets or sets a dictionary of parameters for the transformation function.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressErrorCode">
+            <summary>
+            Error codes specific to the CheckCallProgressHttpTrigger function.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressErrorCode.RequestMissingCallSid">
+            <summary>
+            Request body missing callSid field.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressErrorCode.UnexpectedCallStatus">
+            <summary>
+            Call status returned is unexpected (e.g. we don't understand it).
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode">
+             <summary>
+             Common error codes
+            
+             These should be negative integers .
+             to avoid collision with function specific status codes.
+             </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.NoError">
+            <summary>
+            There was no error.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.MalformedRequestBody">
+            <summary>
+            The request body was malformed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.BadRequest">
+            <summary>
+            Bad request.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioGenericFailure">
+            <summary>
+            Twilio generic failure.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioAuthenticationFailed">
+            <summary>
+            Twilio authentication failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioApiConnectionFailed">
+            <summary>
+            Twilio API connection failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioApiRequestFailed">
+            <summary>
+            Twilio API request failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioRestCallFailed">
+            <summary>
+            Twilio REST call failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioCallFailed">
+            <summary>
+            Twilio automated call failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioCallNoRecordings">
+            <summary>
+            Twilio call has no recordings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.TwilioUnexpectedCallStatus">
+            <summary>
+            Twilio returned an expected call status.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.SecretStoreGenericFailure">
+            <summary>
+            Generic secret store failure.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.StorageClientGenericFailure">
+            <summary>
+            Generic storage client failure.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage">
+            <summary>
+            Common error messages.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.BadRequestMessage">
+            <summary>
+            Bad request.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.TwilioGenericFailureMessage">
+            <summary>
+            Generic Twilio failure.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.TwilioAuthenticationFailedMessage">
+            <summary>
+            Twilio authentication failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.TwilioApiConnectionFailedMessage">
+            <summary>
+            Twilio API connection failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.TwilioApiRequestFailedMessage">
+            <summary>
+            Twilio API request failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.TwilioRestCallFailedMessage">
+            <summary>
+            Twilio REST call failed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.SecretStoreGenericFailureMessage">
+            <summary>
+            Generic secret store failure.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorMessage.StorageClientGenericFailureMessage">
+            <summary>
+            Generic storage client failure.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsErrorCode">
+            <summary>
+            Error codes specific to the DeleteAccountRecordingsHttpTrigger function.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsErrorCode.RequestMissingConfirmDelete">
+            <summary>
+            Request body missing confirmDelete field or value not yes.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsErrorCode">
+            <summary>
+            Error codes specific to the DeleteRecordingsHttpTrigger function.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsErrorCode.RequestMissingCallSid">
+            <summary>
+            Request body missing callSid field
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorCode">
+            <summary>
+            Error codes specific to the ExtractInfoHttpTrigger function.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorCode.RequestMissingCallSid">
+            <summary>
+            Request body missing callSid field.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorCode.RequestMissingText">
+            <summary>
+            Request body missing text field.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorCode.DataExtractorGenericFailure">
+            <summary>
+            Generic data extractor failure.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorMessage">
+            <summary>
+            ExtractInfo error messages.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorMessage.DataExtractorGenericFailureMessage">
+            <summary>
+            Generic data extractor failure.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorMessage.TranscriptionCanceledMessage">
+            <summary>
+            Transcription was canceled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoErrorMessage.TranscriptionEmptyMessage">
+            <summary>
+            Transcription is empty.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.InitiateCallErrorCode">
+            <summary>
+            Error codes specific to the InitiateCallHttpTrigger function.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.InitiateCallErrorCode.RequestMissingInputId">
+            <summary>
+            Request body missing inputId field
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.PullRecordingErrorCode">
+            <summary>
+            Error codes specific to the PullRecordingHttpTrigger function.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.PullRecordingErrorCode.RequestMissingInputId">
+            <summary>
+            Request body missing inputId field.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.PullRecordingErrorCode.RequestMissingCallSid">
+            <summary>
+            Request body missing callSid field.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorCode">
+            <summary>
+            Error codes specific to the TranscribeCallHttpTrigger function.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorCode.RequestMissingCallSid">
+            <summary>
+            Request body missing callSid field
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorCode.RequestMissingRecordingUri">
+            <summary>
+            Request body missing recordingUri field
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorCode.TranscriptionCanceled">
+            <summary>
+            Transcription was canceled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorCode.TranscriptionEmpty">
+            <summary>
+            Transcription is empty.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorMessage">
+            <summary>
+            TranscribeCall error messages.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorMessage.TranscriptionCanceledMessage">
+            <summary>
+            Transcription was canceled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallErrorMessage.TranscriptionEmptyMessage">
+            <summary>
+            Transcription was empty.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoFlag">
+            <summary>
+            Flags returned by ExtractInfo.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoFlag.DateRejected">
+            <summary>
+            Flag specifying the extracted date was rejected as not meeting the minimum DateTime value threshold.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LuisCompositeEntity">
+            <summary>
+            Represents a LUIS composite entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisCompositeEntity.ParentType">
+            <summary>
+            Gets or sets the name of the parent entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisCompositeEntity.Value">
+            <summary>
+            Gets or sets the value identified.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisCompositeEntity.Children">
+            <summary>
+            Gets or sets the child entities of this composite entity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration">
+            <summary>
+            Configuration intended to be pulled from app settings for interacting with the LUIS service.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.DateTimeEntityName">
+            <summary>
+            Gets or sets the name of the datetime entity used to extract datetime information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.DateEntityName">
+            <summary>
+            Gets or sets the name of the date entity used to extract datetime information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.TimeEntityName">
+            <summary>
+            Gets or sets the name of the time entity used to extract datetime information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.PersonEntityName">
+            <summary>
+            Gets or sets the name of the person entity used to extract person information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.LocationEntityName">
+            <summary>
+            Gets or sets the name of the location entity used to extract location information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.CityEntityName">
+            <summary>
+            Gets or sets the name of the city entity used to extract location information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.StateEntityName">
+            <summary>
+            Gets or sets the name of the state entity used to extract location information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisConfiguration.ZipcodeEntityName">
+            <summary>
+            Gets or sets the name of the zipcode entity used to extract location information.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LuisEntity">
+            <summary>
+            Represents a LUIS entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisEntity.Entity">
+            <summary>
+            Gets or sets the name of the entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisEntity.Type">
+            <summary>
+            Gets or sets the type of entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisEntity.Value">
+            <summary>
+            Gets or sets the value identified.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisEntity.StartIndex">
+            <summary>
+            Gets or sets the start index of where the entity begins in the text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisEntity.EndIndex">
+            <summary>
+            Gets or sets the end index of where the entity ends in the text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisEntity.Resolution">
+            <summary>
+            Gets or sets the resolved values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisEntity.Score">
+            <summary>
+            Gets or sets the confidence score of the identified entity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LuisIntent">
+            <summary>
+            Represents a LUSI intent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisIntent.Intent">
+            <summary>
+            Gets or sets the identified intent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisIntent.Score">
+            <summary>
+            Gets or sets the confidence in the identified intent.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LuisResolution">
+            <summary>
+            Represents a LUIS resolution.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResolution.Values">
+            <summary>
+            Gets or sets the collection of resolved values.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LuisResolutionValue">
+            <summary>
+            Represents a value in a LUIS resolution.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResolutionValue.Timex">
+            <summary>
+            Gets or sets the timex datetime.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResolutionValue.Type">
+            <summary>
+            Gets or sets the type of identified value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResolutionValue.Value">
+            <summary>
+            Gets or sets the identified value.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.LuisResponse">
+            <summary>
+            Represents a LUIS response.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResponse.Query">
+            <summary>
+            Gets or sets the input query.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResponse.TopScoringIntent">
+            <summary>
+            Gets or sets the top scoring intent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResponse.Entities">
+            <summary>
+            Gets or sets the collection of identified entities.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.LuisResponse.CompositeEntities">
+            <summary>
+            Gets or sets the collection of identified composite entities.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressRequest">
+            <summary>
+            Represents the expected request schema to CheckCallProgress.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressRequest.CallSidKeyName">
+            <summary>
+            The key expected for callSid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressRequest.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressRequest.Validate">
+            <summary>
+            Validates model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsRequest">
+            <summary>
+            Represents the expected request schema to DeleteAllRecordings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsRequest.ConfirmDeleteKeyName">
+            <summary>
+            The expected key for confirmDelete.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsRequest.ConfirmDelete">
+            <summary>
+            Gets or sets the value to confirm deletion request.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsRequest.Validate">
+            <summary>
+            Validates model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsRequest">
+            <summary>
+            Represents the expected request schema to DeleteRecordings.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsRequest.CallSidKeyName">
+            <summary>
+            The expected key for callSid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsRequest.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsRequest.Validate">
+            <summary>
+            Validates model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest">
+            <summary>
+            Represents the expected request schema to ExtractInfo.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.CallSidKeyName">
+            <summary>
+            The expected key for callSid.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.TextKeyName">
+            <summary>
+            The expected key for text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.Text">
+            <summary>
+            Gets or sets the transcribed text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.Transformations">
+            <summary>
+            Gets or sets the data transformations requested for the input text.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.MaxLength">
+            <summary>
+            Gets or sets the maximum length to use with the trim strategy.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.MinDateTime">
+            <summary>
+            Gets or sets the minimum DateTime value accepted for date extraction. Values below this threshold will set the extracted datetime to null.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoRequest.Validate">
+            <summary>
+            Validates model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.FunctionRequestBase">
+            <summary>
+            Base model for function requests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.FunctionRequestBase.Parse``1(System.String)">
+            <summary>
+            Parses the request's body content.
+            </summary>
+            <typeparam name="T">The type to deserialize the body content as.</typeparam>
+            <param name="requestBody">The request's body content.</param>
+            <returns>The deserialized body content.</returns>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.FunctionRequestBase.Validate">
+            <summary>
+            Validates the request.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.InitiateCallRequest">
+            <summary>
+            Represents the expected request schema to InitiateCall.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.InitiateCallRequest.InputIdKeyName">
+            <summary>
+            The expected key for the inputId.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.InitiateCallRequest.InputId">
+            <summary>
+            Gets or sets the input id to use with the call.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.InitiateCallRequest.InputType">
+            <summary>
+            Gets or sets the type of input id being used (allows for validation if a known type).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.InitiateCallRequest.Dtmf">
+            <summary>
+            Gets or sets the Dual-tone Multi-frequency signaling sequence to use with the call.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.InitiateCallRequest.Validate">
+            <summary>
+            Validates model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.PullRecordingRequest">
+            <summary>
+            Represents the expected request schema to PullRecording.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.PullRecordingRequest.InputIdKeyName">
+            <summary>
+            The key expected for inputId.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.PullRecordingRequest.CallSidKeyName">
+            <summary>
+            The key expected for callSid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PullRecordingRequest.InputId">
+            <summary>
+            Gets or sets the input id to use when pulling the recording.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PullRecordingRequest.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.PullRecordingRequest.Validate">
+            <summary>
+            Validates model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest">
+            <summary>
+            Represents the expected request schema to TranscribeCall.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest.CallSidKeyName">
+            <summary>
+            The expected key for callSid.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest.RecordingUriKeyName">
+            <summary>
+            The expected key for recordingUri.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest.RecordingUri">
+            <summary>
+            Gets or sets the URI of the recording.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest.IsLocalPath">
+            <summary>
+            Gets or sets a value indicating whether the URI is a local path.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallRequest.Validate">
+            <summary>
+            Validates model.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressResponse">
+            <summary>
+            Represents the expected response schema for CheckCallProgress.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressResponse"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressResponse.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressResponse.Status">
+            <summary>
+            Gets or sets the status of the call.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.CheckCallProgressResponse.Duration">
+            <summary>
+            Gets or sets the length of the call.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsResponse">
+            <summary>
+            Represents the expected response schema for DeleteAllRecordings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DeleteAccountRecordingsResponse.AreAllRecordingsDeleted">
+            <summary>
+            Gets or sets a value indicating whether all recordings associated with the account were deleted.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsResponse">
+            <summary>
+            Represents the expected response schema for DeleteRecordings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsResponse.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DeleteRecordingsResponse.AreAllRecordingsDeleted">
+            <summary>
+            Gets or sets a value indicating whether all recordings associated with the call were deleted.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoResponse">
+            <summary>
+            Represents the expected response schema for ExtractInfo.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoResponse.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoResponse"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoResponse.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoResponse.Data">
+            <summary>
+            Gets or sets the data extracted from the transcription.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoResponse.Flags">
+            <summary>
+            Gets or sets additional flags conveying additional information for the execution.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase">
+            <summary>
+            Represents the expected based response schema for all functions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase.StatusCode">
+            <summary>
+            Gets or sets the status code representing the state of a successful execution
+            If an error occurred, this should always be <see cref="F:Microsoft.AdvocacyPlatform.Contracts.CommonStatusCode.Error"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase.StatusDesc">
+            <summary>
+            Gets or sets the description representing the state of a successful execution
+            If an error occurred, this should always be the name for <see cref="F:Microsoft.AdvocacyPlatform.Contracts.CommonStatusCode.Error"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase.HasError">
+            <summary>
+            Gets or sets a value indicating whether an error occurred (true).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase.ErrorCode">
+            <summary>
+            Gets or sets the code specifying the exact error that occurred
+            If no error occurred, this should always be <see cref="F:Microsoft.AdvocacyPlatform.Contracts.CommonErrorCode.NoError"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.FunctionResponseBase.ErrorDetails">
+            <summary>
+            Gets or sets the description representing the details of the error that occurred.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.InitiateCallResponse">
+            <summary>
+            Represents the expected response schema for InitiateCall.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.InitiateCallResponse.InputId">
+            <summary>
+            Gets or sets the input id used in the call.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.InitiateCallResponse.InputType">
+            <summary>
+            Gets or sets the type of input id being used (allows for validation if a known type).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.InitiateCallResponse.AcceptedInputId">
+            <summary>
+            Gets or sets the form the input id was accepted as based on modifications made in input validators. This may not be the same form as it was sent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.InitiateCallResponse.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.PullRecordingResponse">
+            <summary>
+            Represents the expected response schema for PullRecording.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PullRecordingResponse.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PullRecordingResponse.RecordingLength">
+            <summary>
+            Gets or sets the length (in bytes) of the recording in the persistent data store.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PullRecordingResponse.RecordingUri">
+            <summary>
+            Gets or sets the relative URI to the recording.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.PullRecordingResponse.FullRecordingUrl">
+            <summary>
+            Gets or sets the full URL to the recording.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallResponse">
+            <summary>
+            Represents the expected response schema for TranscribeCall.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallResponse.CallSid">
+            <summary>
+            Gets or sets the SID of the call resource.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscribeCallResponse.Text">
+            <summary>
+            Gets or sets the transcribed call text.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.Secret">
+            <summary>
+            Wrapper for ensuring a secret remains encrypted as much as possible.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.Secret._secret">
+            <summary>
+            Internal data structure used to store secret encrypted.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.Secret.#ctor(System.String,System.Security.SecureString)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.Secret"/> class.
+            </summary>
+            <param name="identifier">Identifier for this secret.</param>
+            <param name="secret">An encrypted string with the secret value.</param>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.Secret.#ctor(System.String,System.String,System.Security.SecureString)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.Secret"/> class.
+            </summary>
+            <param name="identifier">Identifier for this secret.</param>
+            <param name="userName">A username to associated with this secret.</param>
+            <param name="secret">An encrypted string with the secret value.</param>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.Secret.Identifier">
+            <summary>
+            Gets or sets the identifier for this secret.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.Secret.UserName">
+            <summary>
+            Gets the associated username.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.Secret.Value">
+            <summary>
+            Gets the unencrypted secret value.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.CommonStatusCode">
+             <summary>
+             Common status codes
+            
+             These should be negative integers to avoid collision with function specific status codes.
+             </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonStatusCode.Ok">
+            <summary>
+            Operation was successful
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.CommonStatusCode.Error">
+            <summary>
+            Operation encountered an error
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoStatusCode">
+             <summary>
+             Status codes specific to ExtractInfo
+            
+             Function-specific status codes should be positive integers to avoid confusion
+             with common status codes.
+             </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.ExtractInfoStatusCode.MissingEntities">
+            <summary>
+            Response was missing expected entities
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.FileInfo">
+            <summary>
+            Represents minimal file information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.FileInfo.SizeInBytes">
+            <summary>
+            Gets or sets the size of the file in bytes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.FileInfo.Uri">
+            <summary>
+            Gets or sets the URI to the file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData">
+            <summary>
+            Data extracted by an IDataExtractor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.Intent">
+            <summary>
+            Gets or sets the intent returned from an INlpDataExtractor.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.IntentConfidence">
+            <summary>
+            Gets or sets the confidence for the intent returned.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.Transcription">
+            <summary>
+            Gets or sets the transcription analyzed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.EvaluatedTranscription">
+            <summary>
+            Gets or sets the transcript sent to LUIS for evaluation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.Date">
+            <summary>
+            Gets or sets the datetime information extracted.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.Location">
+            <summary>
+            Gets or sets the location information extracted.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.Person">
+            <summary>
+            Gets or sets the person information extracted.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.TranscriptionData.AdditionalData">
+            <summary>
+            Gets or sets any additional data to return.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.TrimStrategy">
+            <summary>
+            Enumeration of trim strategies available.
+            </summary>
+        </member>
+        <member name="F:Microsoft.AdvocacyPlatform.Contracts.TrimStrategy.TrimEnd">
+            <summary>
+            Trim from the end
+            </summary>
+        </member>
+        <member name="T:Microsoft.AdvocacyPlatform.Contracts.DtmfRequest">
+            <summary>
+            Represents information to construct a Dual-toned Multi-frequency signaling sequence.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DtmfRequest.InitPause">
+            <summary>
+            Gets or sets the number of seconds to wait after call is initiated.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DtmfRequest.Dtmf">
+            <summary>
+            Gets or sets the Dual-toned Multi-frequency signaling sequence.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AdvocacyPlatform.Contracts.DtmfRequest.FinalPause">
+            <summary>
+            Gets or sets the number of seconds to wait after the sequence has completed.
+            </summary>
+        </member>
+    </members>
+</doc>

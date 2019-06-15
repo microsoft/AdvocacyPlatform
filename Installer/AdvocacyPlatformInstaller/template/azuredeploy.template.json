@@ -1,0 +1,866 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "ap_func_aad_key_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "ap_func_aad_key_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "ap_func_aad_name_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "ap_func_aad_name_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "luis_subscription_key_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "luis_subscription_key_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "speech_api_key_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "speech_api_key_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "storage_access_key_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "storage_access_key_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "storage_read_access_key_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "storage_read_access_key_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "twilioaccountphonenumber_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "twilioaccountphonenumber_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "twilioaccountssid_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "twilioaccountssid_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "twilioaccounttoken_secret_name": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "twilioaccounttoken_secret_value": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "aadaudience_variable": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "aadclientid_variable": {
+      "defaultValue": null,
+      "type": "String"
+    },
+    "sites_ap_wu_func_name": {
+      "defaultValue": "ap-wu-func",
+      "type": "String"
+    },
+    "servicebus_Connection_Name": {
+      "defaultValue": "servicebus",
+      "type": "String"
+    },
+    "serverfarms_WestUS2Plan_name": {
+      "defaultValue": "WestUS2Plan",
+      "type": "String"
+    },
+    "vaults_ap_wu_keyvault_name": {
+      "defaultValue": "ap-wu-keyvault",
+      "type": "String"
+    },
+    "storageAccounts_apwustorage_name": {
+      "defaultValue": "apwustorage",
+      "type": "String"
+    },
+    "components_ap_eu_appInsights_name": {
+      "defaultValue": "ap-eu-appInsights",
+      "type": "String"
+    },
+    "workflows_ap_process_wu_logicapp_name": {
+      "defaultValue": "ap-process-wu-logicapp",
+      "type": "String"
+    },
+    "workflows_ap_request_wu_logicapp_name": {
+      "defaultValue": "ap-request-wu-logicapp",
+      "type": "String"
+    },
+    "accounts_ap_wu_luisapp_name": {
+      "defaultValue": "ap-wu-luisapp",
+      "type": "String"
+    },
+    "namespaces_ap_wu_messagingbus_name": {
+      "defaultValue": "ap-wu-messagingbus",
+      "type": "String"
+    },
+    "workspaces_ap_wu_loganalytics_name": {
+      "defaultValue": "ap-wu-loganalytics",
+      "type": "String"
+    },
+    "accounts_ap_wu_speech_cognitivesvc_name": {
+      "defaultValue": "ap-wu-speech-cognitivesvc",
+      "type": "String"
+    },
+    "ap_function_app_zip_uri": {
+      "defaultValue": "",
+      "type": "String"
+    },
+    "ap_function_app_zip_sas_token": {
+      "defaultValue": "",
+      "type": "String"
+    }
+  },
+  "variables": {
+    "tenant_id": "[subscription().tenantId]",
+    "subscription_id": "[subscription().subscriptionId]",
+    "alertrules_Failure_Anomalies_ap_eu_appInsights_name": "[concat('Failure Anomalies - ', parameters('components_ap_eu_appInsights_name'))]",
+    "solutions_LogicAppsManagement_ap_wu_loganalytics_name": "[concat('LogicAppsManagement_', parameters('workspaces_ap_wu_loganalytics_name'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2016-02-01-preview",
+      "name": "[parameters('accounts_ap_wu_luisapp_name')]",
+      "location": "westus2",
+      "sku": {
+        "name": "S0"
+      },
+      "kind": "LUIS",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.CognitiveServices/accounts",
+      "apiVersion": "2016-02-01-preview",
+      "name": "[parameters('accounts_ap_wu_speech_cognitivesvc_name')]",
+      "location": "westus2",
+      "sku": {
+        "name": "S0"
+      },
+      "kind": "SpeechServices",
+      "properties": {}
+    },
+    {
+      "type": "microsoft.insights/components",
+      "apiVersion": "2015-05-01",
+      "name": "[parameters('components_ap_eu_appInsights_name')]",
+      "location": "eastus",
+      "kind": "web",
+      "properties": {
+        "Application_Type": "web",
+        "Flow_Type": "Redfield",
+        "Request_Source": "IbizaAIExtension"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2016-10-01",
+      "name": "[parameters('vaults_ap_wu_keyvault_name')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apwustorage_name'))]"
+      ],
+      "location": "westus2",
+      "properties": {
+        "sku": {
+          "family": "A",
+          "name": "Premium"
+        },
+        "tenantId": "[variables('tenant_id')]",
+        "accessPolicies": [
+
+        ],
+        "enabledForDeployment": false,
+        "enabledForDiskEncryption": false,
+        "enabledForTemplateDeployment": false
+      }
+    },
+    {
+      "type": "microsoft.operationalinsights/workspaces",
+      "apiVersion": "2015-11-01-preview",
+      "name": "[parameters('workspaces_ap_wu_loganalytics_name')]",
+      "location": "westus2",
+      "properties": {
+        "source": "Azure",
+        "sku": {
+          "name": "pergb2018"
+        },
+        "retentionInDays": 30
+      }
+    },
+    {
+      "type": "Microsoft.ServiceBus/namespaces",
+      "apiVersion": "2017-04-01",
+      "name": "[parameters('namespaces_ap_wu_messagingbus_name')]",
+      "location": "West US 2",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard"
+      },
+      "properties": {
+        "metricId": "[concat('55a24be0-d9c3-4ecd-86b6-566c7aac2512:', parameters('namespaces_ap_wu_messagingbus_name'))]",
+        "serviceBusEndpoint": "[concat('https://', parameters('namespaces_ap_wu_messagingbus_name'), '.servicebus.windows.net:443/')]",
+        "status": "Active"
+      },
+      "resources": [
+        {
+          "type": "Microsoft.ServiceBus/namespaces/AuthorizationRules",
+          "apiVersion": "2017-04-01",
+          "name": "[concat(parameters('namespaces_ap_wu_messagingbus_name'), '/RootManageSharedAccessKey')]",
+          "location": "West US 2",
+          "dependsOn": [
+            "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_ap_wu_messagingbus_name'))]"
+          ],
+          "properties": {
+            "rights": [
+              "Listen",
+              "Manage",
+              "Send"
+            ]
+          }
+        },
+        {
+          "type": "Microsoft.ServiceBus/namespaces/queues",
+          "apiVersion": "2017-04-01",
+          "name": "[concat(parameters('namespaces_ap_wu_messagingbus_name'), '/processing-queue')]",
+          "location": "West US 2",
+          "dependsOn": [
+            "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_ap_wu_messagingbus_name'))]"
+          ],
+          "properties": {
+            "lockDuration": "PT5M",
+            "maxSizeInMegabytes": 5120,
+            "requiresDuplicateDetection": true,
+            "requiresSession": true,
+            "defaultMessageTimeToLive": "P14D",
+            "deadLetteringOnMessageExpiration": true,
+            "enableBatchedOperations": true,
+            "duplicateDetectionHistoryTimeWindow": "PT30S",
+            "maxDeliveryCount": 10,
+            "status": "Active",
+            "autoDeleteOnIdle": "P10675199DT2H48M5.4775807S",
+            "enablePartitioning": false,
+            "enableExpress": false
+          }
+        },
+        {
+          "type": "Microsoft.ServiceBus/namespaces/queues",
+          "apiVersion": "2017-04-01",
+          "name": "[concat(parameters('namespaces_ap_wu_messagingbus_name'), '/request-queue')]",
+          "location": "West US 2",
+          "dependsOn": [
+            "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_ap_wu_messagingbus_name'))]"
+          ],
+          "properties": {
+            "lockDuration": "PT5M",
+            "maxSizeInMegabytes": 5120,
+            "requiresDuplicateDetection": true,
+            "requiresSession": true,
+            "defaultMessageTimeToLive": "P14D",
+            "deadLetteringOnMessageExpiration": true,
+            "enableBatchedOperations": true,
+            "duplicateDetectionHistoryTimeWindow": "PT30S",
+            "maxDeliveryCount": 10,
+            "status": "Active",
+            "autoDeleteOnIdle": "P10675199DT2H48M5.4775807S",
+            "enablePartitioning": false,
+            "enableExpress": false
+          }
+        },
+        {
+          "type": "Microsoft.ServiceBus/namespaces/queues",
+          "apiVersion": "2017-04-01",
+          "name": "[concat(parameters('namespaces_ap_wu_messagingbus_name'), '/result-queue')]",
+          "location": "West US 2",
+          "dependsOn": [
+            "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_ap_wu_messagingbus_name'))]"
+          ],
+          "properties": {
+            "lockDuration": "PT5M",
+            "maxSizeInMegabytes": 5120,
+            "requiresDuplicateDetection": true,
+            "requiresSession": true,
+            "defaultMessageTimeToLive": "P14D",
+            "deadLetteringOnMessageExpiration": true,
+            "enableBatchedOperations": true,
+            "duplicateDetectionHistoryTimeWindow": "PT30S",
+            "maxDeliveryCount": 10,
+            "status": "Active",
+            "autoDeleteOnIdle": "P10675199DT2H48M5.4775807S",
+            "enablePartitioning": false,
+            "enableExpress": false
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2018-07-01",
+      "name": "[parameters('storageAccounts_apwustorage_name')]",
+      "location": "westus2",
+      "sku": {
+        "name": "Standard_GRS",
+        "tier": "Standard"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": [],
+          "defaultAction": "Allow"
+        },
+        "supportsHttpsTrafficOnly": true,
+        "encryption": {
+          "services": {
+            "file": {
+              "enabled": true
+            },
+            "blob": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "Hot"
+      },
+      "resources": [
+        {
+          "type": "blobServices/containers",
+          "apiVersion": "2018-03-01-preview",
+          "name": "default/recordings",
+          "dependsOn": [
+            "[parameters('storageAccounts_apwustorage_name')]"
+          ],
+          "properties": {
+            "publicAccess": "None"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Web/connections",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('servicebus_Connection_Name')]",
+      "location": "westus2",
+      "properties": {
+        "displayName": "[concat('ap-queue-', parameters('servicebus_Connection_Name'))]",
+        "customParameterValues": {},
+        "api": {
+          "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+        },
+        "parameterValues": {
+          "connectionString": "[listKeys(resourceId(concat('Microsoft.ServiceBus/namespaces/AuthorizationRules'), parameters('namespaces_ap_wu_messagingbus_name'), 'RootManageSharedAccessKey'), '2015-08-01').primaryConnectionString]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2016-09-01",
+      "name": "[parameters('serverfarms_WestUS2Plan_name')]",
+      "location": "West US 2",
+      "sku": {
+        "name": "Y1",
+        "tier": "Dynamic",
+        "size": "Y1",
+        "family": "Y",
+        "capacity": 0
+      },
+      "kind": "functionapp",
+      "properties": {
+        "name": "[parameters('serverfarms_WestUS2Plan_name')]",
+        "perSiteScaling": false,
+        "reserved": false,
+        "targetWorkerCount": 0,
+        "targetWorkerSizeId": 0
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('vaults_ap_wu_keyvault_name'), '/', parameters('ap_func_aad_key_secret_name'))]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_ap_wu_keyvault_name'))]"
+      ],
+      "properties": {
+        "value": "[parameters('ap_func_aad_key_secret_value')]",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('vaults_ap_wu_keyvault_name'), '/', parameters('ap_func_aad_name_secret_name'))]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_ap_wu_keyvault_name'))]"
+      ],
+      "properties": {
+        "value": "[parameters('ap_func_aad_name_secret_value')]",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('vaults_ap_wu_keyvault_name'), '/', parameters('luis_subscription_key_secret_name'))]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_ap_wu_keyvault_name'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_ap_wu_luisapp_name'))]"
+      ],
+      "properties": {
+        "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_ap_wu_luisapp_name')), providers('Microsoft.CognitiveServices', 'accounts').apiVersions[0]).key1]",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('vaults_ap_wu_keyvault_name'), '/', parameters('speech_api_key_secret_name'))]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_ap_wu_keyvault_name'))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_ap_wu_speech_cognitivesvc_name'))]"
+      ],
+      "properties": {
+        "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_ap_wu_speech_cognitivesvc_name')), providers('Microsoft.CognitiveServices', 'accounts').apiVersions[0]).key1]",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('vaults_ap_wu_keyvault_name'), '/', parameters('twilioaccountphonenumber_secret_name'))]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_ap_wu_keyvault_name'))]"
+      ],
+      "properties": {
+        "value": "[parameters('twilioaccountphonenumber_secret_value')]",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('vaults_ap_wu_keyvault_name'), '/', parameters('twilioaccountssid_secret_name'))]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_ap_wu_keyvault_name'))]"
+      ],
+      "properties": {
+        "value": "[parameters('twilioaccountssid_secret_value')]",
+        "contentType": "",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(parameters('vaults_ap_wu_keyvault_name'), '/', parameters('twilioaccounttoken_secret_name'))]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_ap_wu_keyvault_name'))]"
+      ],
+      "properties": {
+        "value": "[parameters('twilioaccounttoken_secret_value')]",
+        "contentType": "",
+        "attributes": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "type": "Microsoft.OperationsManagement/solutions",
+      "apiVersion": "2015-11-01-preview",
+      "name": "[variables('solutions_LogicAppsManagement_ap_wu_loganalytics_name')]",
+      "location": "West US 2",
+      "dependsOn": [
+        "[resourceId('microsoft.operationalinsights/workspaces', parameters('workspaces_ap_wu_loganalytics_name'))]"
+      ],
+      "plan": {
+        "name": "[variables('solutions_LogicAppsManagement_ap_wu_loganalytics_name')]",
+        "promotionCode": "",
+        "product": "OMSGallery/LogicAppsManagement",
+        "publisher": "Microsoft"
+      },
+      "properties": {
+        "workspaceResourceId": "[resourceId('microsoft.operationalinsights/workspaces', parameters('workspaces_ap_wu_loganalytics_name'))]",
+        "containedResources": [
+          "[concat(resourceId('microsoft.operationalinsights/workspaces', parameters('workspaces_ap_wu_loganalytics_name')), concat('/views/', variables('solutions_LogicAppsManagement_ap_wu_loganalytics_name')))]"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2016-08-01",
+      "name": "[parameters('sites_ap_wu_func_name')]",
+      "location": "West US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_WestUS2Plan_name'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apwustorage_name'))]",
+        "[resourceId('microsoft.insights/components/', parameters('components_ap_eu_appInsights_name'))]"
+      ],
+      "kind": "functionapp",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "enabled": true,
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('sites_ap_wu_func_name'), '.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Standard"
+          },
+          {
+            "name": "[concat(parameters('sites_ap_wu_func_name'), '.scm.azurewebsites.net')]",
+            "sslState": "Disabled",
+            "hostType": "Repository"
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_WestUS2Plan_name'))]",
+        "reserved": false,
+        "scmSiteAlsoStopped": false,
+        "clientAffinityEnabled": false,
+        "clientCertEnabled": false,
+        "hostNamesDisabled": false,
+        "containerSize": 1536,
+        "dailyMemoryTimeQuota": 0,
+        "httpsOnly": false,
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "AzureWebJobsDashboard",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccounts_apwustorage_name'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apwustorage_name')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
+            },
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccounts_apwustorage_name'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_apwustorage_name')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]"
+            },
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[reference(concat('microsoft.insights/components/', parameters('components_ap_eu_appInsights_name'))).InstrumentationKey]"
+            },
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "dotnet"
+            },
+            {
+              "name": "MSDEPLOY_RENAME_LOCKED_FILES",
+              "value": "1"
+            },
+            {
+              "name": "callFinalPauseInSeconds",
+              "value": "45"
+            },
+            {
+              "name": "callInitialPauseInSeconds",
+              "value": "0"
+            },
+            {
+              "name": "defaultDtmfTemplate",
+              "value": "1ww{inputId}ww1ww1ww1"
+            },
+            {
+              "name": "luisConfiguration",
+              "value": "{dateTimeEntityName: \"builtin.datetimeV2.datetime\", dateEntityName: \"builtin.datetimeV2.date\", timeEntityName: \"builtin.datetimeV2.time\", personEntityName: \"builtin.personName\", locationEntityName: \"location\", cityEntityName: \"city\", stateEntityName: \"state\", zipcodeEntityName: \"zipcode\"}"
+            },
+            {
+              "name": "luisEndpoint",
+              "value": ""
+            },
+            {
+              "name": "luisSubscriptionKeySecretName",
+              "value": "[concat('https://', parameters('vaults_ap_wu_keyvault_name'), '.vault.azure.net/secrets/', parameters('luis_subscription_key_secret_name'))]"
+            },
+            {
+              "name": "numberToCall",
+              "value": "+18008987180"
+            },
+            {
+              "name": "speechApiKeySecretName",
+              "value": "[concat('https://', parameters('vaults_ap_wu_keyvault_name'), '.vault.azure.net/secrets/', parameters('speech_api_key_secret_name'))]"
+            },
+            {
+              "name": "speechApiRegion",
+              "value": "westus2"
+            },
+            {
+              "name": "storageAccessConnectionString",
+              "value": "[concat('BlobEndpoint=https://', parameters('storageAccounts_apwustorage_name'), '.blob.core.windows.net/;QueueEndpoint=https://', parameters('storageAccounts_apwustorage_name'), '.queue.core.windows.net/;FileEndpoint=https://', parameters('storageAccounts_apwustorage_name'), '.file.core.windows.net/;TableEndpoint=https://', parameters('storageAccounts_apwustorage_name'), '.table.core.windows.net/;')]"
+            },
+            {
+              "name": "storageAccessKeySecretName",
+              "value": "[concat('https://', parameters('vaults_ap_wu_keyvault_name'), '.vault.azure.net/secrets/', parameters('storage_access_key_secret_name'))]"
+            },
+            {
+              "name": "storageContainerName",
+              "value": "recordings"
+            },
+            {
+              "name": "storageReadAccessKeySecretName",
+              "value": "[concat('https://', parameters('vaults_ap_wu_keyvault_name'), '.vault.azure.net/secrets/', parameters('storage_read_access_key_secret_name'))]"
+            },
+            {
+              "name": "twilioAccountSidSecretName",
+              "value": "[concat('https://', parameters('vaults_ap_wu_keyvault_name'), '.vault.azure.net/secrets/', parameters('twilioaccountssid_secret_name'))]"
+            },
+            {
+              "name": "twilioAuthTokenSecretName",
+              "value": "[concat('https://', parameters('vaults_ap_wu_keyvault_name'), '.vault.azure.net/secrets/', parameters('twilioaccounttoken_secret_name'))]"
+            },
+            {
+              "name": "twilioLocalNumberSecretName",
+              "value": "[concat('https://', parameters('vaults_ap_wu_keyvault_name'), '.vault.azure.net/secrets/', parameters('twilioaccountphonenumber_secret_name'))]"
+            },
+            {
+              "name": "twilioTwiMLTemplate",
+              "value": "<?xml version=\"1.0\"?><Response><Pause length=\"{callInitialPauseInSeconds}\"/><Play digits=\"{dtmfSequence}\"/><Pause length=\"{callFinalPauseInSeconds}\"/><Hangup/></Response>"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "name": "MSDeploy",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name'))]"
+          ],
+          "tags": {
+
+          },
+          "properties": {
+            "packageUri": "[parameters('ap_function_app_zip_uri')]",
+            "dbType": "None",
+            "connectionString": ""
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2016-08-01",
+      "name": "[concat(parameters('sites_ap_wu_func_name'), '/web')]",
+      "location": "West US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name'))]",
+        "[concat('Microsoft.Web/Sites/', parameters('sites_ap_wu_func_name'), '/Extensions/MSDeploy')]"
+      ],
+      "properties": {
+        "numberOfWorkers": 1,
+        "defaultDocuments": [
+          "Default.htm",
+          "Default.html",
+          "Default.asp",
+          "index.htm",
+          "index.html",
+          "iisstart.htm",
+          "default.aspx",
+          "index.php"
+        ],
+        "netFrameworkVersion": "v4.0",
+        "phpVersion": "5.6",
+        "pythonVersion": "",
+        "nodeVersion": "",
+        "linuxFxVersion": "",
+        "requestTracingEnabled": false,
+        "remoteDebuggingEnabled": false,
+        "remoteDebuggingVersion": "VS2017",
+        "httpLoggingEnabled": false,
+        "logsDirectorySizeLimit": 35,
+        "detailedErrorLoggingEnabled": false,
+        "publishingUsername": "$ap-wu-func",
+        "scmType": "VSTSRM",
+        "use32BitWorkerProcess": true,
+        "webSocketsEnabled": false,
+        "alwaysOn": false,
+        "appCommandLine": "",
+        "managedPipelineMode": "Integrated",
+        "virtualApplications": [
+          {
+            "virtualPath": "/",
+            "physicalPath": "site\\wwwroot",
+            "preloadEnabled": false,
+            "virtualDirectories": null
+          }
+        ],
+        "winAuthAdminState": 0,
+        "winAuthTenantState": 0,
+        "customAppPoolIdentityAdminState": false,
+        "customAppPoolIdentityTenantState": false,
+        "loadBalancing": "LeastRequests",
+        "routingRules": [],
+        "experiments": {
+          "rampUpRules": []
+        },
+        "autoHealEnabled": false,
+        "vnetName": "",
+        "siteAuthEnabled": false,
+        "siteAuthSettings": {
+          "enabled": null,
+          "unauthenticatedClientAction": null,
+          "tokenStoreEnabled": null,
+          "allowedExternalRedirectUrls": null,
+          "defaultProvider": null,
+          "clientId": null,
+          "clientSecret": null,
+          "clientSecretCertificateThumbprint": null,
+          "issuer": null,
+          "allowedAudiences": null,
+          "additionalLoginParams": null,
+          "isAadAutoProvisioned": false,
+          "googleClientId": null,
+          "googleClientSecret": null,
+          "googleOAuthScopes": null,
+          "facebookAppId": null,
+          "facebookAppSecret": null,
+          "facebookOAuthScopes": null,
+          "twitterConsumerKey": null,
+          "twitterConsumerSecret": null,
+          "microsoftAccountClientId": null,
+          "microsoftAccountClientSecret": null,
+          "microsoftAccountOAuthScopes": null
+        },
+        "cors": {
+          "allowedOrigins": [
+            "https://functions.azure.com",
+            "https://functions-staging.azure.com",
+            "https://functions-next.azure.com"
+          ],
+          "supportCredentials": false
+        },
+        "localMySqlEnabled": false,
+        "managedServiceIdentityId": 50582,
+        "http20Enabled": false,
+        "minTlsVersion": "1.2",
+        "ftpsState": "AllAllowed",
+        "reservedInstanceCount": 0
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/hostNameBindings",
+      "apiVersion": "2016-08-01",
+      "name": "[concat(parameters('sites_ap_wu_func_name'), '/', parameters('sites_ap_wu_func_name'), '.azurewebsites.net')]",
+      "location": "West US 2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name'))]",
+        "[concat('Microsoft.Web/Sites/', parameters('sites_ap_wu_func_name'), '/Extensions/MSDeploy')]"
+      ],
+      "properties": {
+        "siteName": "[parameters('sites_ap_wu_func_name')]",
+        "hostNameType": "Verified"
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('workflows_ap_process_wu_logicapp_name')]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+        "MSDeploy"
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-process-logicapp-wu.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Logic/workflows",
+      "apiVersion": "2017-07-01",
+      "name": "[parameters('workflows_ap_request_wu_logicapp_name')]",
+      "location": "westus2",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('sites_ap_wu_func_name'))]",
+        "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+        "MSDeploy"
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "dref": "ap-request-logicapp-wu.json"
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "[parameters('servicebus_Connection_Name')]": {
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_Connection_Name'))]",
+                "connectionName": "[parameters('servicebus_Connection_Name')]",
+                "id": "[concat('/subscriptions/', variables('subscription_id'), '/providers/Microsoft.Web/locations/westus2/managedApis/servicebus')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

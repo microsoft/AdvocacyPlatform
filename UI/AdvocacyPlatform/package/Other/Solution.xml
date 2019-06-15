@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml version="9.1.0.6014" SolutionPackageVersion="9.1" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SolutionManifest>
+    <UniqueName>AdvocacyPlatformSolution</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="AdvocacyPlatform Solution" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions />
+    <Version>1.0.0.42</Version>
+    <Managed>1</Managed>
+    <Publisher>
+      <UniqueName>appublisher</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="AdvocacyPlatform Publisher" languagecode="1033" />
+      </LocalizedNames>
+      <Descriptions>
+        <Description description="Publisher for AdvocacyPlatform solution" languagecode="1033" />
+      </Descriptions>
+      <EMailAddress xsi:nil="true"></EMailAddress>
+      <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
+      <CustomizationPrefix>ap</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>68371</CustomizationOptionValuePrefix>
+      <Addresses>
+        <Address>
+          <AddressNumber>1</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+        <Address>
+          <AddressNumber>2</AddressNumber>
+          <AddressTypeCode>1</AddressTypeCode>
+          <City xsi:nil="true"></City>
+          <County xsi:nil="true"></County>
+          <Country xsi:nil="true"></Country>
+          <Fax xsi:nil="true"></Fax>
+          <FreightTermsCode xsi:nil="true"></FreightTermsCode>
+          <ImportSequenceNumber xsi:nil="true"></ImportSequenceNumber>
+          <Latitude xsi:nil="true"></Latitude>
+          <Line1 xsi:nil="true"></Line1>
+          <Line2 xsi:nil="true"></Line2>
+          <Line3 xsi:nil="true"></Line3>
+          <Longitude xsi:nil="true"></Longitude>
+          <Name xsi:nil="true"></Name>
+          <PostalCode xsi:nil="true"></PostalCode>
+          <PostOfficeBox xsi:nil="true"></PostOfficeBox>
+          <PrimaryContactName xsi:nil="true"></PrimaryContactName>
+          <ShippingMethodCode>1</ShippingMethodCode>
+          <StateOrProvince xsi:nil="true"></StateOrProvince>
+          <Telephone1 xsi:nil="true"></Telephone1>
+          <Telephone2 xsi:nil="true"></Telephone2>
+          <Telephone3 xsi:nil="true"></Telephone3>
+          <TimeZoneRuleVersionNumber xsi:nil="true"></TimeZoneRuleVersionNumber>
+          <UPSZone xsi:nil="true"></UPSZone>
+          <UTCOffset xsi:nil="true"></UTCOffset>
+          <UTCConversionTimeZoneCode xsi:nil="true"></UTCConversionTimeZoneCode>
+        </Address>
+      </Addresses>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="1" schemaName="ap_ain" behavior="0" />
+      <RootComponent type="1" schemaName="ap_ain_case_activity" behavior="0" />
+      <RootComponent type="1" schemaName="ap_ain_history" behavior="0" />
+      <RootComponent type="1" schemaName="ap_configuration" behavior="0" />
+      <RootComponent type="1" schemaName="ap_person" behavior="0" />
+      <RootComponent type="1" schemaName="ap_volunteer" behavior="0" />
+      <RootComponent type="9" schemaName="ap_case_transcription_status" behavior="0" />
+      <RootComponent type="9" schemaName="ap_configuration_type" behavior="0" />
+      <RootComponent type="9" schemaName="ap_person_gender" behavior="0" />
+      <RootComponent type="20" id="{43d828a5-a476-e911-a967-000d3a3005d4}" behavior="0" />
+      <RootComponent type="29" id="{12be44eb-e858-e911-a985-000d3a1d5f25}" behavior="0" />
+      <RootComponent type="29" id="{149866ab-4565-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{1bf4daf4-4465-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{24af4c6a-e658-e911-a985-000d3a1d5f25}" behavior="0" />
+      <RootComponent type="29" id="{2984c729-6350-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{2c100507-7252-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{2f0ac585-4d57-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{3d881f7a-9659-e911-a985-000d3a1d5f25}" behavior="0" />
+      <RootComponent type="29" id="{416f368f-e858-e911-a985-000d3a1d5f25}" behavior="0" />
+      <RootComponent type="29" id="{51d6d4a8-4065-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{7424915c-4565-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{90e923b7-6e52-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{92e45486-6f52-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{ac4ddbf4-4065-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{bc1cb44e-7052-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{c6909b1e-4d57-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="29" id="{dfca61b9-9559-e911-a985-000d3a1d5f25}" behavior="0" />
+      <RootComponent type="60" id="{1eb4ad84-d157-4f5f-9006-f616d2525973}" behavior="0" />
+      <RootComponent type="60" id="{49937e1a-70bf-4d69-90c6-f49c8465ba17}" behavior="0" />
+      <RootComponent type="60" id="{50b42357-9dbc-470d-bf1d-f420639d2950}" behavior="0" />
+      <RootComponent type="60" id="{58537a48-9158-457b-a01c-b58a45440a90}" behavior="0" />
+      <RootComponent type="60" id="{5b50f8f3-b18d-40ce-9b65-a358dcd09474}" behavior="0" />
+      <RootComponent type="60" id="{8933e880-3bd6-4410-b7b8-39901aa23e16}" behavior="0" />
+      <RootComponent type="60" id="{8c68de73-7bb9-47a9-875d-0bc940731e95}" behavior="0" />
+      <RootComponent type="60" id="{b4980b1d-18a2-4789-94be-48b82db463b3}" behavior="0" />
+      <RootComponent type="60" id="{bd4d8636-9a27-4bce-9e35-1b52b1a29dc7}" behavior="0" />
+      <RootComponent type="60" id="{c65832da-463d-4793-b18b-1a308a4dd4d9}" behavior="0" />
+      <RootComponent type="60" id="{ca2f65e9-af58-e911-a985-000d3a1d5f25}" behavior="0" />
+      <RootComponent type="60" id="{d86f5790-dcf3-40ef-b0eb-c9cf52325d16}" behavior="0" />
+      <RootComponent type="60" id="{ea7ee1b0-3b6b-4c34-92d7-4893e847ab19}" behavior="0" />
+      <RootComponent type="61" schemaName="ap_case_icon" behavior="0" />
+      <RootComponent type="61" schemaName="ap_gear_icon" behavior="0" />
+      <RootComponent type="61" schemaName="ap_person_icon" behavior="0" />
+      <RootComponent type="61" schemaName="ap_scale_of_justice_white" behavior="0" />
+      <RootComponent type="61" schemaName="ap_volunteer_icon" behavior="0" />
+      <RootComponent type="62" schemaName="ap_AdvocacyPlatform" behavior="0" />
+      <RootComponent type="63" id="{8188e0e3-6668-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="63" id="{8f2c9ae1-6b68-e911-a975-000d3a300346}" behavior="0" />
+      <RootComponent type="80" schemaName="ap_AdvocacyPlatform" behavior="0" />
+    </RootComponents>
+    <MissingDependencies />
+  </SolutionManifest>
+</ImportExportXml>

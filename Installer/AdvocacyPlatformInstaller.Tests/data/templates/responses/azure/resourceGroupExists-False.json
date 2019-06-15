@@ -1,0 +1,6 @@
+﻿{
+  "error": {
+    "code": "ResourceGroupNotFound",
+    "message": "Resource group '{resourceGroup}' could not be found."
+  }
+}

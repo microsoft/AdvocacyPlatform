@@ -1,0 +1,51 @@
+﻿{
+	"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Resources/deployments/{validationName}",
+	"name": "{validationName}",
+	"properties": {
+		"templateHash": "23465424234",
+		"parameters": {
+			
+		},
+		"mode": "Incremental",
+		"provisioningState": "{provisioningState}",
+		"timestamp": "2019-05-28T02:17:26.9414379Z",
+		"duration": "PT0S",
+		"correlationId": "{correlationId}",
+		"providers": [
+			{
+				"namespace": "{resourceProvider}",
+				"resourceTypes": [
+					{
+						"resourceType": "{resourceType}",
+						"locations": [ "westus2" ]
+					}
+				]
+			}
+		],
+		"dependencies": [
+			{
+				"dependsOn": [
+					{
+						"id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/{resourceProvider}/{resourceType}/{resourceName}",
+						"resourceType": "{resourceProvider}/{resourceType}",
+						"resourceName": "{resourceName}"
+					}
+				],
+				"id": "/subscriptions/{resourceProvider}/resourceGroups/{resourceGroup}/providers/{resourceprovider}/{resourceType}/{resourceName}",
+				"resourceType": "{resourceProvider}/{resourceType}",
+				"resourceName": "{resourceName}"
+			}
+		],
+		"validatedResources": [
+      {
+        "apiVersion": "2016-02-01-preview",
+        "id": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/{resourceProvider}/{resourceType}/{resourceName}",
+        "name": "{resourceName}",
+        "type": "{resourceProvider}/{resourceType}",
+        "kind": "{resourceKind}",
+        "location": "westus2",
+        "properties": {}
+      }
+		]
+	}
+}
