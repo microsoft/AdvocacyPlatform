@@ -7,7 +7,7 @@
   "RecordingUri": "",
   "Transcript": "The alien registration number. You entered the system for your next. The immigration judge ordered removal on your case at Avenida ashford, San Juan Puerto Rico 00919-9089. On august 13 2018 for your next hearing date press one. For case processing information press 2. 4 decision information press 3. For case appeal Information Press, 4 for filing information press",
   "ExpectedEntities": [
-    "Date",
+    "Dates",
     "Location"
   ],
   "ExpectedAdditionalEntities": {

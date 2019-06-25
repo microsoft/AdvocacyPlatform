@@ -2686,7 +2686,6 @@
   <RibbonDiffXml />
   <CustomControlDefaultConfigs>
     <CustomControlDefaultConfig>
-      <CustomControlDefaultConfigId>{77fcc644-fc03-492d-b116-2f45cb916550}</CustomControlDefaultConfigId>
       <ControlDescriptionXML>
         <controlDescriptions>
           <controlDescription>

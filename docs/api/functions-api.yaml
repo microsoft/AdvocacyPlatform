@@ -426,8 +426,10 @@ components:
           type: string
         evaluatedTranscription:
           type: string
-        data:
-          $ref: '#/components/schemas/DateInfo'
+        dates:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateInfo'
         location:
           $ref: '#/components/schemas/LocationInfo'
         person:

@@ -32,6 +32,27 @@ namespace Microsoft.AdvocacyPlatform.Clients
         private HashSet<string> _expectedEntities;
 
         /// <summary>
+        /// LUIS entity types for date/time processing.
+        /// </summary>
+        private enum LuisEntityType
+        {
+            /// <summary>
+            /// No entity.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Date entity.
+            /// </summary>
+            Date = 1,
+
+            /// <summary>
+            /// Time entity.
+            /// </summary>
+            Time = 2,
+        }
+
+        /// <summary>
         /// Initializes the data extractor.
         /// </summary>
         /// <param name="config">Configuration for data extraction.</param>
@@ -92,7 +113,7 @@ namespace Microsoft.AdvocacyPlatform.Clients
                     data.IntentConfidence = luisResponse.TopScoringIntent.Score;
                 }
 
-                data.Date = ExtractDateTime(luisResponse, log);
+                data.Dates = ExtractDateTimes(luisResponse, log);
                 data.Location = ExtractLocation(luisResponse, log);
                 data.Person = ExtractPerson(luisResponse, log);
                 data.AdditionalData = EnumerateAdditionalEntities(luisResponse, log);
@@ -111,95 +132,19 @@ namespace Microsoft.AdvocacyPlatform.Clients
         /// <param name="luisResponse">The transcript.</param>
         /// <param name="log">Trace logging instance.</param>
         /// <returns>The extracted date and time information.</returns>
-        public DateInfo ExtractDateTime(LuisResponse luisResponse, ILogger log)
+        public List<DateInfo> ExtractDateTimes(LuisResponse luisResponse, ILogger log)
         {
-            DateInfo dateInfo = null;
+            List<DateInfo> dateInfos = new List<DateInfo>();
 
             if (luisResponse.Entities == null
                 || luisResponse.Entities.Count == 0)
             {
-                return dateInfo;
+                return dateInfos;
             }
 
-            LuisEntity dateTimeEntity = luisResponse
-                .Entities
-                .Where(x => x.Type == _config.DateTimeEntityName)
-                .FirstOrDefault();
+            dateInfos.AddRange(GetDateInfos(luisResponse.Entities));
 
-            if (dateTimeEntity == null)
-            {
-                DateTime outDateTime;
-
-                LuisEntity dateEntity = luisResponse
-                    .Entities
-                    .Where(x => x.Type == _config.DateEntityName)
-                    .FirstOrDefault();
-
-                LuisEntity timeEntity = luisResponse
-                    .Entities
-                    .Where(x => x.Type == _config.TimeEntityName)
-                    .FirstOrDefault();
-
-                StringBuilder dateTimeBuilder = new StringBuilder();
-
-                if (dateEntity != null
-                    && dateEntity.Resolution != null
-                    && dateEntity.Resolution.Values.Count > 0)
-                {
-                    dateTimeBuilder.Append($"{dateEntity.Resolution.Values.First().Value} ");
-                }
-
-                if (timeEntity != null
-                    && timeEntity.Resolution != null
-                    && timeEntity.Resolution.Values.Count() > 0)
-                {
-                    dateTimeBuilder.Append(timeEntity.Resolution.Values.First().Value);
-                }
-
-                if (DateTime.TryParse(dateTimeBuilder.ToString(), out outDateTime))
-                {
-                    dateInfo = new DateInfo()
-                    {
-                        FullDate = outDateTime,
-                        Year = outDateTime.Year,
-                        Month = outDateTime.Month,
-                        Day = outDateTime.Day,
-                        Hour = outDateTime.Hour,
-                        Minute = outDateTime.Minute,
-                    };
-
-                    if (dateEntity == null)
-                    {
-                        dateInfo.Year = DateTime.MinValue.Year;
-                        dateInfo.Month = DateTime.MinValue.Month;
-                        dateInfo.Day = DateTime.MinValue.Day;
-                        dateInfo.FullDate = new DateTime(dateInfo.Year, dateInfo.Month, dateInfo.Day, dateInfo.Hour, dateInfo.Minute, 0);
-                    }
-                }
-            }
-            else
-            {
-                if (dateTimeEntity.Resolution != null
-                    && dateTimeEntity.Resolution.Values.Count > 0)
-                {
-                    DateTime outDateTime;
-
-                    if (DateTime.TryParse(dateTimeEntity.Resolution.Values.First().Value, CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault, out outDateTime))
-                    {
-                        dateInfo = new DateInfo()
-                        {
-                            FullDate = outDateTime,
-                            Year = outDateTime.Year,
-                            Month = outDateTime.Month,
-                            Day = outDateTime.Day,
-                            Hour = outDateTime.Hour,
-                            Minute = outDateTime.Minute,
-                        };
-                    }
-                }
-            }
-
-            return dateInfo;
+            return dateInfos;
         }
 
         /// <summary>
@@ -348,6 +293,188 @@ namespace Microsoft.AdvocacyPlatform.Clients
             }
 
             return extraEntitiesDictionary;
+        }
+
+        private List<DateInfo> GetDateInfos(IEnumerable<LuisEntity> luisEntities)
+        {
+            List<DateInfo> dateInfos = new List<DateInfo>();
+
+            IEnumerable<LuisEntity> dateTimeEntities = luisEntities
+                .Where(x => x.Type == _config.DateTimeEntityName);
+
+            dateInfos.AddRange(GetDateInfoForDateTimeEntities(dateTimeEntities));
+
+            IEnumerable<LuisEntity> dateAndTimeEntities = luisEntities
+                .Where(x => x.Type == _config.DateEntityName ||
+                    x.Type == _config.TimeEntityName)
+                .OrderBy(x => x.StartIndex);
+
+            dateInfos.AddRange(GetDateInfoForDateAndTimeEntities(dateAndTimeEntities));
+
+            return dateInfos;
+        }
+
+        private List<DateInfo> GetDateInfoForDateTimeEntities(IEnumerable<LuisEntity> dateTimeEntities)
+        {
+            List<DateInfo> dateInfos = new List<DateInfo>();
+
+            foreach (LuisEntity dateTimeEntity in dateTimeEntities)
+            {
+                if (dateTimeEntity.Resolution != null
+                        && dateTimeEntity.Resolution.Values.Count > 0)
+                {
+                    DateTime outDateTime;
+
+                    if (DateTime.TryParse(dateTimeEntity.Resolution.Values.First().Value, CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault, out outDateTime))
+                    {
+                        dateInfos.Add(
+                            new DateInfo()
+                            {
+                                FullDate = outDateTime,
+                                Year = outDateTime.Year,
+                                Month = outDateTime.Month,
+                                Day = outDateTime.Day,
+                                Hour = outDateTime.Hour,
+                                Minute = outDateTime.Minute,
+                            });
+                    }
+                }
+            }
+
+            return dateInfos;
+        }
+
+        private List<DateInfo> GetDateInfoForDateAndTimeEntities(IEnumerable<LuisEntity> dateAndTimeEntities)
+        {
+            List<DateInfo> dateInfos = new List<DateInfo>();
+            StringBuilder dateBuilder = new StringBuilder();
+            LuisEntityType prevEntityType = LuisEntityType.None;
+
+            foreach (LuisEntity luisEntity in dateAndTimeEntities)
+            {
+                switch (prevEntityType)
+                {
+                    case LuisEntityType.None:
+                        if (string.Compare(luisEntity.Type, _config.DateEntityName) == 0)
+                        {
+                            prevEntityType = LuisEntityType.Date;
+
+                            dateBuilder.Append(GetDateEntityInfo(luisEntity));
+                        }
+                        else if (string.Compare(luisEntity.Type, _config.TimeEntityName) == 0)
+                        {
+                            prevEntityType = LuisEntityType.Time;
+
+                            dateBuilder.Append(GetTimeEntityInfo(luisEntity));
+                        }
+
+                        break;
+
+                    case LuisEntityType.Date:
+                        if (string.Compare(luisEntity.Type, _config.DateEntityName) == 0)
+                        {
+                            dateInfos.Add(GetDateInfo(dateBuilder));
+                            dateBuilder.Clear();
+
+                            prevEntityType = LuisEntityType.Date;
+
+                            dateBuilder.Append(GetDateEntityInfo(luisEntity));
+                        }
+                        else if (string.Compare(luisEntity.Type, _config.TimeEntityName) == 0)
+                        {
+                            prevEntityType = LuisEntityType.Time;
+
+                            dateBuilder.Append(GetTimeEntityInfo(luisEntity));
+                        }
+
+                        break;
+
+                    case LuisEntityType.Time:
+                        if (string.Compare(luisEntity.Type, _config.DateEntityName) == 0)
+                        {
+                            dateInfos.Add(GetDateInfo(dateBuilder));
+                            dateBuilder.Clear();
+
+                            prevEntityType = LuisEntityType.Date;
+
+                            dateBuilder.Append(GetDateEntityInfo(luisEntity));
+                        }
+                        else if (string.Compare(luisEntity.Type, _config.TimeEntityName) == 0)
+                        {
+                            dateInfos.Add(GetDateInfo(dateBuilder));
+                            dateBuilder.Clear();
+
+                            prevEntityType = LuisEntityType.Time;
+
+                            dateBuilder.Append(GetTimeEntityInfo(luisEntity));
+                        }
+
+                        break;
+
+                    default:
+                        throw new Exception("Invalid value for currentEntityType!");
+                }
+            }
+
+            if (dateBuilder.Length > 0)
+            {
+                dateInfos.Add(GetDateInfo(dateBuilder));
+            }
+
+            return dateInfos;
+        }
+
+        private DateInfo GetDateInfo(StringBuilder dateBuilder)
+        {
+            DateTime outDateTime;
+            DateInfo dateInfo = new DateInfo();
+
+            if (DateTime.TryParse(dateBuilder.ToString(), CultureInfo.CurrentCulture.DateTimeFormat, DateTimeStyles.NoCurrentDateDefault, out outDateTime))
+            {
+                dateInfo.FullDate = outDateTime;
+                dateInfo.Year = outDateTime.Year;
+                dateInfo.Month = outDateTime.Month;
+                dateInfo.Day = outDateTime.Day;
+                dateInfo.Hour = outDateTime.Hour;
+                dateInfo.Minute = outDateTime.Minute;
+            }
+            else
+            {
+                dateInfo.Year = DateTime.MinValue.Year;
+                dateInfo.Month = DateTime.MinValue.Month;
+                dateInfo.Day = DateTime.MinValue.Day;
+                dateInfo.FullDate = new DateTime(
+                    dateInfo.Year,
+                    dateInfo.Month,
+                    dateInfo.Day,
+                    dateInfo.Hour,
+                    dateInfo.Minute,
+                    0);
+            }
+
+            return dateInfo;
+        }
+
+        private string GetDateEntityInfo(LuisEntity dateEntity)
+        {
+            if (dateEntity.Resolution != null &&
+                dateEntity.Resolution.Values.Count > 0)
+            {
+                return $"{dateEntity.Resolution.Values.First().Value} ";
+            }
+
+            return null;
+        }
+
+        private string GetTimeEntityInfo(LuisEntity timeEntity)
+        {
+            if (timeEntity.Resolution != null &&
+                timeEntity.Resolution.Values.Count() > 0)
+            {
+                return timeEntity.Resolution.Values.First().Value;
+            }
+
+            return null;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Microsoft.AdvocacyPlatform.Clients
                 TranscriptionData data = new TranscriptionData();
 
                 data.Transcription = transcript;
-                data.Date = ExtractDateTime(transcript, log);
+                data.Dates = ExtractDateTimes(transcript, log);
                 data.Location = ExtractLocation(transcript, log);
                 data.Person = ExtractPerson(transcript, log);
 
@@ -79,12 +79,17 @@ namespace Microsoft.AdvocacyPlatform.Clients
         /// <param name="dateText">The text to extract date and time from.</param>
         /// <param name="log">Trace logging instance.</param>
         /// <returns>The extracted date and time information.</returns>
-        public DateInfo ExtractDateTime(string dateText, ILogger log)
+        public List<DateInfo> ExtractDateTimes(string dateText, ILogger log)
         {
-            return ExtractDateTimeBase(dateText, log) ??
+            List<DateInfo> dateInfo = new List<DateInfo>();
+
+            dateInfo.Add(
+                ExtractDateTimeBase(dateText, log) ??
                         ExtractDateTimeBase(dateText, log, true) ??
                             ExtractDateTimeBase(Utils.ReplaceHomonyms(dateText), log, true) ??
-                                new DateInfo();
+                                new DateInfo());
+
+            return dateInfo;
         }
 
         /// <summary>

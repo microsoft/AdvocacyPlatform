@@ -7,7 +7,7 @@
   "RecordingUri": "",
   "Transcript": "The alien registration. You entered the system will you next the immigration judge granted relief on your case at 970 broad St room twelve hundred Newark NJ 07? 02. On January 19th 2016 for your next hearing date press one. For case processing information press 2. 4 decision information press 3 for case appeal information press 4. Or filing information press 5.",
   "ExpectedEntities": [
-    "Date",
+    "Dates",
     "Location"
   ],
   "ExpectedAdditionalEntities": {

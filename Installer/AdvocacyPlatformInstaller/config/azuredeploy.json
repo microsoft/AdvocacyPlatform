@@ -879,7 +879,7 @@
                 "headers": {
                   "Content-Type": "application/x-www-form-urlencoded"
                 },
-                "body": "grant_type=client_credentials&client_id=@{variables('AADClientID')}&resource=@{variables('AADClientID')}&client_secret=@{encodeURIComponent(body('Get_Vault_Secret')?['value'])}"
+                "body": "grant_type=client_credentials&client_id=@{variables('AADClientID')}&resource=@{variables('AADAudience')}&client_secret=@{body('Get_Vault_Secret')?['value']}"
               },
               "runAfter": {
                 "Get_Vault_Secret": [
@@ -1033,11 +1033,6 @@
                   },
                   "actions": {
                     "Complete_the_message_in_a_queue": {
-                      "runAfter": {
-                        "DeleteRecordings": [
-                          "Succeeded"
-                        ]
-                      },
                       "type": "ApiConnection",
                       "inputs": {
                         "host": {
@@ -1052,6 +1047,11 @@
                           "queueType": "Main",
                           "sessionId": "@triggerBody()?['SessionId']"
                         }
+                      },
+                      "runAfter": {
+                        "DeleteRecordings": [
+                          "Succeeded"
+                        ]
                       }
                     },
                     "Condition_Check_Call_Duration": {
@@ -1124,11 +1124,6 @@
                           "runAfter": {}
                         },
                         "Send_extracted_entities_to_result_queue": {
-                          "runAfter": {
-                            "Compose_Result_Message": [
-                              "Succeeded"
-                            ]
-                          },
                           "type": "ApiConnection",
                           "inputs": {
                             "host": {
@@ -1147,6 +1142,11 @@
                             "queries": {
                               "systemProperties": "None"
                             }
+                          },
+                          "runAfter": {
+                            "Compose_Result_Message": [
+                              "Succeeded"
+                            ]
                           }
                         },
                         "TranscribeCall": {
@@ -1177,11 +1177,6 @@
                             "runAfter": {}
                           },
                           "Send_Message_Request_Queue_For_Retry": {
-                            "runAfter": {
-                              "Compose_Call_Retry_Request": [
-                                "Succeeded"
-                              ]
-                            },
                             "type": "ApiConnection",
                             "inputs": {
                               "host": {
@@ -1199,6 +1194,11 @@
                               "queries": {
                                 "systemProperties": "None"
                               }
+                            },
+                            "runAfter": {
+                              "Compose_Call_Retry_Request": [
+                                "Succeeded"
+                              ]
                             }
                           }
                         }
@@ -1227,11 +1227,6 @@
                   "else": {
                     "actions": {
                       "Complete_Error_Message_in_Queue": {
-                        "runAfter": {
-                          "Send_error_message_to_results_queue": [
-                            "Succeeded"
-                          ]
-                        },
                         "type": "ApiConnection",
                         "inputs": {
                           "host": {
@@ -1246,6 +1241,11 @@
                             "queueType": "Main",
                             "sessionId": "0"
                           }
+                        },
+                        "runAfter": {
+                          "Send_error_message_to_results_queue": [
+                            "Succeeded"
+                          ]
                         }
                       },
                       "Compose_Error_Result_Message": {
@@ -1274,11 +1274,6 @@
                         "runAfter": {}
                       },
                       "Send_error_message_to_results_queue": {
-                        "runAfter": {
-                          "Compose_Error_Result_Message": [
-                            "Succeeded"
-                          ]
-                        },
                         "type": "ApiConnection",
                         "inputs": {
                           "host": {
@@ -1297,6 +1292,11 @@
                           "queries": {
                             "systemProperties": "None"
                           }
+                        },
+                        "runAfter": {
+                          "Compose_Error_Result_Message": [
+                            "Succeeded"
+                          ]
                         }
                       }
                     }
@@ -1310,11 +1310,6 @@
               }
             },
             "Send_Everything_Failed_Error_Message_To_Results_Queue": {
-              "runAfter": {
-                "Compose_Everything_Failed_Error_Result_Message": [
-                  "Succeeded"
-                ]
-              },
               "type": "ApiConnection",
               "inputs": {
                 "host": {
@@ -1332,6 +1327,11 @@
                 "queries": {
                   "systemProperties": "None"
                 }
+              },
+              "runAfter": {
+                "Compose_Everything_Failed_Error_Result_Message": [
+                  "Succeeded"
+                ]
               }
             },
             "Until_Call_Completed": {
@@ -1371,11 +1371,6 @@
                   "runAfter": {}
                 },
                 "Renew_lock_on_the_session_in_a_queue": {
-                  "runAfter": {
-                    "CheckCallProgress": [
-                      "Succeeded"
-                    ]
-                  },
                   "type": "ApiConnection",
                   "inputs": {
                     "host": {
@@ -1385,6 +1380,11 @@
                     },
                     "method": "post",
                     "path": "/@{encodeURIComponent(encodeURIComponent('processing-queue'))}/sessions/@{encodeURIComponent(triggerBody()?['SessionId'])}/renewlock"
+                  },
+                  "runAfter": {
+                    "CheckCallProgress": [
+                      "Succeeded"
+                    ]
                   }
                 }
               },

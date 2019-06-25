@@ -5,6 +5,7 @@ namespace Microsoft.AdvocacyPlatform.Functions
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.AdvocacyPlatform.Clients;
@@ -146,14 +147,16 @@ namespace Microsoft.AdvocacyPlatform.Functions
                 {
                     response.Data.Transcription = request.Text;
 
-                    if (!ValidateDate(request.MinDateTime, response.Data.Date))
+                    if (!ValidateDate(request.MinDateTime, response.Data.Dates))
                     {
-                        log.LogWarning($"Extracted date rejected! ('{response.Data.Date.FullDate}' < '{request.MinDateTime}')");
+                        DateInfo firstDateInfo = response.Data.Dates.FirstOrDefault();
+
+                        log.LogWarning($"Extracted date rejected! ({(response.Data.Dates.Count > 1 ? $"Date count: {response.Data.Dates.Count}" : (firstDateInfo != null ? $"'{firstDateInfo.FullDate}' < '{request.MinDateTime}'" : string.Empty))})");
                         response.Flags.Add(ExtractInfoFlag.DateRejected);
                     }
                 }
 
-                log.LogInformation($"Date = {(response.Data.Date != null ? "yes" : "no")}, Location = {(response.Data.Location != null ? "yes" : "no")}, Person = {(response.Data.Person != null ? "yes" : "no")}");
+                log.LogInformation($"Dates = {(response.Data.Dates != null && response.Data.Dates.Count > 0 ? "yes" : "no")}, Location = {(response.Data.Location != null ? "yes" : "no")}, Person = {(response.Data.Person != null ? "yes" : "no")}");
 
                 Tuple<int, string> responseStatus = GetResponseStatus(response.Data);
 
@@ -202,21 +205,31 @@ namespace Microsoft.AdvocacyPlatform.Functions
             return FunctionHelper.ActionResultFactory<ExtractInfoResponse>(isBadRequest, response);
         }
 
-        private static bool ValidateDate(DateTime? minDateTime, DateInfo dateInfo)
+        private static bool ValidateDate(DateTime? minDateTime, IList<DateInfo> dateInfos)
         {
-            if (dateInfo != null)
+            if (dateInfos == null ||
+                dateInfos.Count > 1)
             {
-                if (dateInfo.FullDate < minDateTime)
-                {
-                    dateInfo.FullDate = null;
-                    dateInfo.Year = 0;
-                    dateInfo.Month = 0;
-                    dateInfo.Day = 0;
-                    dateInfo.Hour = 0;
-                    dateInfo.Minute = 0;
+                return false;
+            }
 
-                    return false;
-                }
+            if (dateInfos.Count == 0)
+            {
+                return true;
+            }
+
+            DateInfo validateInfo = dateInfos[0];
+
+            if (validateInfo.FullDate < minDateTime)
+            {
+                validateInfo.FullDate = null;
+                validateInfo.Year = 0;
+                validateInfo.Month = 0;
+                validateInfo.Day = 0;
+                validateInfo.Hour = 0;
+                validateInfo.Minute = 0;
+
+                return false;
             }
 
             return true;
@@ -254,7 +267,8 @@ namespace Microsoft.AdvocacyPlatform.Functions
 
         private static Tuple<int, string> GetResponseStatus(TranscriptionData data)
         {
-            if (data.Date == null
+            if (data.Dates == null
+                || data.Dates.Count != 1
                 || data.Location == null
                 || data.Person == null)
             {

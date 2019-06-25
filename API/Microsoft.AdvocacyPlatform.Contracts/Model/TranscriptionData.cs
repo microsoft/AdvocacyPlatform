@@ -16,7 +16,7 @@ namespace Microsoft.AdvocacyPlatform.Contracts
         /// </summary>
         public TranscriptionData()
         {
-            this.Date = new DateInfo();
+            this.Dates = new List<DateInfo>();
             this.Location = new LocationInfo();
             this.Person = new PersonInfo();
         }
@@ -44,7 +44,7 @@ namespace Microsoft.AdvocacyPlatform.Contracts
         /// <summary>
         /// Gets or sets the datetime information extracted.
         /// </summary>
-        public DateInfo Date { get; set; }
+        public List<DateInfo> Dates { get; set; }
 
         /// <summary>
         /// Gets or sets the location information extracted.
