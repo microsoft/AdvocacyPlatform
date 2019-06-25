@@ -84,9 +84,10 @@ namespace Microsoft.AdvocacyPlatform.Functions.FunctionalTests
             Assert.IsNotNull(response.Data);
             Assert.AreEqual(_config.Transcript.Length < 500 ? _config.Transcript : _config.Transcript.Substring(0, 500), response.Data.Transcription);
 
-            if (_config.ExpectedEntities.Contains("Date"))
+            if (_config.ExpectedEntities.Contains("Dates"))
             {
-                Assert.IsNotNull(response.Data.Date);
+                Assert.IsNotNull(response.Data.Dates);
+                Assert.IsTrue(response.Data.Dates.Count > 0);
             }
 
             if (_config.ExpectedEntities.Contains("Location"))

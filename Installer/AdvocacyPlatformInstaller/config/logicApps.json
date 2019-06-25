@@ -540,39 +540,6 @@
         "state": "Enabled",
         "definition": {
           "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-          "contentVersion": "1.0.0.0",
-          "parameters": {
-            "$connections": {
-              "defaultValue": {},
-              "type": "Object"
-            },
-            "$crmOrgName": {
-              "defaultValue": "[concat(parameters('dynamicscrm_environment_name'),'.crm')]",
-              "type": "String"
-            }
-          },
-          "triggers": {
-            "When_a_message_is_received_in_a_queue_(peek-lock)": {
-              "recurrence": {
-                "frequency": "Minute",
-                "interval": 1
-              },
-              "type": "ApiConnection",
-              "inputs": {
-                "host": {
-                  "connection": {
-                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
-                  }
-                },
-                "method": "get",
-                "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages/head/peek",
-                "queries": {
-                  "queueType": "Main",
-                  "sessionId": "0"
-                }
-              }
-            }
-          },
           "actions": {
             "Abandon_the_message_in_a_queue": {
               "runAfter": {},
@@ -593,6 +560,7 @@
               }
             },
             "For_each_queue_message": {
+              "type": "Foreach",
               "foreach": "@body('Get_messages_from_result_queue_(peek-lock)')",
               "actions": {
                 "Complete_the_message_in_a_queue": {
@@ -618,8 +586,44 @@
                   }
                 },
                 "Condition_Request_Type_Is_CourtHearingInfo": {
+                  "type": "If",
+                  "expression": {
+                    "equals": [
+                      "@equals(body('Parse_JSON')?['requestType'],'CourtHearingInfo')",
+                      "@true"
+                    ]
+                  },
                   "actions": {
                     "Condition_Does_Court_Info_Request_Has_Entities_And_No_Errors": {
+                      "type": "If",
+                      "expression": {
+                        "and": [
+                          {
+                            "equals": [
+                              "@equals(outputs('Format_Date'),null)",
+                              "@false"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@equals(body('Parse_JSON')?['data']?['location']?['location'],null)",
+                              "@false"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@equals(body('Parse_JSON')?['data']?['additionalData']?['caseType'],null)",
+                              "@false"
+                            ]
+                          },
+                          {
+                            "equals": [
+                              "@body('Parse_JSON')?['hasError']",
+                              "@false"
+                            ]
+                          }
+                        ]
+                      },
                       "actions": {
                         "Update_Case_Record_For_Court_Hearing_Info": {
                           "runAfter": {},
@@ -630,9 +634,9 @@
                               "ap_ain_last_call_date": "@{utcNow()}",
                               "ap_call_retry_use_longmessage_dtmf": false,
                               "ap_courthearing_city": "@{body('Parse_JSON')?['data']?['location']?['city']}",
-                              "ap_courthearing_date": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',formatDateTime(body('Parse_JSON')?['data']?['date']?['fullDate'],'MM/dd/yyyy hh:mm:tt'))}",
-                              "ap_courthearing_dateonly": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
-                              "ap_courthearing_datetime": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                              "ap_courthearing_date": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
+                              "ap_courthearing_dateonly": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
+                              "ap_courthearing_datetime": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
                               "ap_courthearing_info_available": true,
                               "ap_courthearing_judge": "@{body('Parse_JSON')?['data']?['additionalData']?['judge']}",
                               "ap_courthearing_location": "@{body('Parse_JSON')?['data']?['location']?['location']}",
@@ -662,6 +666,29 @@
                       "else": {
                         "actions": {
                           "Condition_Court_Hearing_Request_Has_AddedGovernmentMessageAtStart_Entity": {
+                            "type": "If",
+                            "expression": {
+                              "or": [
+                                {
+                                  "equals": [
+                                    "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
+                                    "@true"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
+                                    "@true"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
+                                    "@true"
+                                  ]
+                                }
+                              ]
+                            },
                             "actions": {
                               "Update_Court_Hearing_Case_Record_To_Retry_with_Long_Message_DTMF": {
                                 "runAfter": {},
@@ -686,30 +713,7 @@
                               "Update_Court_Info_Case_Record_For_Retry": [
                                 "Succeeded"
                               ]
-                            },
-                            "expression": {
-                              "or": [
-                                {
-                                  "equals": [
-                                    "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
-                                    "@true"
-                                  ]
-                                },
-                                {
-                                  "equals": [
-                                    "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
-                                    "@true"
-                                  ]
-                                },
-                                {
-                                  "equals": [
-                                    "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
-                                    "@true"
-                                  ]
-                                }
-                              ]
-                            },
-                            "type": "If"
+                            }
                           },
                           "Get_Court_Info_Case_Record_To_Increase_Retries": {
                             "runAfter": {},
@@ -736,9 +740,9 @@
                                 "_ownerid_type": "",
                                 "ap_ain_last_call_date": "@{utcNow()}",
                                 "ap_courthearing_city": "@{body('Parse_JSON')?['data']?['location']?['city']}",
-                                "ap_courthearing_date": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),null,formatDateTime(body('Parse_JSON')?['data']?['date']?['fullDate'],'MM/dd/yyyy hh:mm:tt'))}",
-                                "ap_courthearing_dateonly": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
-                                "ap_courthearing_datetime": "@{if(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                                "ap_courthearing_date": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
+                                "ap_courthearing_dateonly": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
+                                "ap_courthearing_datetime": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
                                 "ap_courthearing_info_available": false,
                                 "ap_courthearing_judge": "@{body('Parse_JSON')?['data']?['additionalData']?['judge']}",
                                 "ap_courthearing_location": "@{body('Parse_JSON')?['data']?['location']?['location']}",
@@ -763,36 +767,7 @@
                             }
                           }
                         }
-                      },
-                      "expression": {
-                        "and": [
-                          {
-                            "equals": [
-                              "@equals(body('Parse_JSON')?['data']?['date']?['fullDate'],null)",
-                              "@false"
-                            ]
-                          },
-                          {
-                            "equals": [
-                              "@equals(body('Parse_JSON')?['data']?['location']?['location'],null)",
-                              "@false"
-                            ]
-                          },
-                          {
-                            "equals": [
-                              "@equals(body('Parse_JSON')?['data']?['additionalData']?['caseType'],null)",
-                              "@false"
-                            ]
-                          },
-                          {
-                            "equals": [
-                              "@body('Parse_JSON')?['hasError']",
-                              "@false"
-                            ]
-                          }
-                        ]
-                      },
-                      "type": "If"
+                      }
                     }
                   },
                   "runAfter": {
@@ -803,8 +778,38 @@
                   "else": {
                     "actions": {
                       "Condition_Request_Type_Is_CaseDecision": {
+                        "type": "If",
+                        "expression": {
+                          "equals": [
+                            "@equals(body('Parse_JSON')?['requestType'],'CaseDecisionInfo')",
+                            "@true"
+                          ]
+                        },
                         "actions": {
                           "Condition_Does_Case_Decision_Request_Has_Date_Entity_And_No_Errors": {
+                            "type": "If",
+                            "expression": {
+                              "and": [
+                                {
+                                  "equals": [
+                                    "@equals(outputs('Format_Date'),null)",
+                                    "@false"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@body('Parse_JSON')?['hasError']",
+                                    "@false"
+                                  ]
+                                },
+                                {
+                                  "equals": [
+                                    "@equals(body('Parse_JSON')?['data']?['additionalData'],null)",
+                                    "@false"
+                                  ]
+                                }
+                              ]
+                            },
                             "actions": {
                               "Update_Case_Decision_Record": {
                                 "runAfter": {},
@@ -817,13 +822,13 @@
                                     "ap_casedecision_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
                                     "ap_casedecision_case_decision": "@{if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseDecision'),body('Parse_JSON')?['data']?['additionalData']?['caseDecision'],null)}",
                                     "ap_casedecision_info_available": true,
-                                    "ap_casedecision_issued_date": "@{body('Parse_JSON')?['data']?['date']?['fullDate']}",
+                                    "ap_casedecision_issued_date": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
                                     "ap_casedecision_transcription_changed_on": "@{utcNow()}",
                                     "ap_casedecision_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
                                     "ap_casedecision_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
                                     "ap_casedecision_transcription_status": 683710004,
                                     "ap_extract_case_decision_info": false,
-                                    "ap_removal_order_issued": "@if(contains(body('Parse_JSON')?['data']?['additionalData'],'removalOrder'),683710001,683710002)",
+                                    "ap_removal_order_issued": "@if(contains(body('Parse_JSON')?['data']?['additionalData'],'removalOrder'),683710001,683710000)",
                                     "ap_total_call_retries": 1
                                   },
                                   "host": {
@@ -840,6 +845,29 @@
                             "else": {
                               "actions": {
                                 "Condition_Case_Decision_Request_Has_AddedGovernmentMessageAtStart_Entity": {
+                                  "type": "If",
+                                  "expression": {
+                                    "or": [
+                                      {
+                                        "equals": [
+                                          "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
+                                          "@true"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
+                                          "@true"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
+                                          "@true"
+                                        ]
+                                      }
+                                    ]
+                                  },
                                   "actions": {
                                     "Update_Case_Decision_Record_To_Retry_with_Long_Message_DTMF": {
                                       "runAfter": {},
@@ -863,30 +891,7 @@
                                     "Update_Case_Decision_Record_For_Retry": [
                                       "Succeeded"
                                     ]
-                                  },
-                                  "expression": {
-                                    "or": [
-                                      {
-                                        "equals": [
-                                          "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
-                                          "@true"
-                                        ]
-                                      },
-                                      {
-                                        "equals": [
-                                          "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
-                                          "@true"
-                                        ]
-                                      },
-                                      {
-                                        "equals": [
-                                          "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
-                                          "@true"
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  "type": "If"
+                                  }
                                 },
                                 "Get_Case_Decision_Record_To_Increase_Retries": {
                                   "runAfter": {},
@@ -913,12 +918,14 @@
                                       "_ownerid_type": "",
                                       "ap_ain_last_call_date": "@{utcNow()}",
                                       "ap_casedecision_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                                      "ap_casedecision_case_decision": "@{if(equals(body('Parse_JSON')?['data']?['additionalData'],null),null,if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseDecision'),body('Parse_JSON')?['data']?['additionalData']?['caseDecision'],null))}",
                                       "ap_casedecision_info_available": false,
                                       "ap_casedecision_transcription_changed_on": "@{utcNow()}",
                                       "ap_casedecision_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
                                       "ap_casedecision_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
                                       "ap_casedecision_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
                                       "ap_casedecision_transcription_status": 683710002,
+                                      "ap_removal_order_issued": "@{if(equals(body('Parse_JSON')?['data']?['additionalData'],null),null,if(contains(body('Parse_JSON')?['data']?['additionalData'],'removalOrder'),683710001,683710000))}",
                                       "ap_total_call_retries": "@add(if(equals(body('Get_Case_Decision_Record_To_Increase_Retries')?['ap_total_call_retries'],null),0,body('Get_Case_Decision_Record_To_Increase_Retries')?['ap_total_call_retries']),1)"
                                     },
                                     "host": {
@@ -931,38 +938,49 @@
                                   }
                                 }
                               }
-                            },
-                            "expression": {
-                              "and": [
-                                {
-                                  "equals": [
-                                    "@equals(body('Parse_JSON')?['data']?['date']?['fullDate'],null)",
-                                    "@false"
-                                  ]
-                                },
-                                {
-                                  "equals": [
-                                    "@body('Parse_JSON')?['hasError']",
-                                    "@false"
-                                  ]
-                                },
-                                {
-                                  "equals": [
-                                    "@equals(body('Parse_JSON')?['data']?['additionalData'],null)",
-                                    "@false"
-                                  ]
-                                }
-                              ]
-                            },
-                            "type": "If"
+                            }
                           }
                         },
                         "runAfter": {},
                         "else": {
                           "actions": {
                             "Condition_Request_Type_Is_CaseAppeal": {
+                              "type": "If",
+                              "expression": {
+                                "and": [
+                                  {
+                                    "equals": [
+                                      "@equals(body('Parse_JSON')?['requestType'],'CaseAppealInfo')",
+                                      "@true"
+                                    ]
+                                  }
+                                ]
+                              },
                               "actions": {
                                 "Condition_Does_Case_Appeal_Request_Has_Date_Entity_And_No_Errors": {
+                                  "type": "If",
+                                  "expression": {
+                                    "and": [
+                                      {
+                                        "equals": [
+                                          "@equals(outputs('Format_Date'),null)",
+                                          "@false"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@body('Parse_JSON')?['hasError']",
+                                          "@false"
+                                        ]
+                                      },
+                                      {
+                                        "equals": [
+                                          "@equals(body('Parse_JSON')?['data']?['additionalData'],null)",
+                                          "@false"
+                                        ]
+                                      }
+                                    ]
+                                  },
                                   "actions": {
                                     "Update_Case_Appeal_Record": {
                                       "runAfter": {},
@@ -974,7 +992,7 @@
                                           "ap_caseappeal_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
                                           "ap_caseappeal_info_available": true,
                                           "ap_caseappeal_status_info": "@{if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseAppealStatus'),body('Parse_JSON')?['data']?['additionalData']?['caseAppealStatus'],null)}",
-                                          "ap_caseappeal_submitted_date": "@{if(or(empty(body('Parse_JSON')?['data']?['date']?['fullDate']),equals(body('Parse_JSON')?['data']?['date']?['fullDate'],'0001-01-01T00:00:00')),'01/01/1753 00:00:00',body('Parse_JSON')?['data']?['date']?['fullDate'])}",
+                                          "ap_caseappeal_submitted_date": "@{if(empty(outputs('Format_Date')),'01/01/1753 00:00:00', outputs('Format_Date'))}",
                                           "ap_caseappeal_transcription_changed_on": "@{utcNow()}",
                                           "ap_caseappeal_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
                                           "ap_caseappeal_transcription_raw": "@{body('Parse_JSON')?['data']?['transcription']}",
@@ -995,6 +1013,29 @@
                                   "else": {
                                     "actions": {
                                       "Condition_Case_Appeal_Request_Has_AddedGovernmentMessageAtStart_Entity": {
+                                        "type": "If",
+                                        "expression": {
+                                          "or": [
+                                            {
+                                              "equals": [
+                                                "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
+                                                "@true"
+                                              ]
+                                            },
+                                            {
+                                              "equals": [
+                                                "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
+                                                "@true"
+                                              ]
+                                            },
+                                            {
+                                              "equals": [
+                                                "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
+                                                "@true"
+                                              ]
+                                            }
+                                          ]
+                                        },
                                         "actions": {
                                           "Update_Case_Appeal_Record_To_Retry_with_Long_Message_DTMF": {
                                             "runAfter": {},
@@ -1018,30 +1059,7 @@
                                           "Update_Case_Appeal_Record_For_Retry": [
                                             "Succeeded"
                                           ]
-                                        },
-                                        "expression": {
-                                          "or": [
-                                            {
-                                              "equals": [
-                                                "@equals(body('Parse_JSON')?['intent'],'AddedGovernmentMessageAtStart')",
-                                                "@true"
-                                              ]
-                                            },
-                                            {
-                                              "equals": [
-                                                "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'systemMaintenance'))",
-                                                "@true"
-                                              ]
-                                            },
-                                            {
-                                              "equals": [
-                                                "@if(equals(body('Parse_JSON')?['data']?['additionalData'],null),false,contains(body('Parse_JSON')?['data']?['additionalData'],'governmentShutdown'))",
-                                                "@true"
-                                              ]
-                                            }
-                                          ]
-                                        },
-                                        "type": "If"
+                                        }
                                       },
                                       "Get_Case_Appeal_Record_To_Increase_Retries": {
                                         "runAfter": {},
@@ -1068,6 +1086,7 @@
                                             "_ownerid_type": "",
                                             "ap_ain_last_call_date": "@{utcNow()}",
                                             "ap_caseappeal_call_recording_url": "@{body('Parse_JSON')?['recordingSAS']}",
+                                            "ap_caseappeal_status_info": "@{if(equals(body('Parse_JSON')?['data']?['additionalData'],null),null,if(contains(body('Parse_JSON')?['data']?['additionalData'],'caseAppealStatus'),body('Parse_JSON')?['data']?['additionalData']?['caseAppealStatus'],null))}",
                                             "ap_caseappeal_transcription_changed_on": "@{utcNow()}",
                                             "ap_caseappeal_transcription_confidence": "@{body('Parse_JSON')?['data']?['intentConfidence']}",
                                             "ap_caseappeal_transcription_errors": "@{body('Parse_JSON')?['errorDetails']}",
@@ -1085,36 +1104,24 @@
                                         }
                                       }
                                     }
-                                  },
-                                  "expression": {
-                                    "and": [
-                                      {
-                                        "equals": [
-                                          "@equals(body('Parse_JSON')?['data']?['date']?['fullDate'],null)",
-                                          "@false"
-                                        ]
-                                      },
-                                      {
-                                        "equals": [
-                                          "@body('Parse_JSON')?['hasError']",
-                                          "@false"
-                                        ]
-                                      },
-                                      {
-                                        "equals": [
-                                          "@equals(body('Parse_JSON')?['data']?['additionalData'],null)",
-                                          "@false"
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  "type": "If"
+                                  }
                                 }
                               },
                               "runAfter": {},
                               "else": {
                                 "actions": {
                                   "Condition_Is_Get_Case_Appeal_Info_Flag_On": {
+                                    "type": "If",
+                                    "expression": {
+                                      "and": [
+                                        {
+                                          "equals": [
+                                            "@body('Get_Case_Record')?['ap_extract_case_appeal_info']",
+                                            "@true"
+                                          ]
+                                        }
+                                      ]
+                                    },
                                     "actions": {
                                       "Update_Case_Appeal_Info_Record_To_In_Error": {
                                         "runAfter": {},
@@ -1140,20 +1147,16 @@
                                       "Condition_Is_Get_Court_Hearing_Info_Flag_On": [
                                         "Succeeded"
                                       ]
-                                    },
-                                    "expression": {
-                                      "and": [
-                                        {
-                                          "equals": [
-                                            "@body('Get_Case_Record')?['ap_extract_case_appeal_info']",
-                                            "@true"
-                                          ]
-                                        }
-                                      ]
-                                    },
-                                    "type": "If"
+                                    }
                                   },
                                   "Condition_Is_Get_Case_Decision_Info_Flag_On": {
+                                    "type": "If",
+                                    "expression": {
+                                      "equals": [
+                                        "@body('Get_Case_Record')?['ap_extract_case_decision_info']",
+                                        "@true"
+                                      ]
+                                    },
                                     "actions": {
                                       "Update_Case_Decision_Info_Record_To_In_Error": {
                                         "runAfter": {},
@@ -1179,16 +1182,16 @@
                                       "Get_Case_Record": [
                                         "Succeeded"
                                       ]
-                                    },
+                                    }
+                                  },
+                                  "Condition_Is_Get_Court_Hearing_Info_Flag_On": {
+                                    "type": "If",
                                     "expression": {
                                       "equals": [
-                                        "@body('Get_Case_Record')?['ap_extract_case_decision_info']",
+                                        "@body('Get_Case_Record')?['ap_extract_court_hearing_info']",
                                         "@true"
                                       ]
                                     },
-                                    "type": "If"
-                                  },
-                                  "Condition_Is_Get_Court_Hearing_Info_Flag_On": {
                                     "actions": {
                                       "Update_Case_Court_Hearing_Info_Record_To_In_Error": {
                                         "runAfter": {},
@@ -1214,14 +1217,7 @@
                                       "Condition_Is_Get_Case_Decision_Info_Flag_On": [
                                         "Succeeded"
                                       ]
-                                    },
-                                    "expression": {
-                                      "equals": [
-                                        "@body('Get_Case_Record')?['ap_extract_court_hearing_info']",
-                                        "@true"
-                                      ]
-                                    },
-                                    "type": "If"
+                                    }
                                   },
                                   "Get_Case_Record": {
                                     "runAfter": {},
@@ -1237,41 +1233,24 @@
                                     }
                                   }
                                 }
-                              },
-                              "expression": {
-                                "and": [
-                                  {
-                                    "equals": [
-                                      "@equals(body('Parse_JSON')?['requestType'],'CaseAppealInfo')",
-                                      "@true"
-                                    ]
-                                  }
-                                ]
-                              },
-                              "type": "If"
+                              }
                             }
                           }
-                        },
-                        "expression": {
-                          "equals": [
-                            "@equals(body('Parse_JSON')?['requestType'],'CaseDecisionInfo')",
-                            "@true"
-                          ]
-                        },
-                        "type": "If"
+                        }
                       }
                     }
-                  },
-                  "expression": {
-                    "equals": [
-                      "@equals(body('Parse_JSON')?['requestType'],'CourtHearingInfo')",
-                      "@true"
+                  }
+                },
+                "Format_Date": {
+                  "type": "Compose",
+                  "inputs": "@if(or(or(empty(body('Parse_JSON')?['data']?['dates']?[0]?['fullDate']),equals(body('Parse_JSON')?['data']?['dates']?[0]?['fullDate'],'0001-01-01T00:00:00')),greater(length(body('Parse_JSON')?['data']?['dates']),1) ),null,body('Parse_JSON')?['data']?['dates']?[0]?['fullDate'])",
+                  "runAfter": {
+                    "Parse_JSON": [
+                      "Succeeded"
                     ]
-                  },
-                  "type": "If"
+                  }
                 },
                 "Parse_JSON": {
-                  "runAfter": {},
                   "type": "ParseJson",
                   "inputs": {
                     "content": "@decodeBase64(items('For_each_queue_message')?['ContentData'])",
@@ -1286,37 +1265,80 @@
                         "data": {
                           "properties": {
                             "additionalData": {
+                              "properties": {
+                                "caseAppealStatus": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
                               "type": [
                                 "object",
                                 "null"
                               ]
                             },
-                            "date": {
-                              "properties": {
-                                "day": {
-                                  "type": "integer"
+                            "dates": {
+                              "items": {
+                                "properties": {
+                                  "day": {
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ]
+                                  },
+                                  "fullDate": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "hour": {
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ]
+                                  },
+                                  "minute": {
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ]
+                                  },
+                                  "month": {
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ]
+                                  },
+                                  "year": {
+                                    "type": [
+                                      "integer",
+                                      "null"
+                                    ]
+                                  }
                                 },
-                                "fullDate": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                },
-                                "hour": {
-                                  "type": "integer"
-                                },
-                                "minute": {
-                                  "type": "integer"
-                                },
-                                "month": {
-                                  "type": "integer"
-                                },
-                                "year": {
-                                  "type": "integer"
-                                }
+                                "required": [
+                                  "year",
+                                  "month",
+                                  "day",
+                                  "hour",
+                                  "minute",
+                                  "fullDate"
+                                ],
+                                "type": [
+                                  "object",
+                                  "null"
+                                ]
                               },
                               "type": [
-                                "object",
+                                "array",
+                                "null"
+                              ]
+                            },
+                            "evaluatedTranscription": {
+                              "type": [
+                                "string",
                                 "null"
                               ]
                             },
@@ -1332,64 +1354,8 @@
                                 "null"
                               ]
                             },
-                            "location": {
-                              "properties": {
-                                "city": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                },
-                                "location": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                },
-                                "state": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                },
-                                "zipcode": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                }
-                              },
-                              "type": [
-                                "object",
-                                "null"
-                              ]
-                            },
-                            "person": {
-                              "properties": {
-                                "name": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                },
-                                "type": {
-                                  "type": [
-                                    "string",
-                                    "null"
-                                  ]
-                                }
-                              },
-                              "type": [
-                                "object",
-                                "null"
-                              ]
-                            },
-                            "recordingSAS": {
-                              "type": [
-                                "string",
-                                "null"
-                              ]
-                            },
+                            "location": {},
+                            "person": {},
                             "transcription": {
                               "type": [
                                 "string",
@@ -1403,19 +1369,38 @@
                           ]
                         },
                         "errorCode": {
-                          "type": "integer"
-                        },
-                        "errorDetails": {
                           "type": [
-                            "string",
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "errorDetails": {},
+                        "flags": {
+                          "type": [
+                            "array",
                             "null"
                           ]
                         },
                         "hasError": {
                           "type": "boolean"
                         },
+                        "inputId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
                         "recordId": {
-                          "type": "string"
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "recordingSAS": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
                         },
                         "requestType": {
                           "type": [
@@ -1436,11 +1421,16 @@
                           ]
                         }
                       },
-                      "type": "object"
+                      "type": [
+                        "object",
+                        "null"
+                      ]
                     }
-                  }
+                  },
+                  "runAfter": {}
                 },
                 "Scope_Create_History_Record": {
+                  "type": "Scope",
                   "actions": {
                     "Create_a_new_EOIR_History_record": {
                       "runAfter": {
@@ -1517,19 +1507,17 @@
                     }
                   },
                   "runAfter": {
-                    "Parse_JSON": [
+                    "Format_Date": [
                       "Succeeded"
                     ]
-                  },
-                  "type": "Scope"
+                  }
                 }
               },
               "runAfter": {
                 "Get_messages_from_result_queue_(peek-lock)": [
                   "Succeeded"
                 ]
-              },
-              "type": "Foreach"
+              }
             },
             "Get_messages_from_result_queue_(peek-lock)": {
               "runAfter": {
@@ -1554,6 +1542,39 @@
               }
             }
           },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            },
+            "$crmOrgName": {
+              "defaultValue": "[concat(parameters('dynamicscrm_environment_name'),'.crm')]",
+              "type": "String"
+            }
+          },
+          "triggers": {
+            "When_a_message_is_received_in_a_queue_(peek-lock)": {
+              "recurrence": {
+                "frequency": "Minute",
+                "interval": 1
+              },
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "[concat('@parameters(''$connections'')[''', parameters('servicebus_Connection_Name'), '''][''connectionId'']')]"
+                  }
+                },
+                "method": "get",
+                "path": "/@{encodeURIComponent(encodeURIComponent('result-queue'))}/messages/head/peek",
+                "queries": {
+                  "queueType": "Main",
+                  "sessionId": "0"
+                }
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
           "outputs": {}
         },
         "parameters": {

@@ -4,6 +4,7 @@ namespace Microsoft.AdvocacyPlatform.Functions.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.AdvocacyPlatform.Clients;
     using Microsoft.AdvocacyPlatform.Contracts;
     using Microsoft.AdvocacyPlatform.Functions.Module;
@@ -55,7 +56,9 @@ namespace Microsoft.AdvocacyPlatform.Functions.Tests
             {
                 Console.WriteLine($"TEST TRANSCRIPT: {inputAndResult.Item1}");
 
-                DateInfo result = dataExtractor.ExtractDateTime(inputAndResult.Item1, Log);
+                List<DateInfo> results = dataExtractor.ExtractDateTimes(inputAndResult.Item1, Log);
+
+                DateInfo result = results.First();
 
                 Assert.AreEqual(inputAndResult.Item2.Year, result.Year);
                 Assert.AreEqual(inputAndResult.Item2.Month, result.Month);
@@ -87,7 +90,9 @@ namespace Microsoft.AdvocacyPlatform.Functions.Tests
             {
                 Console.WriteLine($"TEST TRANSCRIPT: {inputAndResult.Item1}");
 
-                DateInfo result = dataExtractor.ExtractDateTime(inputAndResult.Item1, Log);
+                List<DateInfo> results = dataExtractor.ExtractDateTimes(inputAndResult.Item1, Log);
+
+                DateInfo result = results.First();
 
                 Assert.AreEqual(inputAndResult.Item2.Year, result.Year);
                 Assert.AreEqual(inputAndResult.Item2.Month, result.Month);

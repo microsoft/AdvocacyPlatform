@@ -1,0 +1,15 @@
+﻿{
+  "entity": "{expectedDateTimeEntity}",
+  "type": "builtin.datetimeV2.{expectedResolution}",
+  "startIndex": {expectedStartIndex},
+  "endIndex": {expectedEndIndex},
+  "resolution": {
+    "values": [
+      {
+        "timex": "{expectedDateTime}",
+        "type": "{expectedResolution}",
+        "value": "{expectedDateTime}"
+      }
+    ]
+  }
+}
