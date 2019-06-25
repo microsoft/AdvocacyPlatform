@@ -662,6 +662,10 @@
             {
               "name": "twilioTwiMLTemplate",
               "value": "<?xml version=\"1.0\"?><Response><Pause length=\"{callInitialPauseInSeconds}\"/><Play digits=\"{dtmfSequence}\"/><Pause length=\"{callFinalPauseInSeconds}\"/><Hangup/></Response>"
+            },
+            {
+              "name": "WEBSITE_AUTH_AAD_BYPASS_SINGLE_TENANCY_CHECK",
+              "value": "true"
             }
           ]
         }
