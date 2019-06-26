@@ -1,2 +1,2 @@
 # PowerApps Plan
-A Power Apps plan is required to host the PowerApps environment and Common Data Services database required by the Advocacy Platform platform.
+A Power Apps Plan 2 is required to host the PowerApps environment and Common Data Services database required by the Advocacy Platform platform.
