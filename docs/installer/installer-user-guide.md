@@ -6,7 +6,7 @@ Before running the Advocacy Platform installer you should ensure you have all re
 1. [Azure Subscription](../prerequisites/azure-subscription.md)
 1. [Twilio Account](../prerequisites/twilio-account.md)
 1. [Bing Maps Account](../prerequisites/bing-maps-account.md)
-1. [LUIS Account](../prerequisites/twili-account.md)
+1. [LUIS Account](../prerequisites/luis-account.md)
 
 ## Download and Extract Installer
 Begin by navigating to the latest Advocacy Platform GitHub release at https://github.com/Microsoft/AdvocacyPlatform/releases/latest. Download the latest version of the installer by clicking on the asset named AdvocacyPlatformInstaller_{version}.zip.
