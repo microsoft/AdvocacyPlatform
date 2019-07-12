@@ -8,6 +8,7 @@ To get started using the Advocacy Platform please refer to the following section
 3. [Latest releases](https://github.com/Microsoft/AdvocacyPlatform/releases/latest)
 3. [Components](#Components)
 4. [API references](./docs/api/api-reference.md)
+5. [How To Guide](./docs/howtoguide/how-to-guide.md)
 
 # Components
 1. [API](./docs/api/api.md)
