@@ -1,5 +1,6 @@
-# Introduction 
-## Advocacy Platform
+# Advocacy Platform
+
+<img src="https://dev.azure.com/AdvocacyPlatform/AdvocacyPlatform/_apis/build/status/microsoft.AdvocacyPlatform?branchName=master">
 
 # Getting Started
 To get started using the Advocacy Platform please refer to the following sections of this documentation:
