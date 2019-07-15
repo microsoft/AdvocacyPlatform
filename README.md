@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/AdvocacyPlatform/AdvocacyPlatform/_apis/build/status/microsoft.AdvocacyPlatform?branchName=master)](https://dev.azure.com/AdvocacyPlatform/AdvocacyPlatform/_build/latest?definitionId=1&branchName=master)
+
 # Introduction 
 ## Advocacy Platform
 
