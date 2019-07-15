@@ -5,30 +5,114 @@
 
 trigger:
 - master
-
 pool:
-  vmImage: 'windows-latest'
+  name: Hosted VS2017
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  Version.Major: '0'
+  Version.Minor: '1'
 
 steps:
+- task: DotNetCoreCLI@2
+  displayName: 'AdvocacyPlatform API (dotnet restore)'
+  inputs:
+    command: restore
+    projects: '$(Build.SourcesDirectory)\API\**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'AdvocacyPlatform API (dotnet build)'
+  inputs:
+    projects: '$(Build.SourcesDirectory)\API\**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'AdvocacyPlatform API (dotnet test)'
+  inputs:
+    command: test
+    projects: |
+     $(Build.SourcesDirectory)\API\**/*test*.csproj
+     !$(Build.SourcesDirectory)\API\**/*functionaltest*.csproj
+    arguments: '--no-build --settings $(Build.SourcesDirectory)\API\Microsoft.AdvocacyPlatform.Functions.Tests\CodeCoverage.runsettings'
+
+- task: DotNetCoreCLI@2
+  displayName: 'AdvocacyPlatform API (dotnet publish)'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: '$(Build.SourcesDirectory)\API\Microsoft.AdvocacyPlatform.Functions\**/*.csproj'
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
+
 - task: NuGetToolInstaller@1
+  displayName: 'AdvocacyPlatform Installer + UI (Get NuGet)'
 
 - task: NuGetCommand@2
+  displayName: 'AdvocacyPlatform UI (NuGet Restore)'
   inputs:
-    restoreSolution: '$(solution)'
+    restoreSolution: '$(Build.SourcesDirectory)\UI\**/*.sln'
+
+- task: NuGetCommand@2
+  displayName: 'AdvocacyPlatform Installer (NuGet Restore)'
+  inputs:
+    restoreSolution: '$(Build.SourcesDirectory)\Installer\**/*.sln'
 
 - task: VSBuild@1
+  displayName: 'AdvocacyPlatform UI (Build)'
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    solution: '$(Build.SourcesDirectory)\UI\**/*.sln'
+    platform: x64
+    configuration: Release
+    clean: true
+    msbuildArchitecture: x64
+
+- task: VSBuild@1
+  displayName: 'AdvocacyPlatform Installer (Build)'
+  inputs:
+    solution: '$(Build.SourcesDirectory)\Installer\**/*.sln'
+    platform: x64
+    configuration: Release
+    clean: true
+    msbuildArchitecture: x64
 
 - task: VSTest@2
+  displayName: 'AdvocacyPlatform Installer (Test)'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    testAssemblyVer2: |
+     **\*test*.dll
+     !**\*functionaltests*.dll
+     !**\*TestAdapter.dll
+     !**\obj\**
+    runSettingsFile: Installer/AdvocacyPlatformInstaller.Tests/CodeCoverage.runsettings
+    codeCoverageEnabled: true
+    diagnosticsEnabled: True
+
+- task: CopyFiles@2
+  displayName: 'AdvocacyPlatform Installer (Copy Package Dll)'
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)\UI\AdvocacyPlatformDeployment\bin\x64\Release\'
+    Contents: 'AdvocacyPlatformSolution*.dll'
+    TargetFolder: '$(System.DefaultWorkingDirectory)\Installer\AdvocacyPlatformInstaller\bin\x64\Release\AdvocacyPlatformSolution'
+
+- task: CopyFiles@2
+  displayName: 'AdvocacyPlatform Installer (Copy Package Folder)'
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)\UI\AdvocacyPlatformDeployment\bin\x64\Release\AdvocacyPlatformSolution'
+    TargetFolder: '$(System.DefaultWorkingDirectory)\Installer\AdvocacyPlatformInstaller\bin\x64\Release\AdvocacyPlatformSolution\AdvocacyPlatformSolution'
+
+- task: ArchiveFiles@2
+  displayName: 'AdvocacyPlatform Installer (Zip)'
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)\Installer\AdvocacyPlatformInstaller\bin\x64\Release'
+    includeRootFolder: false
+    archiveFile: '$(Build.ArtifactStagingDirectory)/AdvocacyPlatformInstaller_$(Version.Major).$(Version.Minor).$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact (drop)'
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    artifactName: notes
+    targetPath: docs/release
