@@ -4,75 +4,75 @@
   "parameters": {
     "ap_func_aad_key_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "ap_func_aad_key_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "ap_func_aad_name_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "ap_func_aad_name_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "luis_subscription_key_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "luis_subscription_key_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "speech_api_key_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "speech_api_key_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "storage_access_key_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "storage_access_key_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "storage_read_access_key_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "storage_read_access_key_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "twilioaccountphonenumber_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "twilioaccountphonenumber_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "twilioaccountssid_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "twilioaccountssid_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "twilioaccounttoken_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "twilioaccounttoken_secret_value": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "aadaudience_variable": {
       "defaultValue": null,
