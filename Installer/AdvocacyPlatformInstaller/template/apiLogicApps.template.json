@@ -4,7 +4,7 @@
   "parameters": {
     "ap_func_aad_key_secret_name": {
       "defaultValue": null,
-      "type": "String"
+      "type": "securestring"
     },
     "aadaudience_variable": {
       "defaultValue": null,
