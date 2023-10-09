@@ -136,7 +136,7 @@
     },
     "ap_function_app_zip_sas_token": {
       "defaultValue": "",
-      "type": "String"
+      "type": "securestring"
     }
   },
   "variables": {
